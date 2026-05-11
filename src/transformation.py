@@ -1,13 +1,163 @@
 from logger import logging
+from pyspark.sql import SparkSession
+from pyspark.sql.functions import col, to_timestamp, hour, dayofweek, month, year
+from pyspark.ml.feature import VectorAssembler, StandardScaler, OneHotEncoder
+from pyspark.ml import Pipeline
+import os
+import shutil
 
 
 def transform_data():
     try:
         logging.info("Starting data transformation process...")
-        # Placeholder for data transformation logic
+
+        # ── 1. Spark Session ──────────────────────────────────────────────────
+        spark = SparkSession.builder.appName("TrafficTransformation").getOrCreate()
+
+        # ── 2. Load cleaned data (output of cleaning.py) ─────────────────────
+        df = spark.read.csv(
+            "data/processed/clean_traffic_data",
+            header=True,
+            inferSchema=True,
+        )
+        logging.info("===================================")
+        logging.info("Loaded Cleaned Dataset")
+        logging.info("  Rows    : %d", df.count())
+        logging.info("  Columns : %s", df.columns)
+        logging.info("===================================")
+
+        # ── 3. Ensure DateTime is TimestampType & re-derive time features ─────
+        #       (handles the case where CSV round-trips lose the cast)
+        logging.info("Parsing DateTime and extracting time features...")
+        df = df.withColumn("DateTime", to_timestamp(col("DateTime"), "yyyy-MM-dd HH:mm:ss"))
+
+        # Only add time columns if they aren't already present (cleaning step may have added them)
+        existing = df.columns
+        if "Year" not in existing:
+            df = df.withColumn("Year", year(col("DateTime")))
+        if "Month" not in existing:
+            df = df.withColumn("Month", month(col("DateTime")))
+        if "Hour" not in existing:
+            df = df.withColumn("Hour", hour(col("DateTime")))
+        if "DayOfWeek" not in existing:
+            df = df.withColumn("DayOfWeek", dayofweek(col("DateTime")))   # 1=Sun … 7=Sat
+
+        logging.info("Time features confirmed: Year, Month, Hour, DayOfWeek")
+
+        # ── 4. One-Hot Encode categorical columns ─────────────────────────────
+        #   Junction  (int, 4 categories) → treat as categorical
+        #   DayOfWeek (int, 1-7)          → treat as categorical
+        #   Hour      (int, 0-23)         → treat as categorical (cyclic patterns)
+        #
+        #   OneHotEncoder in PySpark ML expects Double input, so cast first.
+        logging.info("Applying OneHotEncoder to Junction, DayOfWeek, Hour...")
+
+        df = (
+            df.withColumn("Junction_idx",   col("Junction").cast("double"))
+              .withColumn("DayOfWeek_idx",  col("DayOfWeek").cast("double"))
+              .withColumn("Hour_idx",       col("Hour").cast("double"))
+        )
+
+        ohe = OneHotEncoder(
+            inputCols=["Junction_idx", "DayOfWeek_idx", "Hour_idx"],
+            outputCols=["Junction_ohe", "DayOfWeek_ohe", "Hour_ohe"],
+            dropLast=True,          # avoids dummy-variable trap
+            handleInvalid="keep",
+        )
+
+        # ── 5. Assemble all features into a single vector ─────────────────────
+        #   Numeric  : Year, Month, Vehicles (used as a lag/context feature)
+        #   OHE vecs : Junction_ohe, DayOfWeek_ohe, Hour_ohe
+        #
+        #   TARGET   : Vehicles  (kept separate — NOT put inside features_vec)
+        logging.info("Assembling feature vector...")
+
+        assembler = VectorAssembler(
+            inputCols=[
+                "Year",
+                "Month",
+                "Junction_ohe",
+                "DayOfWeek_ohe",
+                "Hour_ohe",
+            ],
+            outputCol="features_raw",
+            handleInvalid="skip",
+        )
+
+        # ── 6. StandardScaler on the assembled vector ─────────────────────────
+        logging.info("Adding StandardScaler...")
+
+        scaler = StandardScaler(
+            inputCol="features_raw",
+            outputCol="features",
+            withMean=False,   # False is safer for sparse OHE vectors
+            withStd=True,
+        )
+
+        # ── 7. Build & fit the ML Pipeline ────────────────────────────────────
+        logging.info("Building and fitting Pipeline...")
+
+        pipeline = Pipeline(stages=[ohe, assembler, scaler])
+        pipeline_model = pipeline.fit(df)
+        df_final = pipeline_model.transform(df)
+
+        logging.info("Pipeline fitted successfully.")
+        logging.info("===================================")
+        logging.info("Transformed Dataset Schema")
+        logging.info("===================================")
+        df_final.printSchema()
+
+        # Preview: show key columns only (full vector is noisy in logs)
+        logging.info("===================================")
+        logging.info("Transformed Dataset Preview (top 5 rows)")
+        logging.info("===================================")
+        df_final.select(
+            "DateTime", "Junction", "Hour", "DayOfWeek",
+            "Month", "Year", "Vehicles", "features"
+        ).show(5, truncate=False)
+
+        # ── 8. Train / Test split (80 / 20) ───────────────────────────────────
+        train_df, test_df = df_final.randomSplit([0.8, 0.2], seed=42)
+        logging.info("===================================")
+        logging.info("Train/Test Split")
+        logging.info("  Train rows : %d", train_df.count())
+        logging.info("  Test  rows : %d", test_df.count())
+        logging.info("===================================")
+
+        # ── 9. Save train / test as Parquet ───────────────────────────────────
+        output_dir = "data/transformed"
+        if os.path.exists(output_dir):
+            shutil.rmtree(output_dir)
+        os.makedirs(output_dir, exist_ok=True)
+
+        train_path = os.path.join(output_dir, "train")
+        test_path  = os.path.join(output_dir, "test")
+
+        train_df.write.mode("overwrite").parquet(train_path)
+        test_df.write.mode("overwrite").parquet(test_path)
+        logging.info("Train data saved : %s", train_path)
+        logging.info("Test  data saved : %s", test_path)
+
+        # ── 10. Save fitted Pipeline model ────────────────────────────────────
+        models_dir = "models/pipeline"
+        if os.path.exists(models_dir):
+            shutil.rmtree(models_dir)
+
+        pipeline_model.save(models_dir)
+        logging.info("Pipeline model saved : %s", models_dir)
+
+        logging.info("===================================")
+        logging.info("Transformation Complete")
+        logging.info("  data/transformed/train/")
+        logging.info("  data/transformed/test/")
+        logging.info("  models/pipeline/")
+        logging.info("===================================")
         logging.info("Data transformation process completed successfully!")
+
     except Exception as e:
         logging.error("Error during data transformation: %s", str(e))
+        raise
+
 
 if __name__ == "__main__":
     try:
