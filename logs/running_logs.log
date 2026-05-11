@@ -1,0 +1,16 @@
+[ 2026-05-12 04:18:27,353 ] extraction.py:12 root - INFO - Using project folder: D:\spark-traffic-mlops
+[ 2026-05-12 04:18:27,354 ] extraction.py:15 root - INFO - Downloading traffic dataset...
+[ 2026-05-12 04:18:29,159 ] extraction.py:26 root - INFO - File read successfully with default utf-8 encoding.
+[ 2026-05-12 04:18:29,159 ] extraction.py:31 root - INFO - Downloaded! Shape: (48120, 4)
+[ 2026-05-12 04:18:29,160 ] extraction.py:32 root - INFO - Columns: ['DateTime', 'Junction', 'Vehicles', 'ID']
+[ 2026-05-12 04:18:29,161 ] extraction.py:33 root - INFO - First 5 records:
+              DateTime  Junction  Vehicles           ID
+0  2015-11-01 00:00:00         1        15  20151101001
+1  2015-11-01 01:00:00         1        13  20151101011
+2  2015-11-01 02:00:00         1        10  20151101021
+3  2015-11-01 03:00:00         1         7  20151101031
+4  2015-11-01 04:00:00         1         9  20151101041
+[ 2026-05-12 04:18:29,423 ] extraction.py:38 root - INFO - Data saved at: D:\spark-traffic-mlops\data\raw\traffic.csv
+[ 2026-05-12 04:18:29,424 ] extraction.py:41 root - INFO - Final files in data/raw: ['traffic.csv']
+[ 2026-05-12 04:18:29,425 ] extraction.py:42 root - INFO - Data extraction process completed successfully!
+[ 2026-05-12 04:28:18,610 ] main.py:3 root - INFO - Starting the Spark Traffic MLOps project.
