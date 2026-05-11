@@ -95,3 +95,24 @@
 [ 2026-05-12 04:37:06,623 ] load.py:6 root - INFO - Starting data loading process...
 [ 2026-05-12 04:37:27,232 ] load.py:16 root - INFO - Data loading  process completed successfully!
 [ 2026-05-12 04:37:27,252 ] clientserver.py:570 py4j.clientserver - INFO - Closing down clientserver connection
+[ 2026-05-12 04:39:11,634 ] train.py:23 root - INFO - Starting model training process...
+[ 2026-05-12 04:39:32,772 ] train.py:32 root - INFO - ===================================
+[ 2026-05-12 04:39:32,772 ] train.py:33 root - INFO - Loaded Transformed Dataset
+[ 2026-05-12 04:39:36,607 ] train.py:34 root - INFO -   Train rows : 38480
+[ 2026-05-12 04:39:36,882 ] train.py:35 root - INFO -   Test  rows : 9640
+[ 2026-05-12 04:39:36,882 ] train.py:36 root - INFO - ===================================
+[ 2026-05-12 04:39:38,196 ] train.py:247 root - ERROR - Error during model training: API request to endpoint /api/2.0/mlflow/experiments/get-by-name failed with error code 401 != 200. Response body: '=============== ATTENTION! ===============
+
+To use authentication, you must first: 
+    Get your default access token from: https://dagshub.com/user/settings/tokens
+    OR 
+    Set a password: https://dagshub.com/user/settings/password 
+=========================================='
+[ 2026-05-12 04:39:38,196 ] train.py:255 root - ERROR - Error during model training: API request to endpoint /api/2.0/mlflow/experiments/get-by-name failed with error code 401 != 200. Response body: '=============== ATTENTION! ===============
+
+To use authentication, you must first: 
+    Get your default access token from: https://dagshub.com/user/settings/tokens
+    OR 
+    Set a password: https://dagshub.com/user/settings/password 
+=========================================='
+[ 2026-05-12 04:39:38,243 ] clientserver.py:570 py4j.clientserver - INFO - Closing down clientserver connection
