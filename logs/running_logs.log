@@ -57,3 +57,38 @@
 [ 2026-05-12 04:33:24,925 ] cleaning.py:104 root - INFO - ===================================
 [ 2026-05-12 04:33:24,931 ] cleaning.py:105 root - INFO - Data cleaning process completed successfully!
 [ 2026-05-12 04:33:24,966 ] clientserver.py:570 py4j.clientserver - INFO - Closing down clientserver connection
+[ 2026-05-12 04:35:18,169 ] transformation.py:12 root - INFO - Starting data transformation process...
+[ 2026-05-12 04:35:35,192 ] transformation.py:23 root - INFO - ===================================
+[ 2026-05-12 04:35:35,195 ] transformation.py:24 root - INFO - Loaded Cleaned Dataset
+[ 2026-05-12 04:35:36,223 ] transformation.py:25 root - INFO -   Rows    : 48120
+[ 2026-05-12 04:35:36,252 ] transformation.py:26 root - INFO -   Columns : ['DateTime', 'Junction', 'Vehicles', 'Year', 'Month', 'Hour', 'DayOfWeek']
+[ 2026-05-12 04:35:36,253 ] transformation.py:27 root - INFO - ===================================
+[ 2026-05-12 04:35:36,253 ] transformation.py:31 root - INFO - Parsing DateTime and extracting time features...
+[ 2026-05-12 04:35:36,319 ] transformation.py:45 root - INFO - Time features confirmed: Year, Month, Hour, DayOfWeek
+[ 2026-05-12 04:35:36,319 ] transformation.py:53 root - INFO - Applying OneHotEncoder to Junction, DayOfWeek, Hour...
+[ 2026-05-12 04:35:36,766 ] transformation.py:73 root - INFO - Assembling feature vector...
+[ 2026-05-12 04:35:36,776 ] transformation.py:88 root - INFO - Adding StandardScaler...
+[ 2026-05-12 04:35:36,786 ] transformation.py:98 root - INFO - Building and fitting Pipeline...
+[ 2026-05-12 04:35:40,097 ] transformation.py:104 root - INFO - Pipeline fitted successfully.
+[ 2026-05-12 04:35:40,099 ] transformation.py:105 root - INFO - ===================================
+[ 2026-05-12 04:35:40,099 ] transformation.py:106 root - INFO - Transformed Dataset Schema
+[ 2026-05-12 04:35:40,100 ] transformation.py:107 root - INFO - ===================================
+[ 2026-05-12 04:35:40,104 ] transformation.py:111 root - INFO - ===================================
+[ 2026-05-12 04:35:40,104 ] transformation.py:112 root - INFO - Transformed Dataset Preview (top 5 rows)
+[ 2026-05-12 04:35:40,104 ] transformation.py:113 root - INFO - ===================================
+[ 2026-05-12 04:35:40,667 ] transformation.py:121 root - INFO - ===================================
+[ 2026-05-12 04:35:40,667 ] transformation.py:122 root - INFO - Train/Test Split
+[ 2026-05-12 04:35:42,833 ] transformation.py:123 root - INFO -   Train rows : 38480
+[ 2026-05-12 04:35:44,564 ] transformation.py:124 root - INFO -   Test  rows : 9640
+[ 2026-05-12 04:35:44,564 ] transformation.py:125 root - INFO - ===================================
+[ 2026-05-12 04:35:53,181 ] transformation.py:138 root - INFO - Train data saved : data/transformed\train
+[ 2026-05-12 04:35:53,182 ] transformation.py:139 root - INFO - Test  data saved : data/transformed\test
+[ 2026-05-12 04:35:55,303 ] transformation.py:147 root - INFO - Pipeline model saved : models/pipeline
+[ 2026-05-12 04:35:55,304 ] transformation.py:149 root - INFO - ===================================
+[ 2026-05-12 04:35:55,308 ] transformation.py:150 root - INFO - Transformation Complete
+[ 2026-05-12 04:35:55,317 ] transformation.py:151 root - INFO -   data/transformed/train/
+[ 2026-05-12 04:35:55,318 ] transformation.py:152 root - INFO -   data/transformed/test/
+[ 2026-05-12 04:35:55,319 ] transformation.py:153 root - INFO -   models/pipeline/
+[ 2026-05-12 04:35:55,325 ] transformation.py:154 root - INFO - ===================================
+[ 2026-05-12 04:35:55,325 ] transformation.py:155 root - INFO - Data transformation process completed successfully!
+[ 2026-05-12 04:35:55,361 ] clientserver.py:570 py4j.clientserver - INFO - Closing down clientserver connection
