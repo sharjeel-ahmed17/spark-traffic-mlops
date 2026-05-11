@@ -1,45 +1,49 @@
 import os
+import pandas as pd
 import kagglehub
-from kagglehub import KaggleDatasetAdapter
 from logger import logging
-
 
 def data_extraction():
     try:
-
         # 1. Project folder set
         base_dir = os.getcwd()
-        data_dir = os.path.join(base_dir, "data/raw")
+        data_dir = os.path.join(base_dir, "data", "raw")
         os.makedirs(data_dir, exist_ok=True)
         logging.info("Using project folder: %s", base_dir)
 
-        # 2. Dataset download as pandas
-        logging.info("Downloading Telco Churn dataset...")
-        df = kagglehub.load_dataset(
-            KaggleDatasetAdapter.PANDAS,
-            "fedesoriano/traffic-prediction-dataset",
-            "traffic.csv"  
-        )
+        # 2. Dataset download using the updated method
+        logging.info("Downloading traffic dataset...")
+        # dataset_download returns the local path to the folder containing the files
+        dataset_path = kagglehub.dataset_download("fedesoriano/traffic-prediction-dataset")
+        
+        # Locate the specific file (traffic.csv)
+        file_name = "traffic.csv"
+        source_path = os.path.join(dataset_path, file_name)
+
+        # 3. Read with encoding fallback to fix the 'utf-8' error
+        try:
+            df = pd.read_csv(source_path)
+            logging.info("File read successfully with default utf-8 encoding.")
+        except UnicodeDecodeError:
+            logging.warning("UTF-8 decoding failed. Attempting with ISO-8859-1 encoding...")
+            df = pd.read_csv(source_path, encoding='ISO-8859-1')
+
         logging.info("Downloaded! Shape: %s", df.shape)
         logging.info("Columns: %s", df.columns.tolist())
-        logging.info("First 5 records:")
-        logging.info(df.head())
+        logging.info("First 5 records:\n%s", df.head())
 
-        # 3. Save data to  project folder 
+        # 4. Save data to project folder 
         output_path = os.path.join(data_dir, "data.csv")
-        df.to_csv(output_path, index=False)
+        df.to_csv(output_path, index=False, encoding='utf-8') # Save back as clean utf-8
         logging.info("Data saved at: %s", output_path)
 
-        # 4. Final check
-        logging.info("\nFinal files in data/raw:")
-        logging.info(os.listdir(data_dir))
+        # 5. Final check
+        logging.info("Final files in data/raw: %s", os.listdir(data_dir))
         logging.info("Data extraction process completed successfully!")
+
     except Exception as e:
         logging.error("Error during data extraction: %s", str(e))
     
 
 if __name__ == "__main__":
-    try:
-        data_extraction()
-    except Exception as e:
-        logging.error("Error during data extraction: %s", str(e))
+    data_extraction()
