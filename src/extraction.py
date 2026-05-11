@@ -26,7 +26,7 @@ def data_extraction():
         logging.info(df.head())
 
         # 3. Save data to  project folder 
-        output_path = os.path.join(data_dir, "data.csv")
+        output_path = os.path.join(data_dir, "traffic.csv")
         df.to_csv(output_path, index=False)
         logging.info("Data saved at: %s", output_path)
 
