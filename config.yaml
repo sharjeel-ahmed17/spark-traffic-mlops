@@ -1,0 +1,14 @@
+# config.yaml
+project:
+  name: "traffic-mlops"
+  experiment_name: "v1-baseline"
+
+data:
+  raw: "data/traffic_raw.csv"
+  processed: "data/traffic_clean.parquet"
+  test_size: 0.2
+
+model:
+  type: "RandomForest"
+  n_estimators: 100
+  max_depth: 10

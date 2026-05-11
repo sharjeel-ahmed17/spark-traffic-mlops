@@ -216,3 +216,30 @@ __marimo__/
 
 # Streamlit
 .streamlit/secrets.toml
+
+
+index.md
+
+# MLflow
+mlruns/
+mlflow.db
+
+# Data
+data/
+
+# Virtual Environment
+venv/
+
+# Python cache
+__pycache__/
+*.pyc
+*.pyo
+
+/mlruns
+
+
+# models
+models/
+
+#credentials
+.env
