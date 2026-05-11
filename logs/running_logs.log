@@ -92,3 +92,6 @@
 [ 2026-05-12 04:35:55,325 ] transformation.py:154 root - INFO - ===================================
 [ 2026-05-12 04:35:55,325 ] transformation.py:155 root - INFO - Data transformation process completed successfully!
 [ 2026-05-12 04:35:55,361 ] clientserver.py:570 py4j.clientserver - INFO - Closing down clientserver connection
+[ 2026-05-12 04:37:06,623 ] load.py:6 root - INFO - Starting data loading process...
+[ 2026-05-12 04:37:27,232 ] load.py:16 root - INFO - Data loading  process completed successfully!
+[ 2026-05-12 04:37:27,252 ] clientserver.py:570 py4j.clientserver - INFO - Closing down clientserver connection
