@@ -32,9 +32,9 @@ def data_extraction():
         logging.info("Columns: %s", df.columns.tolist())
         logging.info("First 5 records:\n%s", df.head())
 
-        # 4. Save data to project folder 
-        output_path = os.path.join(data_dir, "data.csv")
-        df.to_csv(output_path, index=False, encoding='utf-8') # Save back as clean utf-8
+        # 3. Save data to  project folder 
+        output_path = os.path.join(data_dir, "traffic.csv")
+        df.to_csv(output_path, index=False)
         logging.info("Data saved at: %s", output_path)
 
         # 5. Final check
