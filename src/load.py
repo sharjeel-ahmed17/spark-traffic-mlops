@@ -8,7 +8,7 @@ def load_data():
             .appName("Traffic Vehicle Prediction") \
             .getOrCreate()
         print("Spark Session Created")
-        file_path = os.path.join("data/raw", "data.csv")
+        file_path = os.path.join("data/raw", "traffic.csv")
         print("Reading file from:", file_path)
         df = spark.read.csv(file_path, header=True, inferSchema=True)
         df.show(5)
