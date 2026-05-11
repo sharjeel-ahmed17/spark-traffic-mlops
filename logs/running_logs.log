@@ -14,3 +14,46 @@
 [ 2026-05-12 04:18:29,424 ] extraction.py:41 root - INFO - Final files in data/raw: ['traffic.csv']
 [ 2026-05-12 04:18:29,425 ] extraction.py:42 root - INFO - Data extraction process completed successfully!
 [ 2026-05-12 04:28:18,610 ] main.py:3 root - INFO - Starting the Spark Traffic MLOps project.
+[ 2026-05-12 04:32:11,696 ] cleaning.py:9 root - INFO - Starting data cleaning process...
+[ 2026-05-12 04:33:10,888 ] cleaning.py:20 root - INFO - ===================================
+[ 2026-05-12 04:33:10,889 ] cleaning.py:21 root - INFO - Original Dataset Shape
+[ 2026-05-12 04:33:12,646 ] cleaning.py:22 root - INFO - Rows    : 48120
+[ 2026-05-12 04:33:12,704 ] cleaning.py:23 root - INFO - Columns : 4
+[ 2026-05-12 04:33:12,705 ] cleaning.py:24 root - INFO - ===================================
+[ 2026-05-12 04:33:12,705 ] cleaning.py:27 root - INFO - Checking Null Values...
+[ 2026-05-12 04:33:13,824 ] cleaning.py:30 root - INFO -   DateTime     : 0 null values
+[ 2026-05-12 04:33:14,561 ] cleaning.py:30 root - INFO -   Junction     : 0 null values
+[ 2026-05-12 04:33:14,938 ] cleaning.py:30 root - INFO -   Vehicles     : 0 null values
+[ 2026-05-12 04:33:15,335 ] cleaning.py:30 root - INFO -   ID           : 0 null values
+[ 2026-05-12 04:33:17,621 ] cleaning.py:36 root - INFO - ===================================
+[ 2026-05-12 04:33:17,621 ] cleaning.py:37 root - INFO - Duplicate Removal
+[ 2026-05-12 04:33:17,621 ] cleaning.py:38 root - INFO -   Rows before      : 48120
+[ 2026-05-12 04:33:17,622 ] cleaning.py:39 root - INFO -   Rows after       : 48120
+[ 2026-05-12 04:33:17,622 ] cleaning.py:40 root - INFO -   Duplicates removed: 0
+[ 2026-05-12 04:33:17,622 ] cleaning.py:41 root - INFO - ===================================
+[ 2026-05-12 04:33:17,622 ] cleaning.py:44 root - INFO - Removing unnecessary column: ID
+[ 2026-05-12 04:33:17,646 ] cleaning.py:46 root - INFO - ID column removed successfully.
+[ 2026-05-12 04:33:17,646 ] cleaning.py:49 root - INFO - Casting DateTime column to TimestampType...
+[ 2026-05-12 04:33:17,682 ] cleaning.py:51 root - INFO - DateTime cast completed.
+[ 2026-05-12 04:33:18,346 ] cleaning.py:55 root - INFO - Vehicles <= 0 (invalid rows): 0
+[ 2026-05-12 04:33:18,855 ] cleaning.py:62 root - INFO - Invalid Junction values: 0
+[ 2026-05-12 04:33:18,855 ] cleaning.py:68 root - INFO - Adding time-based feature columns...
+[ 2026-05-12 04:33:18,950 ] cleaning.py:75 root - INFO - Feature columns added: Year, Month, Hour, DayOfWeek
+[ 2026-05-12 04:33:18,950 ] cleaning.py:78 root - INFO - ===================================
+[ 2026-05-12 04:33:18,950 ] cleaning.py:79 root - INFO - Final Dataset Schema
+[ 2026-05-12 04:33:18,951 ] cleaning.py:80 root - INFO - ===================================
+[ 2026-05-12 04:33:18,954 ] cleaning.py:84 root - INFO - ===================================
+[ 2026-05-12 04:33:18,955 ] cleaning.py:85 root - INFO - Cleaned Dataset Preview (top 5 rows)
+[ 2026-05-12 04:33:18,956 ] cleaning.py:86 root - INFO - ===================================
+[ 2026-05-12 04:33:20,050 ] cleaning.py:90 root - INFO - ===================================
+[ 2026-05-12 04:33:20,050 ] cleaning.py:91 root - INFO - Summary Statistics
+[ 2026-05-12 04:33:20,051 ] cleaning.py:92 root - INFO - ===================================
+[ 2026-05-12 04:33:22,213 ] cleaning.py:97 root - INFO - Saving cleaned dataset to: data/processed/clean_traffic_data
+[ 2026-05-12 04:33:24,084 ] cleaning.py:99 root - INFO - ===================================
+[ 2026-05-12 04:33:24,085 ] cleaning.py:100 root - INFO - Cleaned data saved successfully
+[ 2026-05-12 04:33:24,089 ] cleaning.py:101 root - INFO - Path: data/processed/clean_traffic_data
+[ 2026-05-12 04:33:24,919 ] cleaning.py:102 root - INFO - Final row count  : 48120
+[ 2026-05-12 04:33:24,925 ] cleaning.py:103 root - INFO - Final column count: 7
+[ 2026-05-12 04:33:24,925 ] cleaning.py:104 root - INFO - ===================================
+[ 2026-05-12 04:33:24,931 ] cleaning.py:105 root - INFO - Data cleaning process completed successfully!
+[ 2026-05-12 04:33:24,966 ] clientserver.py:570 py4j.clientserver - INFO - Closing down clientserver connection
