@@ -116,3 +116,58 @@ To use authentication, you must first:
     Set a password: https://dagshub.com/user/settings/password 
 =========================================='
 [ 2026-05-12 04:39:38,243 ] clientserver.py:570 py4j.clientserver - INFO - Closing down clientserver connection
+[ 2026-05-12 04:41:21,407 ] train.py:23 root - INFO - Starting model training process...
+[ 2026-05-12 04:41:38,021 ] train.py:32 root - INFO - ===================================
+[ 2026-05-12 04:41:38,021 ] train.py:33 root - INFO - Loaded Transformed Dataset
+[ 2026-05-12 04:41:41,855 ] train.py:34 root - INFO -   Train rows : 38480
+[ 2026-05-12 04:41:42,135 ] train.py:35 root - INFO -   Test  rows : 9640
+[ 2026-05-12 04:41:42,136 ] train.py:36 root - INFO - ===================================
+[ 2026-05-12 04:41:43,693 ] train.py:41 root - INFO - MLflow experiment set: Traffic_Vehicles_Regression_Experiment
+[ 2026-05-12 04:41:44,058 ] train.py:137 root - INFO - ===================================
+[ 2026-05-12 04:41:44,059 ] train.py:138 root - INFO - Training : PoissonGLM
+[ 2026-05-12 04:41:44,072 ] train.py:139 root - INFO - ===================================
+[ 2026-05-12 04:41:48,039 ] train.py:153 root - INFO -   ParamGrid size : 6 combinations
+[ 2026-05-12 04:43:25,674 ] clientserver.py:570 py4j.clientserver - INFO - Closing down clientserver connection
+[ 2026-05-12 04:43:26,253 ] train.py:172 root - INFO -   RMSE : 7.1342
+[ 2026-05-12 04:43:26,254 ] train.py:173 root - INFO -   R2   : 0.8865
+[ 2026-05-12 04:43:26,257 ] train.py:174 root - INFO -   MAE  : 4.3736
+[ 2026-05-12 04:44:29,576 ] train.py:196 root - INFO -   *** New best model: PoissonGLM (RMSE=7.1342) ***
+[ 2026-05-12 04:44:33,300 ] train.py:137 root - INFO - ===================================
+[ 2026-05-12 04:44:33,301 ] train.py:138 root - INFO - Training : DecisionTree
+[ 2026-05-12 04:44:33,301 ] train.py:139 root - INFO - ===================================
+[ 2026-05-12 04:44:33,825 ] train.py:153 root - INFO -   ParamGrid size : 9 combinations
+[ 2026-05-12 04:45:18,177 ] clientserver.py:570 py4j.clientserver - INFO - Closing down clientserver connection
+[ 2026-05-12 04:45:19,018 ] train.py:172 root - INFO -   RMSE : 9.6333
+[ 2026-05-12 04:45:19,018 ] train.py:173 root - INFO -   R2   : 0.7931
+[ 2026-05-12 04:45:19,024 ] train.py:174 root - INFO -   MAE  : 6.1894
+[ 2026-05-12 04:46:11,636 ] train.py:137 root - INFO - ===================================
+[ 2026-05-12 04:46:11,636 ] train.py:138 root - INFO - Training : RandomForest
+[ 2026-05-12 04:46:11,640 ] train.py:139 root - INFO - ===================================
+[ 2026-05-12 04:46:12,129 ] train.py:153 root - INFO -   ParamGrid size : 8 combinations
+[ 2026-05-12 04:53:13,660 ] clientserver.py:570 py4j.clientserver - INFO - Closing down clientserver connection
+[ 2026-05-12 04:53:16,043 ] train.py:172 root - INFO -   RMSE : 8.2313
+[ 2026-05-12 04:53:16,044 ] train.py:173 root - INFO -   R2   : 0.8490
+[ 2026-05-12 04:53:16,044 ] train.py:174 root - INFO -   MAE  : 5.2100
+[ 2026-05-12 04:54:16,518 ] train.py:137 root - INFO - ===================================
+[ 2026-05-12 04:54:16,520 ] train.py:138 root - INFO - Training : GradientBoosting
+[ 2026-05-12 04:54:16,532 ] train.py:139 root - INFO - ===================================
+[ 2026-05-12 04:54:17,048 ] train.py:153 root - INFO -   ParamGrid size : 4 combinations
+[ 2026-05-12 04:58:31,444 ] clientserver.py:570 py4j.clientserver - INFO - Closing down clientserver connection
+[ 2026-05-12 04:58:32,057 ] train.py:172 root - INFO -   RMSE : 6.7378
+[ 2026-05-12 04:58:32,058 ] train.py:173 root - INFO -   R2   : 0.8988
+[ 2026-05-12 04:58:32,059 ] train.py:174 root - INFO -   MAE  : 4.0889
+[ 2026-05-12 04:59:28,630 ] train.py:196 root - INFO -   *** New best model: GradientBoosting (RMSE=6.7378) ***
+[ 2026-05-12 04:59:29,357 ] train.py:201 root - INFO - ===================================
+[ 2026-05-12 04:59:29,358 ] train.py:202 root - INFO - BEST MODEL : GradientBoosting
+[ 2026-05-12 04:59:29,361 ] train.py:203 root - INFO - BEST RMSE  : 6.7378
+[ 2026-05-12 04:59:29,368 ] train.py:204 root - INFO - ===================================
+[ 2026-05-12 05:00:19,593 ] train.py:212 root - INFO - Best model logged to MLflow under 'best_model'.
+[ 2026-05-12 05:00:19,594 ] train.py:232 root - INFO - No scores.json found — creating new file.
+[ 2026-05-12 05:00:19,604 ] train.py:239 root - INFO - ===================================
+[ 2026-05-12 05:00:19,605 ] train.py:240 root - INFO - Scores saved to : D:\spark-traffic-mlops\scores.json
+[ 2026-05-12 05:00:19,606 ] train.py:241 root - INFO - Total runs in file : 1
+[ 2026-05-12 05:00:19,606 ] train.py:242 root - INFO - ===================================
+[ 2026-05-12 05:00:19,608 ] train.py:243 root - INFO - Training Completed Successfully
+[ 2026-05-12 05:00:19,609 ] train.py:244 root - INFO - ===================================
+[ 2026-05-12 05:00:19,639 ] clientserver.py:570 py4j.clientserver - INFO - Closing down clientserver connection
+[ 2026-05-12 05:00:19,640 ] clientserver.py:570 py4j.clientserver - INFO - Closing down clientserver connection
