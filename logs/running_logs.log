@@ -171,3 +171,25 @@ To use authentication, you must first:
 [ 2026-05-12 05:00:19,609 ] train.py:244 root - INFO - ===================================
 [ 2026-05-12 05:00:19,639 ] clientserver.py:570 py4j.clientserver - INFO - Closing down clientserver connection
 [ 2026-05-12 05:00:19,640 ] clientserver.py:570 py4j.clientserver - INFO - Closing down clientserver connection
+[ 2026-05-12 05:03:48,340 ] best_model.py:12 root - INFO - Starting best model selection process...
+[ 2026-05-12 05:03:48,340 ] best_model.py:21 root - INFO - MLflow tracking URI : https://dagshub.com/sharjeel-ahmed17/spark-traffic-mlops.mlflow
+[ 2026-05-12 05:03:48,343 ] best_model.py:22 root - INFO - Experiment          : Traffic_Vehicles_Regression_Experiment
+[ 2026-05-12 05:03:49,311 ] best_model.py:34 root - INFO - Experiment ID : 0
+[ 2026-05-12 05:03:49,735 ] best_model.py:54 root - INFO - ===================================
+[ 2026-05-12 05:03:49,736 ] best_model.py:55 root - INFO - BEST RUN FOUND
+[ 2026-05-12 05:03:49,737 ] best_model.py:56 root - INFO -   Run ID     : 6fce8fa3b0c448a89301ad97bd5fe44f
+[ 2026-05-12 05:03:49,738 ] best_model.py:57 root - INFO -   Model name : GradientBoosting
+[ 2026-05-12 05:03:49,738 ] best_model.py:58 root - INFO -   RMSE       : 6.7378
+[ 2026-05-12 05:03:49,740 ] best_model.py:59 root - INFO -   R2         : 0.8988
+[ 2026-05-12 05:03:49,740 ] best_model.py:60 root - INFO -   MAE        : 4.0889
+[ 2026-05-12 05:03:49,740 ] best_model.py:61 root - INFO - ===================================
+[ 2026-05-12 05:03:49,741 ] best_model.py:68 root - INFO - Registering model from URI : runs:/6fce8fa3b0c448a89301ad97bd5fe44f/model
+[ 2026-05-12 05:03:51,570 ] best_model.py:75 root - INFO - ===================================
+[ 2026-05-12 05:03:51,570 ] best_model.py:76 root - INFO - MODEL REGISTERED
+[ 2026-05-12 05:03:51,570 ] best_model.py:77 root - INFO -   Name    : Traffic_Vehicle_Prediction
+[ 2026-05-12 05:03:51,570 ] best_model.py:78 root - INFO -   Version : 1
+[ 2026-05-12 05:03:51,570 ] best_model.py:79 root - INFO - ===================================
+[ 2026-05-12 05:03:52,279 ] best_model.py:89 root - INFO - Model v1 transitioned to stage: Production
+[ 2026-05-12 05:03:52,279 ] best_model.py:90 root - INFO - ===================================
+[ 2026-05-12 05:03:52,280 ] best_model.py:91 root - INFO - Best model selection process completed successfully!
+[ 2026-05-12 05:03:52,280 ] best_model.py:92 root - INFO - ===================================
