@@ -1,0 +1,11 @@
+.venv
+.git
+.claude
+mlruns
+__pycache__
+*.pyc
+*.pyo
+*.pyd
+.env
+.gitignore
+requirements-dev.txt
