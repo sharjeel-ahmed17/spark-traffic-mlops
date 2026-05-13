@@ -8,6 +8,7 @@ import mlflow.spark
 
 from pyspark.sql import SparkSession
 from pyspark.ml.linalg import Vectors
+from pyspark.ml import PipelineModel
 
 # ─────────────────────────────────────────────────────────────
 # FIX PYSPARK WINDOWS ISSUE
@@ -42,10 +43,14 @@ spark = SparkSession.builder \
     .getOrCreate()
 
 # ─────────────────────────────────────────────────────────────
-# LOAD MODEL FROM MLFLOW MODEL REGISTRY
+# LOAD MODEL AND PIPELINE
 # ─────────────────────────────────────────────────────────────
 MODEL_NAME = "Traffic_Vehicle_Prediction"
 
+# Load the transformation pipeline
+pipeline_model = PipelineModel.load("models/pipeline")
+
+# Load the trained model from MLflow
 model = mlflow.spark.load_model(
     model_uri=f"models:/{MODEL_NAME}/Production"
 )
@@ -75,43 +80,35 @@ def home():
 # ─────────────────────────────────────────────────────────────
 @app.post("/predict")
 def predict(
-    feature_1: float,
-    feature_2: float,
-    feature_3: float,
-    feature_4: float,
-    feature_5: float,
-    feature_6: float,
-    feature_7: float,
-    feature_8: float,
-    feature_9: float
+    junction: float,
+    day_of_week: float,
+    hour: float,
+    month: float,
+    year: float
 ):
     try:
+        # CREATE RAW INPUT DATAFRAME
+        # The pipeline expects columns exactly as they were during training
+        input_data = [(junction, day_of_week, hour, month, year)]
+        columns = ["Junction", "DayOfWeek", "Hour", "Month", "Year"]
 
-        # CREATE FEATURE VECTOR
-        features = Vectors.dense([
-            feature_1,
-            feature_2,
-            feature_3,
-            feature_4,
-            feature_5,
-            feature_6,
-            feature_7,
-            feature_8,
-            feature_9
-        ])
+        input_df = spark.createDataFrame(input_data, columns)
 
-        # CREATE SPARK DATAFRAME
-        input_df = spark.createDataFrame(
-            [(features,)],
-            ["features"]
+        # PRE-PROCESSING: Cast categorical columns to double for OHE (as done in transformation.py)
+        from pyspark.sql.functions import col
+        input_df = (
+            input_df.withColumn("Junction_idx",   col("Junction").cast("double"))
+                   .withColumn("DayOfWeek_idx",  col("DayOfWeek").cast("double"))
+                   .withColumn("Hour_idx",       col("Hour").cast("double"))
         )
 
-        # PREDICT
-        prediction_df = model.transform(input_df)
+        # 1. Transform raw features using the saved pipeline
+        transformed_df = pipeline_model.transform(input_df)
 
-        prediction = prediction_df.select(
-            "prediction"
-        ).collect()[0][0]
+        # 2. Use the trained model to predict based on the 'features' column
+        prediction_df = model.transform(transformed_df)
+
+        prediction = prediction_df.select("prediction").collect()[0][0]
 
         return {
             "predicted_vehicles": round(float(prediction), 2),
@@ -120,7 +117,6 @@ def predict(
         }
 
     except Exception as e:
-
         return {
             "status": "failed",
             "error": str(e)
