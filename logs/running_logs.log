@@ -193,3 +193,196 @@ To use authentication, you must first:
 [ 2026-05-12 05:03:52,279 ] best_model.py:90 root - INFO - ===================================
 [ 2026-05-12 05:03:52,280 ] best_model.py:91 root - INFO - Best model selection process completed successfully!
 [ 2026-05-12 05:03:52,280 ] best_model.py:92 root - INFO - ===================================
+[ 2026-05-13 09:29:32,402 ] train.py:27 root - INFO - Starting model training process...
+[ 2026-05-13 09:29:49,387 ] train.py:36 root - INFO - ===================================
+[ 2026-05-13 09:29:49,387 ] train.py:37 root - INFO - Loaded Transformed Dataset
+[ 2026-05-13 09:29:52,357 ] train.py:38 root - INFO -   Train rows : 38480
+[ 2026-05-13 09:29:52,618 ] train.py:39 root - INFO -   Test  rows : 9640
+[ 2026-05-13 09:29:52,619 ] train.py:40 root - INFO - ===================================
+[ 2026-05-13 09:29:53,618 ] train.py:45 root - INFO - MLflow experiment set: Traffic_Vehicles_Regression_Experiment
+[ 2026-05-13 09:29:53,757 ] train.py:145 root - INFO - ===================================
+[ 2026-05-13 09:29:53,758 ] train.py:146 root - INFO - Training : PoissonGLM
+[ 2026-05-13 09:29:53,759 ] train.py:147 root - INFO - ===================================
+[ 2026-05-13 09:29:54,850 ] train.py:161 root - INFO -   ParamGrid size : 6 combinations
+[ 2026-05-13 09:31:42,025 ] clientserver.py:570 py4j.clientserver - INFO - Closing down clientserver connection
+[ 2026-05-13 09:31:42,675 ] train.py:180 root - INFO -   RMSE : 7.6929
+[ 2026-05-13 09:31:42,677 ] train.py:181 root - INFO -   R2   : 0.8681
+[ 2026-05-13 09:31:42,677 ] train.py:182 root - INFO -   MAE  : 4.9001
+[ 2026-05-13 09:31:49,439 ] train.py:266 root - ERROR - Error during model training: An error occurred while calling o4634.save.
+: java.io.IOException: Path models/runs/PoissonGLM already exists. To overwrite it, please use write.overwrite().save(path) for Scala and use write().overwrite().save(path) for Java and Python.
+	at org.apache.spark.ml.util.FileSystemOverwrite.handleOverwrite(ReadWrite.scala:841)
+	at org.apache.spark.ml.util.MLWriter.save(ReadWrite.scala:175)
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:77)
+	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:569)
+	at py4j.reflection.MethodInvoker.invoke(MethodInvoker.java:244)
+	at py4j.reflection.ReflectionEngine.invoke(ReflectionEngine.java:374)
+	at py4j.Gateway.invoke(Gateway.java:282)
+	at py4j.commands.AbstractCommand.invokeMethod(AbstractCommand.java:132)
+	at py4j.commands.CallCommand.execute(CallCommand.java:79)
+	at py4j.ClientServerConnection.waitForCommands(ClientServerConnection.java:184)
+	at py4j.ClientServerConnection.run(ClientServerConnection.java:108)
+	at java.base/java.lang.Thread.run(Thread.java:840)
+
+[ 2026-05-13 09:31:49,440 ] train.py:274 root - ERROR - Error during model training: An error occurred while calling o4634.save.
+: java.io.IOException: Path models/runs/PoissonGLM already exists. To overwrite it, please use write.overwrite().save(path) for Scala and use write().overwrite().save(path) for Java and Python.
+	at org.apache.spark.ml.util.FileSystemOverwrite.handleOverwrite(ReadWrite.scala:841)
+	at org.apache.spark.ml.util.MLWriter.save(ReadWrite.scala:175)
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:77)
+	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:569)
+	at py4j.reflection.MethodInvoker.invoke(MethodInvoker.java:244)
+	at py4j.reflection.ReflectionEngine.invoke(ReflectionEngine.java:374)
+	at py4j.Gateway.invoke(Gateway.java:282)
+	at py4j.commands.AbstractCommand.invokeMethod(AbstractCommand.java:132)
+	at py4j.commands.CallCommand.execute(CallCommand.java:79)
+	at py4j.ClientServerConnection.waitForCommands(ClientServerConnection.java:184)
+	at py4j.ClientServerConnection.run(ClientServerConnection.java:108)
+	at java.base/java.lang.Thread.run(Thread.java:840)
+
+[ 2026-05-13 09:31:49,514 ] clientserver.py:570 py4j.clientserver - INFO - Closing down clientserver connection
+[ 2026-05-13 09:31:49,514 ] clientserver.py:570 py4j.clientserver - INFO - Closing down clientserver connection
+[ 2026-05-13 09:43:58,396 ] train.py:25 root - INFO - Starting model training process...
+[ 2026-05-13 09:44:16,602 ] train.py:32 root - INFO - ===================================
+[ 2026-05-13 09:44:16,616 ] train.py:33 root - INFO - Loaded Transformed Dataset
+[ 2026-05-13 09:44:20,410 ] train.py:34 root - INFO -   Train rows : 38480
+[ 2026-05-13 09:44:20,793 ] train.py:35 root - INFO -   Test  rows : 9640
+[ 2026-05-13 09:44:20,793 ] train.py:36 root - INFO - ===================================
+[ 2026-05-13 09:44:21,720 ] train.py:41 root - INFO - MLflow experiment set: Traffic_Vehicles_Regression_Experiment
+[ 2026-05-13 09:44:22,057 ] train.py:121 root - INFO - ===================================
+[ 2026-05-13 09:44:22,058 ] train.py:122 root - INFO - Training : PoissonGLM
+[ 2026-05-13 09:44:22,059 ] train.py:123 root - INFO - ===================================
+[ 2026-05-13 09:44:23,130 ] train.py:137 root - INFO -   ParamGrid size : 6 combinations
+[ 2026-05-13 12:50:59,621 ] train.py:23 root - INFO - Starting model training process...
+[ 2026-05-13 12:51:30,804 ] train.py:32 root - INFO - ===================================
+[ 2026-05-13 12:51:30,805 ] train.py:33 root - INFO - Loaded Transformed Dataset
+[ 2026-05-13 12:51:33,591 ] train.py:34 root - INFO -   Train rows : 38480
+[ 2026-05-13 12:51:33,894 ] train.py:35 root - INFO -   Test  rows : 9640
+[ 2026-05-13 12:51:33,894 ] train.py:36 root - INFO - ===================================
+[ 2026-05-13 12:51:35,005 ] train.py:41 root - INFO - MLflow experiment set: Traffic_Vehicles_Regression_Experiment
+[ 2026-05-13 12:51:35,124 ] train.py:137 root - INFO - ===================================
+[ 2026-05-13 12:51:35,124 ] train.py:138 root - INFO - Training : PoissonGLM
+[ 2026-05-13 12:51:35,124 ] train.py:139 root - INFO - ===================================
+[ 2026-05-13 12:51:35,888 ] train.py:153 root - INFO -   ParamGrid size : 6 combinations
+[ 2026-05-13 12:52:47,562 ] clientserver.py:570 py4j.clientserver - INFO - Closing down clientserver connection
+[ 2026-05-13 12:52:48,001 ] train.py:172 root - INFO -   RMSE : 7.1342
+[ 2026-05-13 12:52:48,002 ] train.py:173 root - INFO -   R2   : 0.8865
+[ 2026-05-13 12:52:48,002 ] train.py:174 root - INFO -   MAE  : 4.3736
+[ 2026-05-13 12:53:28,715 ] train.py:196 root - INFO -   *** New best model: PoissonGLM (RMSE=7.1342) ***
+[ 2026-05-13 12:53:29,338 ] train.py:137 root - INFO - ===================================
+[ 2026-05-13 12:53:29,338 ] train.py:138 root - INFO - Training : DecisionTree
+[ 2026-05-13 12:53:29,339 ] train.py:139 root - INFO - ===================================
+[ 2026-05-13 12:53:29,781 ] train.py:153 root - INFO -   ParamGrid size : 9 combinations
+[ 2026-05-13 12:53:59,206 ] clientserver.py:570 py4j.clientserver - INFO - Closing down clientserver connection
+[ 2026-05-13 12:53:59,583 ] train.py:172 root - INFO -   RMSE : 9.6333
+[ 2026-05-13 12:53:59,583 ] train.py:173 root - INFO -   R2   : 0.7931
+[ 2026-05-13 12:53:59,583 ] train.py:174 root - INFO -   MAE  : 6.1894
+[ 2026-05-13 12:55:00,581 ] train.py:137 root - INFO - ===================================
+[ 2026-05-13 12:55:00,582 ] train.py:138 root - INFO - Training : RandomForest
+[ 2026-05-13 12:55:00,582 ] train.py:139 root - INFO - ===================================
+[ 2026-05-13 12:55:01,036 ] train.py:153 root - INFO -   ParamGrid size : 8 combinations
+[ 2026-05-13 12:59:45,502 ] clientserver.py:570 py4j.clientserver - INFO - Closing down clientserver connection
+[ 2026-05-13 12:59:47,459 ] train.py:172 root - INFO -   RMSE : 8.2499
+[ 2026-05-13 12:59:47,460 ] train.py:173 root - INFO -   R2   : 0.8483
+[ 2026-05-13 12:59:47,460 ] train.py:174 root - INFO -   MAE  : 5.2274
+[ 2026-05-13 13:00:34,902 ] train.py:137 root - INFO - ===================================
+[ 2026-05-13 13:00:34,902 ] train.py:138 root - INFO - Training : GradientBoosting
+[ 2026-05-13 13:00:34,902 ] train.py:139 root - INFO - ===================================
+[ 2026-05-13 13:00:35,407 ] train.py:153 root - INFO -   ParamGrid size : 4 combinations
+[ 2026-05-13 13:03:10,257 ] clientserver.py:570 py4j.clientserver - INFO - Closing down clientserver connection
+[ 2026-05-13 13:03:10,848 ] train.py:172 root - INFO -   RMSE : 6.7378
+[ 2026-05-13 13:03:10,848 ] train.py:173 root - INFO -   R2   : 0.8988
+[ 2026-05-13 13:03:10,848 ] train.py:174 root - INFO -   MAE  : 4.0889
+[ 2026-05-13 13:03:54,759 ] train.py:196 root - INFO -   *** New best model: GradientBoosting (RMSE=6.7378) ***
+[ 2026-05-13 13:03:55,378 ] train.py:201 root - INFO - ===================================
+[ 2026-05-13 13:03:55,378 ] train.py:202 root - INFO - BEST MODEL : GradientBoosting
+[ 2026-05-13 13:03:55,379 ] train.py:203 root - INFO - BEST RMSE  : 6.7378
+[ 2026-05-13 13:03:55,379 ] train.py:204 root - INFO - ===================================
+[ 2026-05-13 13:04:39,805 ] train.py:212 root - INFO - Best model logged to MLflow under 'best_model'.
+[ 2026-05-13 13:04:39,813 ] train.py:229 root - INFO - Existing scores.json found — appending new run.
+[ 2026-05-13 13:04:39,814 ] train.py:239 root - INFO - ===================================
+[ 2026-05-13 13:04:39,815 ] train.py:240 root - INFO - Scores saved to : D:\spark-traffic-mlops\scores.json
+[ 2026-05-13 13:04:39,815 ] train.py:241 root - INFO - Total runs in file : 2
+[ 2026-05-13 13:04:39,815 ] train.py:242 root - INFO - ===================================
+[ 2026-05-13 13:04:39,815 ] train.py:243 root - INFO - Training Completed Successfully
+[ 2026-05-13 13:04:39,815 ] train.py:244 root - INFO - ===================================
+[ 2026-05-13 13:04:39,831 ] clientserver.py:570 py4j.clientserver - INFO - Closing down clientserver connection
+[ 2026-05-13 13:04:39,832 ] clientserver.py:570 py4j.clientserver - INFO - Closing down clientserver connection
+[ 2026-05-13 13:09:46,931 ] train.py:23 root - INFO - Starting model training process...
+[ 2026-05-13 13:10:01,877 ] train.py:32 root - INFO - ===================================
+[ 2026-05-13 13:10:01,878 ] train.py:33 root - INFO - Loaded Transformed Dataset
+[ 2026-05-13 13:10:04,968 ] train.py:34 root - INFO -   Train rows : 38480
+[ 2026-05-13 13:10:05,265 ] train.py:35 root - INFO -   Test  rows : 9640
+[ 2026-05-13 13:10:05,265 ] train.py:36 root - INFO - ===================================
+[ 2026-05-13 13:10:07,501 ] train.py:41 root - INFO - MLflow experiment set: Traffic_Vehicles_Regression_Experiment
+[ 2026-05-13 13:10:07,621 ] train.py:137 root - INFO - ===================================
+[ 2026-05-13 13:10:07,621 ] train.py:138 root - INFO - Training : PoissonGLM
+[ 2026-05-13 13:10:07,621 ] train.py:139 root - INFO - ===================================
+[ 2026-05-13 13:10:07,970 ] train.py:153 root - INFO -   ParamGrid size : 6 combinations
+[ 2026-05-13 13:12:01,136 ] clientserver.py:570 py4j.clientserver - INFO - Closing down clientserver connection
+[ 2026-05-13 13:12:02,116 ] train.py:172 root - INFO -   RMSE : 7.1342
+[ 2026-05-13 13:12:02,117 ] train.py:173 root - INFO -   R2   : 0.8865
+[ 2026-05-13 13:12:02,117 ] train.py:174 root - INFO -   MAE  : 4.3736
+[ 2026-05-13 13:12:42,142 ] train.py:196 root - INFO -   *** New best model: PoissonGLM (RMSE=7.1342) ***
+[ 2026-05-13 13:12:42,159 ] train.py:137 root - INFO - ===================================
+[ 2026-05-13 13:12:42,160 ] train.py:138 root - INFO - Training : DecisionTree
+[ 2026-05-13 13:12:42,160 ] train.py:139 root - INFO - ===================================
+[ 2026-05-13 13:12:42,211 ] train.py:153 root - INFO -   ParamGrid size : 9 combinations
+[ 2026-05-13 13:13:10,909 ] clientserver.py:570 py4j.clientserver - INFO - Closing down clientserver connection
+[ 2026-05-13 13:13:11,325 ] train.py:172 root - INFO -   RMSE : 9.6333
+[ 2026-05-13 13:13:11,325 ] train.py:173 root - INFO -   R2   : 0.7931
+[ 2026-05-13 13:13:11,325 ] train.py:174 root - INFO -   MAE  : 6.1894
+[ 2026-05-13 13:13:37,152 ] train.py:137 root - INFO - ===================================
+[ 2026-05-13 13:13:37,152 ] train.py:138 root - INFO - Training : RandomForest
+[ 2026-05-13 13:13:37,152 ] train.py:139 root - INFO - ===================================
+[ 2026-05-13 13:13:37,181 ] train.py:153 root - INFO -   ParamGrid size : 8 combinations
+[ 2026-05-13 13:20:01,778 ] clientserver.py:570 py4j.clientserver - INFO - Closing down clientserver connection
+[ 2026-05-13 13:20:04,866 ] train.py:172 root - INFO -   RMSE : 8.2647
+[ 2026-05-13 13:20:04,866 ] train.py:173 root - INFO -   R2   : 0.8477
+[ 2026-05-13 13:20:04,866 ] train.py:174 root - INFO -   MAE  : 5.2121
+[ 2026-05-13 13:39:30,834 ] train.py:137 root - INFO - ===================================
+[ 2026-05-13 13:39:30,836 ] train.py:138 root - INFO - Training : GradientBoosting
+[ 2026-05-13 13:39:30,837 ] train.py:139 root - INFO - ===================================
+[ 2026-05-13 13:39:30,896 ] train.py:153 root - INFO -   ParamGrid size : 4 combinations
+[ 2026-05-13 13:43:31,486 ] clientserver.py:570 py4j.clientserver - INFO - Closing down clientserver connection
+[ 2026-05-13 13:43:32,098 ] train.py:172 root - INFO -   RMSE : 6.7378
+[ 2026-05-13 13:43:32,098 ] train.py:173 root - INFO -   R2   : 0.8988
+[ 2026-05-13 13:43:32,098 ] train.py:174 root - INFO -   MAE  : 4.0889
+[ 2026-05-13 13:44:01,608 ] train.py:196 root - INFO -   *** New best model: GradientBoosting (RMSE=6.7378) ***
+[ 2026-05-13 13:44:01,619 ] train.py:201 root - INFO - ===================================
+[ 2026-05-13 13:44:01,619 ] train.py:202 root - INFO - BEST MODEL : GradientBoosting
+[ 2026-05-13 13:44:01,620 ] train.py:203 root - INFO - BEST RMSE  : 6.7378
+[ 2026-05-13 13:44:01,620 ] train.py:204 root - INFO - ===================================
+[ 2026-05-13 13:44:30,997 ] train.py:212 root - INFO - Best model logged to MLflow under 'best_model'.
+[ 2026-05-13 13:44:31,008 ] train.py:229 root - INFO - Existing scores.json found — appending new run.
+[ 2026-05-13 13:44:31,022 ] train.py:239 root - INFO - ===================================
+[ 2026-05-13 13:44:31,045 ] train.py:240 root - INFO - Scores saved to : D:\spark-traffic-mlops\scores.json
+[ 2026-05-13 13:44:31,059 ] train.py:241 root - INFO - Total runs in file : 3
+[ 2026-05-13 13:44:31,075 ] train.py:242 root - INFO - ===================================
+[ 2026-05-13 13:44:31,080 ] train.py:243 root - INFO - Training Completed Successfully
+[ 2026-05-13 13:44:31,080 ] train.py:244 root - INFO - ===================================
+[ 2026-05-13 13:44:31,099 ] clientserver.py:570 py4j.clientserver - INFO - Closing down clientserver connection
+[ 2026-05-13 13:52:38,266 ] best_model.py:12 root - INFO - Starting best model selection process...
+[ 2026-05-13 13:52:39,588 ] best_model.py:21 root - INFO - MLflow tracking URI : sqlite:///mlflow.db
+[ 2026-05-13 13:52:39,588 ] best_model.py:22 root - INFO - Experiment          : Traffic_Vehicles_Regression_Experiment
+[ 2026-05-13 13:52:39,601 ] best_model.py:34 root - INFO - Experiment ID : 1
+[ 2026-05-13 13:52:39,654 ] best_model.py:54 root - INFO - ===================================
+[ 2026-05-13 13:52:39,655 ] best_model.py:55 root - INFO - BEST RUN FOUND
+[ 2026-05-13 13:52:39,655 ] best_model.py:56 root - INFO -   Run ID     : 213c4be4c92040bfbebe1cd5fadae108
+[ 2026-05-13 13:52:39,655 ] best_model.py:57 root - INFO -   Model name : GradientBoosting
+[ 2026-05-13 13:52:39,656 ] best_model.py:58 root - INFO -   RMSE       : 6.7378
+[ 2026-05-13 13:52:39,656 ] best_model.py:59 root - INFO -   R2         : 0.8988
+[ 2026-05-13 13:52:39,657 ] best_model.py:60 root - INFO -   MAE        : 4.0889
+[ 2026-05-13 13:52:39,657 ] best_model.py:61 root - INFO - ===================================
+[ 2026-05-13 13:52:39,657 ] best_model.py:68 root - INFO - Registering model from URI : runs:/213c4be4c92040bfbebe1cd5fadae108/model
+[ 2026-05-13 13:52:39,916 ] best_model.py:75 root - INFO - ===================================
+[ 2026-05-13 13:52:39,917 ] best_model.py:76 root - INFO - MODEL REGISTERED
+[ 2026-05-13 13:52:39,917 ] best_model.py:77 root - INFO -   Name    : Traffic_Vehicle_Prediction
+[ 2026-05-13 13:52:39,917 ] best_model.py:78 root - INFO -   Version : 1
+[ 2026-05-13 13:52:39,918 ] best_model.py:79 root - INFO - ===================================
+[ 2026-05-13 13:52:39,965 ] best_model.py:89 root - INFO - Model v1 transitioned to stage: Production
+[ 2026-05-13 13:52:39,966 ] best_model.py:90 root - INFO - ===================================
+[ 2026-05-13 13:52:39,966 ] best_model.py:91 root - INFO - Best model selection process completed successfully!
+[ 2026-05-13 13:52:39,967 ] best_model.py:92 root - INFO - ===================================
