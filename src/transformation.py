@@ -5,18 +5,21 @@ from pyspark.ml.feature import VectorAssembler, StandardScaler, OneHotEncoder
 from pyspark.ml import Pipeline
 import os
 import shutil
+from config_utils import load_config
 
 
 def transform_data():
     try:
         logging.info("Starting data transformation process...")
+        config, params = load_config()
 
         # ── 1. Spark Session ──────────────────────────────────────────────────
         spark = SparkSession.builder.appName("TrafficTransformation").getOrCreate()
 
         # ── 2. Load cleaned data (output of cleaning.py) ─────────────────────
+        cleaned_data_path = config["data"]["processed_dir"]
         df = spark.read.csv(
-            "data/processed/clean_traffic_data",
+            cleaned_data_path,
             header=True,
             inferSchema=True,
         )
@@ -72,14 +75,13 @@ def transform_data():
         #   TARGET   : Vehicles  (kept separate — NOT put inside features_vec)
         logging.info("Assembling feature vector...")
 
+        categorical_features = [f"{col_name}_ohe" for col_name in params["transformation"]["categorical_cols"]]
+        numeric_features = params["transformation"]["numeric_cols"]
+        
+        assembler_input_cols = numeric_features + categorical_features
+
         assembler = VectorAssembler(
-            inputCols=[
-                "Year",
-                "Month",
-                "Junction_ohe",
-                "DayOfWeek_ohe",
-                "Hour_ohe",
-            ],
+            inputCols=assembler_input_cols,
             outputCol="features_raw",
             handleInvalid="skip",
         )
@@ -117,7 +119,9 @@ def transform_data():
         ).show(5, truncate=False)
 
         # ── 8. Train / Test split (80 / 20) ───────────────────────────────────
-        train_df, test_df = df_final.randomSplit([0.8, 0.2], seed=42)
+        test_size = params["transformation"]["test_size"]
+        random_split_seed = params["transformation"]["random_split_seed"]
+        train_df, test_df = df_final.randomSplit([1.0 - test_size, test_size], seed=random_split_seed)
         logging.info("===================================")
         logging.info("Train/Test Split")
         logging.info("  Train rows : %d", train_df.count())
@@ -125,13 +129,13 @@ def transform_data():
         logging.info("===================================")
 
         # ── 9. Save train / test as Parquet ───────────────────────────────────
-        output_dir = "data/transformed"
+        output_dir = config["data"]["transformed_dir"]
         if os.path.exists(output_dir):
             shutil.rmtree(output_dir)
         os.makedirs(output_dir, exist_ok=True)
 
-        train_path = os.path.join(output_dir, "train")
-        test_path  = os.path.join(output_dir, "test")
+        train_path = config["data"]["train_data"]
+        test_path  = config["data"]["test_data"]
 
         train_df.write.mode("overwrite").parquet(train_path)
         test_df.write.mode("overwrite").parquet(test_path)
@@ -139,7 +143,7 @@ def transform_data():
         logging.info("Test  data saved : %s", test_path)
 
         # ── 10. Save fitted Pipeline model ────────────────────────────────────
-        models_dir = "models/pipeline"
+        models_dir = config["artifacts"]["pipeline_model"]
         if os.path.exists(models_dir):
             shutil.rmtree(models_dir)
 
@@ -148,9 +152,9 @@ def transform_data():
 
         logging.info("===================================")
         logging.info("Transformation Complete")
-        logging.info("  data/transformed/train/")
-        logging.info("  data/transformed/test/")
-        logging.info("  models/pipeline/")
+        logging.info("  %s/", config["data"]["train_data"])
+        logging.info("  %s/", config["data"]["test_data"])
+        logging.info("  %s/", config["artifacts"]["pipeline_model"])
         logging.info("===================================")
         logging.info("Data transformation process completed successfully!")
 

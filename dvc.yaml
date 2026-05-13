@@ -1,0 +1,41 @@
+stages:
+  extraction:
+    cmd: python src/extraction.py
+    deps:
+      - src/extraction.py
+    outs:
+      - data/raw/traffic.csv
+
+  cleaning:
+    cmd: python src/cleaning.py
+    deps:
+      - src/cleaning.py
+      - data/raw/traffic.csv
+    outs:
+      - data/processed/clean_traffic_data
+
+  transformation:
+    cmd: python src/transformation.py
+    deps:
+      - src/transformation.py
+      - data/processed/clean_traffic_data
+    params:
+      - transformation.test_size
+      - transformation.random_split_seed
+    outs:
+      - data/transformed/train
+      - data/transformed/test
+      - models/pipeline
+
+  train:
+    cmd: python src/train.py
+    deps:
+      - src/train.py
+      - data/transformed/train
+      - data/transformed/test
+    params:
+      - training.cv_folds
+      - training.models
+    metrics:
+      - scores.json:
+          cache: false

@@ -1,0 +1,35 @@
+# Pipeline Parameters
+extraction:
+  dataset_id: "fedesoriano/traffic-prediction-dataset"
+  file_name: "traffic.csv"
+
+cleaning:
+  valid_junctions: [1, 2, 3, 4]
+  drop_cols: ["ID"]
+
+transformation:
+  test_size: 0.2
+  random_split_seed: 42
+  categorical_cols: ["Junction", "DayOfWeek", "Hour"]
+  numeric_cols: ["Year", "Month"]
+
+training:
+  cv_folds: 3
+  seed: 42
+  target_col: "Vehicles"
+  
+  # Model Hyperparameters (as used in src/train.py)
+  models:
+    PoissonGLM:
+      regParam: [0.0, 0.01, 0.1]
+      maxIter: [25, 50]
+    DecisionTree:
+      maxDepth: [3, 5, 7]
+      minInstancesPerNode: [1, 5, 10]
+    RandomForest:
+      numTrees: [50, 100]
+      maxDepth: [5, 10]
+      minInstancesPerNode: [1, 5]
+    GradientBoosting:
+      maxDepth: [3, 5]
+      maxIter: [20, 50]

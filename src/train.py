@@ -16,18 +16,20 @@ import mlflow.spark
 import json
 import os
 from datetime import datetime
+from config_utils import load_config
 
 
 def train_models():
     try:
         logging.info("Starting model training process...")
+        config, params = load_config()
 
         # ── 1. Spark Session ──────────────────────────────────────────────────
         spark = SparkSession.builder.appName("TrafficTraining").getOrCreate()
 
         # ── 2. Load transformed data (output of transformation.py) ────────────
-        train_df = spark.read.parquet("data/transformed/train")
-        test_df  = spark.read.parquet("data/transformed/test")
+        train_df = spark.read.parquet(config["data"]["train_data"])
+        test_df  = spark.read.parquet(config["data"]["test_data"])
 
         logging.info("===================================")
         logging.info("Loaded Transformed Dataset")
@@ -37,102 +39,73 @@ def train_models():
 
         # ── 3. MLflow experiment setup ────────────────────────────────────────
         mlflow.set_tracking_uri(os.getenv("MLFLOW_TRACKING_URI"))
-        mlflow.set_experiment("Traffic_Vehicles_Regression_Experiment")
+        mlflow.set_experiment(config["project"]["experiment_name"])
         logging.info("MLflow experiment set: Traffic_Vehicles_Regression_Experiment")
 
+        target_col = params["training"]["target_col"]
+        
         # ── 4. Evaluators — RMSE primary; R2 and MAE for full picture ─────────
         evaluator_rmse = RegressionEvaluator(
-            labelCol="Vehicles",
+            labelCol=target_col,
             predictionCol="prediction",
             metricName="rmse",
         )
         evaluator_r2 = RegressionEvaluator(
-            labelCol="Vehicles",
+            labelCol=target_col,
             predictionCol="prediction",
             metricName="r2",
         )
         evaluator_mae = RegressionEvaluator(
-            labelCol="Vehicles",
+            labelCol=target_col,
             predictionCol="prediction",
             metricName="mae",
         )
 
         # ── 5. Models dictionary ──────────────────────────────────────────────
-        #   features col = "features"  (StandardScaler output from transformation.py)
-        #   label col    = "Vehicles"  (continuous integer, 1–180, skew=1.82)
-        #
-        #   Model selection rationale (benchmarked on traffic.csv):
-        #   ┌──────────────────────────────┬───────┬───────┐
-        #   │ Model                        │  RMSE │    R² │
-        #   ├──────────────────────────────┼───────┼───────┤
-        #   │ LinearRegression  (removed)  │ 16.76 │ 0.621 │  ← too weak
-        #   │ GeneralizedLinearReg(Poisson)│  ~8.1 │ ~0.91 │  ← KNN substitute
-        #   │ DecisionTree                 │  8.36 │ 0.906 │
-        #   │ RandomForest                 │  7.89 │ 0.916 │  ← best
-        #   │ GradientBoosting             │  9.03 │ 0.890 │
-        #   └──────────────────────────────┴───────┴───────┘
+        models_config = params["training"]["models"]
         models = {
-
-            # ── Poisson GLM: correct model for right-skewed vehicle count data ─
             "PoissonGLM": {
                 "model": GeneralizedLinearRegression(
-                    labelCol="Vehicles",
+                    labelCol=target_col,
                     featuresCol="features",
-                    family="poisson",       # models count/rate data (λ > 0)
-                    link="log",             # canonical link for Poisson family
+                    family="poisson",
+                    link="log",
                 ),
-                "params": {
-                    "regParam": [0.0, 0.01, 0.1],
-                    "maxIter":  [25, 50],
-                },
+                "params": models_config["PoissonGLM"],
             },
-
             "DecisionTree": {
                 "model": DecisionTreeRegressor(
-                    labelCol="Vehicles",
+                    labelCol=target_col,
                     featuresCol="features",
                 ),
-                "params": {
-                    "maxDepth":            [3, 5, 7],
-                    "minInstancesPerNode": [1, 5, 10],
-                },
+                "params": models_config["DecisionTree"],
             },
-
             "RandomForest": {
                 "model": RandomForestRegressor(
-                    labelCol="Vehicles",
+                    labelCol=target_col,
                     featuresCol="features",
                 ),
-                "params": {
-                    "numTrees":            [50, 100],
-                    "maxDepth":            [5, 10],
-                    "minInstancesPerNode": [1, 5],
-                },
+                "params": models_config["RandomForest"],
             },
-
             "GradientBoosting": {
                 "model": GBTRegressor(
-                    labelCol="Vehicles",
+                    labelCol=target_col,
                     featuresCol="features",
                 ),
-                "params": {
-                    "maxDepth": [3, 5],
-                    "maxIter":  [20, 50],
-                },
+                "params": models_config["GradientBoosting"],
             },
         }
 
         # ── 6. Track best model ───────────────────────────────────────────────
         best_model_name = None
-        best_rmse       = float("inf")   # lower RMSE = better
+        best_rmse       = float("inf")
         best_model      = None
 
-        # ── 7. Results dictionary — collects every model's evaluation ─────────
-        #       Appended to scores.json in project root after training completes
+        # ── 7. Results dictionary ─────────────────────────────────────────────
         results = {}
 
         # ── 8. Training loop ──────────────────────────────────────────────────
-        for name, config in models.items():
+        for name, m_config in models.items():
 
             logging.info("===================================")
             logging.info("Training : %s", name)
@@ -140,11 +113,10 @@ def train_models():
 
             with mlflow.start_run(run_name=name):
 
-                model         = config["model"]
+                model         = m_config["model"]
                 param_builder = ParamGridBuilder()
 
-                # Build param grid dynamically from config
-                for param_name, values in config["params"].items():
+                for param_name, values in m_config["params"].items():
                     param_builder = param_builder.addGrid(
                         getattr(model, param_name), values
                     )
@@ -152,13 +124,12 @@ def train_models():
                 param_grid = param_builder.build()
                 logging.info("  ParamGrid size : %d combinations", len(param_grid))
 
-                # 3-fold cross validation — minimise RMSE during CV
                 cv = CrossValidator(
                     estimator=model,
                     estimatorParamMaps=param_grid,
                     evaluator=evaluator_rmse,
-                    numFolds=3,
-                    seed=42,
+                    numFolds=params["training"]["cv_folds"],
+                    seed=params["training"]["seed"],
                 )
 
                 cv_model    = cv.fit(train_df)
@@ -212,7 +183,7 @@ def train_models():
         logging.info("Best model logged to MLflow under 'best_model'.")
 
         # ── 11. Save / append results to scores.json in project root ──────────
-        scores_path = "scores.json"
+        scores_path = config["artifacts"]["scores_file"]
 
         # Build the run record — keyed by timestamp so every run is unique
         run_record = {

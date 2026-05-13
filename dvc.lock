@@ -1,0 +1,123 @@
+schema: '2.0'
+stages:
+  extraction:
+    cmd: python src/extraction.py
+    deps:
+    - path: src/extraction.py
+      hash: md5
+      md5: 314e7b167c6cdbd5164e329702698bd2
+      size: 1992
+    outs:
+    - path: data/raw/traffic.csv
+      hash: md5
+      md5: 040dc3a1372cd4bdc0061c7aa82dba84
+      size: 1815392
+  cleaning:
+    cmd: python src/cleaning.py
+    deps:
+    - path: data/raw/traffic.csv
+      hash: md5
+      md5: 040dc3a1372cd4bdc0061c7aa82dba84
+      size: 1815392
+    - path: src/cleaning.py
+      hash: md5
+      md5: a144dd636a353e741ae8bb58e42d5677
+      size: 6773
+    outs:
+    - path: data/processed/clean_traffic_data
+      hash: md5
+      md5: d0c5dbf4c683a46a434b44c09d70e5fe.dir
+      size: 2305469
+      nfiles: 4
+  transformation:
+    cmd: python src/transformation.py
+    deps:
+    - path: data/processed/clean_traffic_data
+      hash: md5
+      md5: d0c5dbf4c683a46a434b44c09d70e5fe.dir
+      size: 2305469
+      nfiles: 4
+    - path: src/transformation.py
+      hash: md5
+      md5: 51f1ad49f989b64a13e7751910c123a7
+      size: 8223
+    params:
+      params.yaml:
+        transformation.random_split_seed: 42
+        transformation.test_size: 0.2
+    outs:
+    - path: data/transformed/test
+      hash: md5
+      md5: b17e1da41434d5f26e4c6553b7f03f60.dir
+      size: 165075
+      nfiles: 4
+    - path: data/transformed/train
+      hash: md5
+      md5: 9a915dc44045c2975172097b8299e303.dir
+      size: 454458
+      nfiles: 4
+    - path: models/pipeline
+      hash: md5
+      md5: a93ffe303622ca1d1743a5f67ace4b00.dir
+      size: 5300
+      nfiles: 24
+  train:
+    cmd: python src/train.py
+    deps:
+    - path: data/transformed/test
+      hash: md5
+      md5: b17e1da41434d5f26e4c6553b7f03f60.dir
+      size: 165075
+      nfiles: 4
+    - path: data/transformed/train
+      hash: md5
+      md5: 9a915dc44045c2975172097b8299e303.dir
+      size: 454458
+      nfiles: 4
+    - path: src/train.py
+      hash: md5
+      md5: dfb33927b2c470adda8dfed88c9a0b2c
+      size: 9712
+    params:
+      params.yaml:
+        training.cv_folds: 3
+        training.models:
+          PoissonGLM:
+            regParam:
+            - 0.0
+            - 0.01
+            - 0.1
+            maxIter:
+            - 25
+            - 50
+          DecisionTree:
+            maxDepth:
+            - 3
+            - 5
+            - 7
+            minInstancesPerNode:
+            - 1
+            - 5
+            - 10
+          RandomForest:
+            numTrees:
+            - 50
+            - 100
+            maxDepth:
+            - 5
+            - 10
+            minInstancesPerNode:
+            - 1
+            - 5
+          GradientBoosting:
+            maxDepth:
+            - 3
+            - 5
+            maxIter:
+            - 20
+            - 50
+    outs:
+    - path: scores.json
+      hash: md5
+      md5: 4733ca448daf9f7214ba8338c682c963
+      size: 2672

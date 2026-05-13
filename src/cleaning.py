@@ -2,18 +2,21 @@ from logger import logging
 from pyspark.sql import SparkSession
 from pyspark.sql.functions import col, trim, to_timestamp, hour, dayofweek, month, year
 import os
+from config_utils import load_config
 
 
 def cleaning():
     try:
         logging.info("Starting data cleaning process...")
+        config, params = load_config()
 
         # ── 1. Spark Session ──────────────────────────────────────────────────
         spark = SparkSession.builder.appName("TrafficCleaning").getOrCreate()
 
         # ── 2. Load dataset ───────────────────────────────────────────────────
+        raw_file_path = config["data"]["raw_file"]
         df = spark.read.csv(
-            "data/raw/traffic.csv",
+            raw_file_path,
             header=True,
             inferSchema=True,
         )
@@ -41,9 +44,10 @@ def cleaning():
         logging.info("===================================")
 
         # ── 5. Drop the surrogate ID column (not useful for analysis) ─────────
-        logging.info("Removing unnecessary column: ID")
-        df = df.drop("ID")
-        logging.info("ID column removed successfully.")
+        cols_to_drop = params["cleaning"]["drop_cols"]
+        logging.info("Removing unnecessary columns: %s", ', '.join(cols_to_drop))
+        df = df.drop(*cols_to_drop)
+        logging.info("Columns removed successfully.")
 
         # ── 6. Cast DateTime string → proper TimestampType ───────────────────
         logging.info("Casting DateTime column to TimestampType...")
@@ -58,10 +62,11 @@ def cleaning():
             logging.info("Invalid Vehicles rows removed.")
 
         # ── 8. Validate Junction values (must be 1-4) ──────────────────────────
-        invalid_junctions = df.filter(~col("Junction").isin(1, 2, 3, 4)).count()
+        valid_junctions = params["cleaning"]["valid_junctions"]
+        invalid_junctions = df.filter(~col("Junction").isin(valid_junctions)).count()
         logging.info("Invalid Junction values: %d", invalid_junctions)
         if invalid_junctions > 0:
-            df = df.filter(col("Junction").isin(1, 2, 3, 4))
+            df = df.filter(col("Junction").isin(valid_junctions))
             logging.info("Invalid Junction rows removed.")
 
         # ── 9. Feature engineering – time components ──────────────────────────
@@ -93,7 +98,7 @@ def cleaning():
         df.select("Junction", "Vehicles", "Hour", "Month", "Year").describe().show()
 
         # ── 13. Save cleaned dataset ───────────────────────────────────────────
-        output_path = "data/processed/clean_traffic_data"
+        output_path = config["data"]["processed_dir"]
         logging.info("Saving cleaned dataset to: %s", output_path)
         df.write.mode("overwrite").option("header", True).csv(output_path)
         logging.info("===================================")

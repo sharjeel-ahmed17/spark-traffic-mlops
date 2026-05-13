@@ -2,22 +2,26 @@ import os
 import pandas as pd
 import kagglehub
 from logger import logging
+from config_utils import load_config
 
 def data_extraction():
     try:
+        config, params = load_config()
+
         # 1. Project folder set
-        base_dir = os.getcwd()
-        data_dir = os.path.join(base_dir, "data", "raw")
+        data_dir = config["data"]["raw_dir"]
         os.makedirs(data_dir, exist_ok=True)
-        logging.info("Using project folder: %s", base_dir)
+        logging.info("Using data directory: %s", data_dir)
 
         # 2. Dataset download using the updated method
         logging.info("Downloading traffic dataset...")
+        dataset_id = params["extraction"]["dataset_id"]
+        file_name  = params["extraction"]["file_name"]
+        
         # dataset_download returns the local path to the folder containing the files
-        dataset_path = kagglehub.dataset_download("fedesoriano/traffic-prediction-dataset")
+        dataset_path = kagglehub.dataset_download(dataset_id)
         
         # Locate the specific file (traffic.csv)
-        file_name = "traffic.csv"
         source_path = os.path.join(dataset_path, file_name)
 
         # 3. Read with encoding fallback to fix the 'utf-8' error
@@ -33,7 +37,7 @@ def data_extraction():
         logging.info("First 5 records:\n%s", df.head())
 
         # 3. Save data to  project folder 
-        output_path = os.path.join(data_dir, "traffic.csv")
+        output_path = config["data"]["raw_file"]
         df.to_csv(output_path, index=False)
         logging.info("Data saved at: %s", output_path)
 

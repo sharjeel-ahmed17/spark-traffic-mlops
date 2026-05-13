@@ -749,3 +749,145 @@ To use authentication, you must first:
 [ 2026-05-13 11:26:00,669 ] best_model.py:95 root - ERROR - Error during best model selection: Unable to find a logged_model with artifact_path model under run 8dd9a06e16df414bad6b01088cab96bc
 [ 2026-05-13 11:26:00,669 ] best_model.py:103 root - ERROR - Error during best model selection: Unable to find a logged_model with artifact_path model under run 8dd9a06e16df414bad6b01088cab96bc
 >>>>>>> f0fd069ebb7538e86d112acbda786a3d9726e00a
+[ 2026-05-13 19:08:51,408 ] extraction.py:14 root - INFO - Using data directory: data/raw
+[ 2026-05-13 19:08:51,409 ] extraction.py:17 root - INFO - Downloading traffic dataset...
+[ 2026-05-13 19:08:53,253 ] extraction.py:30 root - INFO - File read successfully with default utf-8 encoding.
+[ 2026-05-13 19:08:53,254 ] extraction.py:35 root - INFO - Downloaded! Shape: (48120, 4)
+[ 2026-05-13 19:08:53,255 ] extraction.py:36 root - INFO - Columns: ['DateTime', 'Junction', 'Vehicles', 'ID']
+[ 2026-05-13 19:08:53,257 ] extraction.py:37 root - INFO - First 5 records:
+              DateTime  Junction  Vehicles           ID
+0  2015-11-01 00:00:00         1        15  20151101001
+1  2015-11-01 01:00:00         1        13  20151101011
+2  2015-11-01 02:00:00         1        10  20151101021
+3  2015-11-01 03:00:00         1         7  20151101031
+4  2015-11-01 04:00:00         1         9  20151101041
+[ 2026-05-13 19:08:53,566 ] extraction.py:42 root - INFO - Data saved at: data/raw/traffic.csv
+[ 2026-05-13 19:08:53,570 ] extraction.py:45 root - INFO - Final files in data/raw: ['traffic.csv']
+[ 2026-05-13 19:08:53,571 ] extraction.py:46 root - INFO - Data extraction process completed successfully!
+[ 2026-05-13 19:08:55,968 ] cleaning.py:10 root - INFO - Starting data cleaning process...
+[ 2026-05-13 19:09:18,851 ] cleaning.py:23 root - INFO - ===================================
+[ 2026-05-13 19:09:18,852 ] cleaning.py:24 root - INFO - Original Dataset Shape
+[ 2026-05-13 19:09:20,112 ] cleaning.py:25 root - INFO - Rows    : 48120
+[ 2026-05-13 19:09:20,144 ] cleaning.py:26 root - INFO - Columns : 4
+[ 2026-05-13 19:09:20,145 ] cleaning.py:27 root - INFO - ===================================
+[ 2026-05-13 19:09:20,145 ] cleaning.py:30 root - INFO - Checking Null Values...
+[ 2026-05-13 19:09:20,913 ] cleaning.py:33 root - INFO -   DateTime     : 0 null values
+[ 2026-05-13 19:09:21,432 ] cleaning.py:33 root - INFO -   Junction     : 0 null values
+[ 2026-05-13 19:09:22,013 ] cleaning.py:33 root - INFO -   Vehicles     : 0 null values
+[ 2026-05-13 19:09:22,685 ] cleaning.py:33 root - INFO -   ID           : 0 null values
+[ 2026-05-13 19:09:25,575 ] cleaning.py:39 root - INFO - ===================================
+[ 2026-05-13 19:09:25,582 ] cleaning.py:40 root - INFO - Duplicate Removal
+[ 2026-05-13 19:09:25,583 ] cleaning.py:41 root - INFO -   Rows before      : 48120
+[ 2026-05-13 19:09:25,586 ] cleaning.py:42 root - INFO -   Rows after       : 48120
+[ 2026-05-13 19:09:25,586 ] cleaning.py:43 root - INFO -   Duplicates removed: 0
+[ 2026-05-13 19:09:25,586 ] cleaning.py:44 root - INFO - ===================================
+[ 2026-05-13 19:09:25,586 ] cleaning.py:48 root - INFO - Removing unnecessary columns: ID
+[ 2026-05-13 19:09:25,617 ] cleaning.py:50 root - INFO - Columns removed successfully.
+[ 2026-05-13 19:09:25,618 ] cleaning.py:53 root - INFO - Casting DateTime column to TimestampType...
+[ 2026-05-13 19:09:25,677 ] cleaning.py:55 root - INFO - DateTime cast completed.
+[ 2026-05-13 19:09:26,495 ] cleaning.py:59 root - INFO - Vehicles <= 0 (invalid rows): 0
+[ 2026-05-13 19:09:27,264 ] cleaning.py:67 root - INFO - Invalid Junction values: 0
+[ 2026-05-13 19:09:27,264 ] cleaning.py:73 root - INFO - Adding time-based feature columns...
+[ 2026-05-13 19:09:27,422 ] cleaning.py:80 root - INFO - Feature columns added: Year, Month, Hour, DayOfWeek
+[ 2026-05-13 19:09:27,423 ] cleaning.py:83 root - INFO - ===================================
+[ 2026-05-13 19:09:27,423 ] cleaning.py:84 root - INFO - Final Dataset Schema
+[ 2026-05-13 19:09:27,427 ] cleaning.py:85 root - INFO - ===================================
+[ 2026-05-13 19:09:27,438 ] cleaning.py:89 root - INFO - ===================================
+[ 2026-05-13 19:09:27,438 ] cleaning.py:90 root - INFO - Cleaned Dataset Preview (top 5 rows)
+[ 2026-05-13 19:09:27,439 ] cleaning.py:91 root - INFO - ===================================
+[ 2026-05-13 19:09:29,109 ] cleaning.py:95 root - INFO - ===================================
+[ 2026-05-13 19:09:29,109 ] cleaning.py:96 root - INFO - Summary Statistics
+[ 2026-05-13 19:09:29,110 ] cleaning.py:97 root - INFO - ===================================
+[ 2026-05-13 19:09:32,534 ] cleaning.py:102 root - INFO - Saving cleaned dataset to: data/processed/clean_traffic_data
+[ 2026-05-13 19:09:35,269 ] cleaning.py:104 root - INFO - ===================================
+[ 2026-05-13 19:09:35,271 ] cleaning.py:105 root - INFO - Cleaned data saved successfully
+[ 2026-05-13 19:09:35,271 ] cleaning.py:106 root - INFO - Path: data/processed/clean_traffic_data
+[ 2026-05-13 19:09:36,297 ] cleaning.py:107 root - INFO - Final row count  : 48120
+[ 2026-05-13 19:09:36,300 ] cleaning.py:108 root - INFO - Final column count: 7
+[ 2026-05-13 19:09:36,304 ] cleaning.py:109 root - INFO - ===================================
+[ 2026-05-13 19:09:36,305 ] cleaning.py:110 root - INFO - Data cleaning process completed successfully!
+[ 2026-05-13 19:09:36,335 ] clientserver.py:570 py4j.clientserver - INFO - Closing down clientserver connection
+[ 2026-05-13 19:09:40,221 ] transformation.py:13 root - INFO - Starting data transformation process...
+[ 2026-05-13 19:10:02,069 ] transformation.py:26 root - INFO - ===================================
+[ 2026-05-13 19:10:02,069 ] transformation.py:27 root - INFO - Loaded Cleaned Dataset
+[ 2026-05-13 19:10:03,428 ] transformation.py:28 root - INFO -   Rows    : 48120
+[ 2026-05-13 19:10:03,461 ] transformation.py:29 root - INFO -   Columns : ['DateTime', 'Junction', 'Vehicles', 'Year', 'Month', 'Hour', 'DayOfWeek']
+[ 2026-05-13 19:10:03,462 ] transformation.py:30 root - INFO - ===================================
+[ 2026-05-13 19:10:03,462 ] transformation.py:34 root - INFO - Parsing DateTime and extracting time features...
+[ 2026-05-13 19:10:03,539 ] transformation.py:48 root - INFO - Time features confirmed: Year, Month, Hour, DayOfWeek
+[ 2026-05-13 19:10:03,540 ] transformation.py:56 root - INFO - Applying OneHotEncoder to Junction, DayOfWeek, Hour...
+[ 2026-05-13 19:10:04,286 ] transformation.py:76 root - INFO - Assembling feature vector...
+[ 2026-05-13 19:10:04,297 ] transformation.py:90 root - INFO - Adding StandardScaler...
+[ 2026-05-13 19:10:04,313 ] transformation.py:100 root - INFO - Building and fitting Pipeline...
+[ 2026-05-13 19:10:08,680 ] transformation.py:106 root - INFO - Pipeline fitted successfully.
+[ 2026-05-13 19:10:08,680 ] transformation.py:107 root - INFO - ===================================
+[ 2026-05-13 19:10:08,681 ] transformation.py:108 root - INFO - Transformed Dataset Schema
+[ 2026-05-13 19:10:08,681 ] transformation.py:109 root - INFO - ===================================
+[ 2026-05-13 19:10:08,687 ] transformation.py:113 root - INFO - ===================================
+[ 2026-05-13 19:10:08,687 ] transformation.py:114 root - INFO - Transformed Dataset Preview (top 5 rows)
+[ 2026-05-13 19:10:08,687 ] transformation.py:115 root - INFO - ===================================
+[ 2026-05-13 19:10:09,473 ] transformation.py:125 root - INFO - ===================================
+[ 2026-05-13 19:10:09,473 ] transformation.py:126 root - INFO - Train/Test Split
+[ 2026-05-13 19:10:12,423 ] transformation.py:127 root - INFO -   Train rows : 38480
+[ 2026-05-13 19:10:14,479 ] transformation.py:128 root - INFO -   Test  rows : 9640
+[ 2026-05-13 19:10:14,488 ] transformation.py:129 root - INFO - ===================================
+[ 2026-05-13 19:10:25,364 ] transformation.py:142 root - INFO - Train data saved : data/transformed/train
+[ 2026-05-13 19:10:25,365 ] transformation.py:143 root - INFO - Test  data saved : data/transformed/test
+[ 2026-05-13 19:10:28,217 ] transformation.py:151 root - INFO - Pipeline model saved : models/pipeline
+[ 2026-05-13 19:10:28,217 ] transformation.py:153 root - INFO - ===================================
+[ 2026-05-13 19:10:28,218 ] transformation.py:154 root - INFO - Transformation Complete
+[ 2026-05-13 19:10:28,218 ] transformation.py:155 root - INFO -   data/transformed/train/
+[ 2026-05-13 19:10:28,219 ] transformation.py:156 root - INFO -   data/transformed/test/
+[ 2026-05-13 19:10:28,220 ] transformation.py:157 root - INFO -   models/pipeline/
+[ 2026-05-13 19:10:28,221 ] transformation.py:158 root - INFO - ===================================
+[ 2026-05-13 19:10:28,222 ] transformation.py:159 root - INFO - Data transformation process completed successfully!
+[ 2026-05-13 19:10:28,249 ] clientserver.py:570 py4j.clientserver - INFO - Closing down clientserver connection
+[ 2026-05-13 19:10:36,667 ] train.py:24 root - INFO - Starting model training process...
+[ 2026-05-13 19:10:53,733 ] train.py:34 root - INFO - ===================================
+[ 2026-05-13 19:10:53,734 ] train.py:35 root - INFO - Loaded Transformed Dataset
+[ 2026-05-13 19:10:57,206 ] train.py:36 root - INFO -   Train rows : 38480
+[ 2026-05-13 19:10:57,466 ] train.py:37 root - INFO -   Test  rows : 9640
+[ 2026-05-13 19:10:57,466 ] train.py:38 root - INFO - ===================================
+[ 2026-05-13 19:10:59,514 ] train.py:43 root - INFO - MLflow experiment set: Traffic_Vehicles_Regression_Experiment
+[ 2026-05-13 19:10:59,736 ] train.py:110 root - INFO - ===================================
+[ 2026-05-13 19:10:59,736 ] train.py:111 root - INFO - Training : PoissonGLM
+[ 2026-05-13 19:10:59,738 ] train.py:112 root - INFO - ===================================
+[ 2026-05-13 19:11:00,713 ] train.py:125 root - INFO -   ParamGrid size : 6 combinations
+[ 2026-05-13 19:12:41,499 ] clientserver.py:570 py4j.clientserver - INFO - Closing down clientserver connection
+[ 2026-05-13 19:12:42,585 ] train.py:143 root - INFO -   RMSE : 7.1342
+[ 2026-05-13 19:12:42,586 ] train.py:144 root - INFO -   R2   : 0.8865
+[ 2026-05-13 19:12:42,587 ] train.py:145 root - INFO -   MAE  : 4.3736
+[ 2026-05-13 19:13:42,727 ] train.py:167 root - INFO -   *** New best model: PoissonGLM (RMSE=7.1342) ***
+[ 2026-05-13 19:13:42,747 ] train.py:110 root - INFO - ===================================
+[ 2026-05-13 19:13:42,747 ] train.py:111 root - INFO - Training : DecisionTree
+[ 2026-05-13 19:13:42,747 ] train.py:112 root - INFO - ===================================
+[ 2026-05-13 19:13:42,799 ] train.py:125 root - INFO -   ParamGrid size : 9 combinations
+[ 2026-05-13 19:14:20,314 ] clientserver.py:570 py4j.clientserver - INFO - Closing down clientserver connection
+[ 2026-05-13 19:14:20,821 ] train.py:143 root - INFO -   RMSE : 9.6333
+[ 2026-05-13 19:14:20,823 ] train.py:144 root - INFO -   R2   : 0.7931
+[ 2026-05-13 19:14:20,823 ] train.py:145 root - INFO -   MAE  : 6.1894
+[ 2026-05-13 19:15:02,455 ] train.py:110 root - INFO - ===================================
+[ 2026-05-13 19:15:02,458 ] train.py:111 root - INFO - Training : RandomForest
+[ 2026-05-13 19:15:02,462 ] train.py:112 root - INFO - ===================================
+[ 2026-05-13 19:15:02,534 ] train.py:125 root - INFO -   ParamGrid size : 8 combinations
+[ 2026-05-13 19:23:11,291 ] clientserver.py:570 py4j.clientserver - INFO - Closing down clientserver connection
+[ 2026-05-13 19:23:14,201 ] train.py:143 root - INFO -   RMSE : 8.2797
+[ 2026-05-13 19:23:14,205 ] train.py:144 root - INFO -   R2   : 0.8472
+[ 2026-05-13 19:23:14,216 ] train.py:145 root - INFO -   MAE  : 5.2480
+[ 2026-05-13 19:23:56,394 ] train.py:110 root - INFO - ===================================
+[ 2026-05-13 19:23:56,394 ] train.py:111 root - INFO - Training : GradientBoosting
+[ 2026-05-13 19:23:56,394 ] train.py:112 root - INFO - ===================================
+[ 2026-05-13 19:23:56,442 ] train.py:125 root - INFO -   ParamGrid size : 4 combinations
+[ 2026-05-13 19:28:06,257 ] clientserver.py:570 py4j.clientserver - INFO - Closing down clientserver connection
+[ 2026-05-13 19:28:06,939 ] train.py:143 root - INFO -   RMSE : 6.7378
+[ 2026-05-13 19:28:06,939 ] train.py:144 root - INFO -   R2   : 0.8988
+[ 2026-05-13 19:28:06,940 ] train.py:145 root - INFO -   MAE  : 4.0889
+[ 2026-05-13 19:28:48,249 ] train.py:167 root - INFO -   *** New best model: GradientBoosting (RMSE=6.7378) ***
+[ 2026-05-13 19:28:48,271 ] train.py:172 root - INFO - ===================================
+[ 2026-05-13 19:28:48,273 ] train.py:173 root - INFO - BEST MODEL : GradientBoosting
+[ 2026-05-13 19:28:48,274 ] train.py:174 root - INFO - BEST RMSE  : 6.7378
+[ 2026-05-13 19:28:48,274 ] train.py:175 root - INFO - ===================================
+[ 2026-05-13 19:29:38,654 ] train.py:183 root - INFO - Best model logged to MLflow under 'best_model'.
+[ 2026-05-13 19:29:38,661 ] train.py:218 root - ERROR - Error during model training: Expecting property name enclosed in double quotes: line 30 column 1 (char 716)
+[ 2026-05-13 19:29:38,662 ] train.py:226 root - ERROR - Error during model training: Expecting property name enclosed in double quotes: line 30 column 1 (char 716)
+[ 2026-05-13 19:29:38,710 ] clientserver.py:570 py4j.clientserver - INFO - Closing down clientserver connection

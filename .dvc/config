@@ -1,0 +1,4 @@
+[core]
+    remote = default
+['remote "default"']
+    url = https://dagshub.com/sharjeel-ahmed17/spark-traffic-mlops.dvc
