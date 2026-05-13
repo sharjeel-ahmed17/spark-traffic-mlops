@@ -1,14 +1,9 @@
 from dotenv import load_dotenv
 load_dotenv()
+from config_utils import load_config
 from logger import logging
 from pyspark.sql import SparkSession
-from pyspark.ml.regression import (
-
-    GeneralizedLinearRegression,
-    DecisionTreeRegressor,
-    RandomForestRegressor,
-    GBTRegressor,
-)
+from pyspark.ml.regression import GeneralizedLinearRegression,DecisionTreeRegressor,RandomForestRegressor,GBTRegressor
 from pyspark.ml.evaluation import RegressionEvaluator
 from pyspark.ml.tuning import ParamGridBuilder, CrossValidator
 import mlflow
@@ -16,7 +11,6 @@ import mlflow.spark
 import json
 import os
 from datetime import datetime
-from config_utils import load_config
 
 
 def train_models():
@@ -24,10 +18,8 @@ def train_models():
         logging.info("Starting model training process...")
         config, params = load_config()
 
-        # ── 1. Spark Session ──────────────────────────────────────────────────
         spark = SparkSession.builder.appName("TrafficTraining").getOrCreate()
 
-        # ── 2. Load transformed data (output of transformation.py) ────────────
         train_df = spark.read.parquet(config["data"]["train_data"])
         test_df  = spark.read.parquet(config["data"]["test_data"])
 
@@ -37,14 +29,12 @@ def train_models():
         logging.info("  Test  rows : %d", test_df.count())
         logging.info("===================================")
 
-        # ── 3. MLflow experiment setup ────────────────────────────────────────
         mlflow.set_tracking_uri(os.getenv("MLFLOW_TRACKING_URI"))
         mlflow.set_experiment(config["project"]["experiment_name"])
         logging.info("MLflow experiment set: Traffic_Vehicles_Regression_Experiment")
 
         target_col = params["training"]["target_col"]
         
-        # ── 4. Evaluators — RMSE primary; R2 and MAE for full picture ─────────
         evaluator_rmse = RegressionEvaluator(
             labelCol=target_col,
             predictionCol="prediction",
@@ -61,7 +51,6 @@ def train_models():
             metricName="mae",
         )
 
-        # ── 5. Models dictionary ──────────────────────────────────────────────
         models_config = params["training"]["models"]
         models = {
             "PoissonGLM": {
@@ -96,15 +85,12 @@ def train_models():
             },
         }
 
-        # ── 6. Track best model ───────────────────────────────────────────────
         best_model_name = None
         best_rmse       = float("inf")
         best_model      = None
 
-        # ── 7. Results dictionary ─────────────────────────────────────────────
         results = {}
 
-        # ── 8. Training loop ──────────────────────────────────────────────────
         for name, m_config in models.items():
 
             logging.info("===================================")
@@ -135,7 +121,6 @@ def train_models():
                 cv_model    = cv.fit(train_df)
                 predictions = cv_model.transform(test_df)
 
-                # Compute all three metrics on test set
                 rmse = evaluator_rmse.evaluate(predictions)
                 r2   = evaluator_r2.evaluate(predictions)
                 mae  = evaluator_mae.evaluate(predictions)
@@ -144,14 +129,12 @@ def train_models():
                 logging.info("  R2   : %.4f", r2)
                 logging.info("  MAE  : %.4f", mae)
 
-                # Store evaluation in results dictionary
                 results[name] = {
                     "RMSE" : round(rmse, 4),
                     "R2"   : round(r2,   4),
                     "MAE"  : round(mae,  4),
                 }
 
-                # Log params & metrics to MLflow
                 mlflow.log_param("model",     name)
                 mlflow.log_param("num_folds", 3)
                 mlflow.log_metric("RMSE", rmse)
@@ -159,7 +142,6 @@ def train_models():
                 mlflow.log_metric("MAE",  mae)
                 mlflow.spark.log_model(cv_model.bestModel, "model")
 
-                # Update best tracker (lower RMSE wins)
                 if rmse < best_rmse:
                     best_rmse       = rmse
                     best_model      = cv_model.bestModel
@@ -168,13 +150,11 @@ def train_models():
                         "  *** New best model: %s (RMSE=%.4f) ***", name, rmse
                     )
 
-        # ── 9. Final summary ──────────────────────────────────────────────────
         logging.info("===================================")
         logging.info("BEST MODEL : %s", best_model_name)
         logging.info("BEST RMSE  : %.4f", best_rmse)
         logging.info("===================================")
 
-        # ── 10. Save best model separately in MLflow ──────────────────────────
         with mlflow.start_run(run_name="Best_Model_" + best_model_name):
             mlflow.log_param("best_model", best_model_name)
             mlflow.log_metric("best_RMSE", best_rmse)
@@ -182,10 +162,8 @@ def train_models():
 
         logging.info("Best model logged to MLflow under 'best_model'.")
 
-        # ── 11. Save / append results to scores.json in project root ──────────
         scores_path = config["artifacts"]["scores_file"]
 
-        # Build the run record — keyed by timestamp so every run is unique
         run_record = {
             "run_timestamp" : datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
             "best_model"    : best_model_name,
@@ -193,7 +171,6 @@ def train_models():
             "models"        : results,
         }
 
-        # Load existing data if file already exists (append), else start fresh
         if os.path.exists(scores_path):
             with open(scores_path, "r") as f:
                 all_scores = json.load(f)
@@ -217,7 +194,6 @@ def train_models():
     except Exception as e:
         logging.error("Error during model training: %s", str(e))
         raise
-
 
 if __name__ == "__main__":
     try:

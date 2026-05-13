@@ -1,15 +1,11 @@
 import logging
 import os
 
-# Logs folder path setup
 LOGS_DIR = os.path.join(os.getcwd(), "logs")
 os.makedirs(LOGS_DIR, exist_ok=True)
-
-# Direct logs folder ke andar file
 LOG_FILE_PATH = os.path.join(LOGS_DIR, "running_logs.log")
 
 logging.basicConfig(
-    # Added %(filename)s here
     format="[ %(asctime)s ] %(filename)s:%(lineno)d %(name)s - %(levelname)s - %(message)s",
     level=logging.INFO,
     handlers=[
@@ -19,10 +15,9 @@ logging.basicConfig(
 )
 
 logger = logging.getLogger("MLOpsWorkflow")
-
 def log_info(message):
     logger.info(message)
-
+    
 def log_warning(message):
     logger.warning(message)
 
