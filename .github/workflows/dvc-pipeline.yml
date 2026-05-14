@@ -1,4 +1,4 @@
-name: DVC Pipeline
+name: DVC Pipeline with DagsHub
 
 on:
   push:
@@ -23,7 +23,7 @@ on:
   workflow_dispatch:
 
 permissions:
-  contents: read
+  contents: write
   pull-requests: write
 
 jobs:
@@ -51,28 +51,45 @@ jobs:
       - name: Setup DVC
         uses: iterative/setup-dvc@v1
 
-      - name: Configure DVC remote
+      - name: Configure DagsHub DVC Remote
         run: |
-          # Configure your DVC remote storage
-          # Example: dvc remote add -d myremote s3://my-bucket/dvc-storage
-          # dvc remote modify myremote access_key_id ${{ secrets.AWS_ACCESS_KEY_ID }}
-          # dvc remote modify myremote secret_access_key ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          echo "Configure DVC remote as needed"
+          dvc remote add -d dagshub https://dagshub.com/sharjeel-ahmed17/spark-traffic-mlops.dvc
+          dvc remote modify dagshub auth basic
+          dvc remote modify dagshub -u ${{ secrets.DAGSHUB_USERNAME }}
+          dvc remote modify dagshub -p ${{ secrets.DAGSHUB_PASSWORD }}
+        env:
+          DAGSHUB_USERNAME: ${{ secrets.DAGSHUB_USERNAME }}
+          DAGSHUB_PASSWORD: ${{ secrets.DAGSHUB_PASSWORD }}
+
+      - name: Configure Git for DagsHub
+        run: |
+          git remote set-url origin https://${{ secrets.DAGSHUB_USERNAME }}:${{ secrets.DAGSHUB_PASSWORD }}@dagshub.com/sharjeel-ahmed17/spark-traffic-mlops.git
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
 
       - name: Cache DVC files
         uses: actions/cache@v3
         with:
           path: |
             .dvc/cache
-            data/
-            models/
           key: dvc-cache-${{ hashFiles('dvc.lock') }}
           restore-keys: |
             dvc-cache-
 
+      - name: Pull DVC data from DagsHub
+        run: |
+          dvc pull -r dagshub || true
+        continue-on-error: true
+
       - name: Run DVC pipeline
         run: |
           dvc repro --force
+
+      - name: Push DVC data to DagsHub
+        if: github.event_name == 'push'
+        run: |
+          dvc push -r dagshub || true
+        continue-on-error: true
 
       - name: Generate DVC plots
         if: always()
@@ -103,12 +120,18 @@ jobs:
             const fs = require('fs');
             try {
               const metrics = JSON.parse(fs.readFileSync('artifacts/metrics.json', 'utf8'));
-              const comment = `## DVC Pipeline Report
+              const metricsStr = JSON.stringify(metrics, null, 2);
               
-              ### Metrics
+              const comment = `## 🚀 DVC Pipeline Report
+              
+              ### 📊 Metrics
               \`\`\`json
-              ${JSON.stringify(metrics, null, 2)}
+              ${metricsStr}
               \`\`\`
+              
+              ### 📈 DagsHub Links
+              - [MLflow Tracking](https://dagshub.com/sharjeel-ahmed17/spark-traffic-mlops.mlflow/)
+              - [DVC Repository](https://dagshub.com/sharjeel-ahmed17/spark-traffic-mlops)
               
               ✅ Pipeline completed successfully!`;
               
@@ -122,13 +145,11 @@ jobs:
               console.log('Could not post metrics comment:', e.message);
             }
 
-      - name: Push updated dvc.lock
+      - name: Push updated dvc.lock to repository
         if: github.event_name == 'push' && success()
         run: |
-          git config user.name "github-actions"
-          git config user.email "github-actions@github.com"
           git add dvc.lock
-          git diff --quiet && git diff --staged --quiet || (git commit -m "chore: update dvc.lock" && git push)
+          git diff --quiet && git diff --staged --quiet || (git commit -m "chore: update dvc.lock from pipeline run" && git push origin HEAD:${{ github.ref }})
         continue-on-error: true
 
   dvc-dag:
@@ -151,6 +172,7 @@ jobs:
         run: |
           mkdir -p dag_output
           dvc dag --md > dag_output/pipeline_dag.md
+          cat dag_output/pipeline_dag.md
 
       - name: Upload DAG
         uses: actions/upload-artifact@v3
@@ -165,9 +187,13 @@ jobs:
             const fs = require('fs');
             try {
               const dag = fs.readFileSync('dag_output/pipeline_dag.md', 'utf8');
-              const comment = `## DVC Pipeline DAG
+              const comment = `## 📊 DVC Pipeline DAG
               
-              ${dag}`;
+              \`\`\`
+              ${dag}
+              \`\`\`
+              
+              View the full pipeline on [DagsHub](https://dagshub.com/sharjeel-ahmed17/spark-traffic-mlops)`;
               
               github.rest.issues.createComment({
                 issue_number: context.issue.number,
@@ -177,4 +203,52 @@ jobs:
               });
             } catch (e) {
               console.log('Could not post DAG comment:', e.message);
+            }
+
+  dvc-metrics-to-dagshub:
+    runs-on: ubuntu-latest
+    if: github.event_name == 'push' && success()
+    needs: dvc-pipeline
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Download artifacts
+        uses: actions/download-artifact@v3
+        with:
+          name: dvc-artifacts
+
+      - name: Log metrics to console
+        run: |
+          echo "📊 Pipeline Metrics:"
+          cat metrics.json || echo "No metrics file found"
+
+      - name: Comment on commit with metrics
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const fs = require('fs');
+            try {
+              const metrics = JSON.parse(fs.readFileSync('metrics.json', 'utf8'));
+              const metricsStr = JSON.stringify(metrics, null, 2);
+              
+              const comment = `## ✅ Pipeline Executed Successfully
+              
+              ### 📊 Model Metrics
+              \`\`\`json
+              ${metricsStr}
+              \`\`\`
+              
+              🔗 [View on DagsHub](https://dagshub.com/sharjeel-ahmed17/spark-traffic-mlops)
+              📈 [MLflow Tracking](https://dagshub.com/sharjeel-ahmed17/spark-traffic-mlops.mlflow/)`;
+              
+              github.rest.repos.createCommitComment({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                commit_sha: context.sha,
+                body: comment
+              });
+            } catch (e) {
+              console.log('Could not post commit comment:', e.message);
             }
