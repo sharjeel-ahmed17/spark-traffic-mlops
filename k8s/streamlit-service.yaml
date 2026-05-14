@@ -1,0 +1,17 @@
+---
+# Streamlit Service (LoadBalancer for external access)
+apiVersion: v1
+kind: Service
+metadata:
+  name: streamlit-service
+  namespace: default
+  labels:
+    app: streamlit
+spec:
+  type: LoadBalancer
+  ports:
+    - port: 80
+      targetPort: 8501
+      protocol: TCP
+  selector:
+    app: streamlit

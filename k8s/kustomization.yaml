@@ -1,0 +1,28 @@
+---
+# Kustomize configuration for spark-traffic-mlops
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+namespace: spark-traffic
+
+resources:
+  - namespace.yaml
+  - configmap.yaml
+  - pvc.yaml
+  - mlflow-deployment.yaml
+  - mlflow-service.yaml
+  - fastapi-deployment.yaml
+  - fastapi-service.yaml
+  - streamlit-deployment.yaml
+  - streamlit-service.yaml
+  - deployment.yaml
+  - services.yaml
+
+images:
+  - name: spark-traffic
+    newName: your-docker-registry/spark-traffic
+    newTag: latest
+
+commonLabels:
+  app.kubernetes.io/name: spark-traffic-mlops
+  app.kubernetes.io/managed-by: kustomize
