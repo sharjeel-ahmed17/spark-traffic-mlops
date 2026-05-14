@@ -7,6 +7,7 @@ import mlflow.spark
 from pyspark.sql import SparkSession
 from pyspark.ml.linalg import Vectors
 from pyspark.ml import PipelineModel
+from fastapi.middleware.cors import CORSMiddleware
 
 os.environ["PYSPARK_PYTHON"] = sys.executable
 os.environ["PYSPARK_DRIVER_PYTHON"] = sys.executable
@@ -21,6 +22,14 @@ app = FastAPI(
     description="Traffic Vehicle Prediction using Spark MLlib + MLflow"
 )
 
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins="*",
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 spark = SparkSession.builder \
     .appName("TrafficPredictionAPI") \
     .getOrCreate()

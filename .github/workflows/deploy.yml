@@ -1,0 +1,44 @@
+name: CI/CD Pipeline to Docker Hub and Hugging Face
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      # 1. Code ko checkout karna
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      # 2. Docker Hub par Login karna
+      - name: Login to Docker Hub
+        uses: docker/login-action@v3
+        with:
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
+
+      # 3. Docker Buildx setup karna (for caching and efficiency)
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+      # 4. Docker Image build aur Docker Hub par push karna
+      - name: Build and Push Docker Image
+        uses: docker/build-push-action@v5
+        with:
+          context: .
+          file: ./Dockerfile
+          push: true
+          tags: |
+            sharjeelahmed017/traffic-prediction-api:latest
+            sharjeelahmed017/traffic-prediction-api:${{ github.sha }}
+
+      # 5. Hugging Face Space ko deploy/restart trigger bhejna (Sahi Endpoint)
+      - name: Deploy to Hugging Face Spaces
+        run: |
+          curl -sS -f -X POST \
+            -H "Authorization: Bearer ${{ secrets.HF_TOKEN }}" \
+            "https://huggingface.co/spaces/sharjeel17/traffic"
