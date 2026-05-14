@@ -891,3 +891,278 @@ To use authentication, you must first:
 [ 2026-05-13 19:29:38,661 ] train.py:218 root - ERROR - Error during model training: Expecting property name enclosed in double quotes: line 30 column 1 (char 716)
 [ 2026-05-13 19:29:38,662 ] train.py:226 root - ERROR - Error during model training: Expecting property name enclosed in double quotes: line 30 column 1 (char 716)
 [ 2026-05-13 19:29:38,710 ] clientserver.py:570 py4j.clientserver - INFO - Closing down clientserver connection
+[ 2026-05-14 21:27:53,139 ] extraction.py:13 root - INFO - Using data directory: data/raw
+[ 2026-05-14 21:27:53,141 ] extraction.py:15 root - INFO - Downloading traffic dataset...
+[ 2026-05-14 21:27:54,586 ] extraction.py:24 root - INFO - File read successfully with default utf-8 encoding.
+[ 2026-05-14 21:27:54,586 ] extraction.py:29 root - INFO - Downloaded! Shape: (48120, 4)
+[ 2026-05-14 21:27:54,590 ] extraction.py:30 root - INFO - Columns: ['DateTime', 'Junction', 'Vehicles', 'ID']
+[ 2026-05-14 21:27:54,591 ] extraction.py:31 root - INFO - First 5 records:
+              DateTime  Junction  Vehicles           ID
+0  2015-11-01 00:00:00         1        15  20151101001
+1  2015-11-01 01:00:00         1        13  20151101011
+2  2015-11-01 02:00:00         1        10  20151101021
+3  2015-11-01 03:00:00         1         7  20151101031
+4  2015-11-01 04:00:00         1         9  20151101041
+[ 2026-05-14 21:27:54,814 ] extraction.py:35 root - INFO - Data saved at: data/raw/traffic.csv
+[ 2026-05-14 21:27:54,814 ] extraction.py:37 root - INFO - Final files in data/raw: ['traffic.csv']
+[ 2026-05-14 21:27:54,817 ] extraction.py:38 root - INFO - Data extraction process completed successfully!
+[ 2026-05-14 21:28:00,015 ] cleaning.py:8 root - INFO - Starting data cleaning process...
+[ 2026-05-14 21:30:26,854 ] cleaning.py:19 root - INFO - ===================================
+[ 2026-05-14 21:30:26,854 ] cleaning.py:20 root - INFO - Original Dataset Shape
+[ 2026-05-14 21:30:28,367 ] cleaning.py:21 root - INFO - Rows    : 48120
+[ 2026-05-14 21:30:28,408 ] cleaning.py:22 root - INFO - Columns : 4
+[ 2026-05-14 21:30:28,409 ] cleaning.py:23 root - INFO - ===================================
+[ 2026-05-14 21:30:28,416 ] cleaning.py:25 root - INFO - Checking Null Values...
+[ 2026-05-14 21:30:29,363 ] cleaning.py:28 root - INFO -   DateTime     : 0 null values
+[ 2026-05-14 21:30:29,899 ] cleaning.py:28 root - INFO -   Junction     : 0 null values
+[ 2026-05-14 21:30:30,284 ] cleaning.py:28 root - INFO -   Vehicles     : 0 null values
+[ 2026-05-14 21:30:30,746 ] cleaning.py:28 root - INFO -   ID           : 0 null values
+[ 2026-05-14 21:30:33,433 ] cleaning.py:33 root - INFO - ===================================
+[ 2026-05-14 21:30:33,434 ] cleaning.py:34 root - INFO - Duplicate Removal
+[ 2026-05-14 21:30:33,437 ] cleaning.py:35 root - INFO -   Rows before      : 48120
+[ 2026-05-14 21:30:33,437 ] cleaning.py:36 root - INFO -   Rows after       : 48120
+[ 2026-05-14 21:30:33,443 ] cleaning.py:37 root - INFO -   Duplicates removed: 0
+[ 2026-05-14 21:30:33,445 ] cleaning.py:38 root - INFO - ===================================
+[ 2026-05-14 21:30:33,445 ] cleaning.py:41 root - INFO - Removing unnecessary columns: ID
+[ 2026-05-14 21:30:33,478 ] cleaning.py:43 root - INFO - Columns removed successfully.
+[ 2026-05-14 21:30:33,480 ] cleaning.py:45 root - INFO - Casting DateTime column to TimestampType...
+[ 2026-05-14 21:30:33,531 ] cleaning.py:47 root - INFO - DateTime cast completed.
+[ 2026-05-14 21:30:34,404 ] cleaning.py:50 root - INFO - Vehicles <= 0 (invalid rows): 0
+[ 2026-05-14 21:30:35,066 ] cleaning.py:57 root - INFO - Invalid Junction values: 0
+[ 2026-05-14 21:30:35,066 ] cleaning.py:62 root - INFO - Adding time-based feature columns...
+[ 2026-05-14 21:30:35,192 ] cleaning.py:69 root - INFO - Feature columns added: Year, Month, Hour, DayOfWeek
+[ 2026-05-14 21:30:35,192 ] cleaning.py:71 root - INFO - ===================================
+[ 2026-05-14 21:30:35,196 ] cleaning.py:72 root - INFO - Final Dataset Schema
+[ 2026-05-14 21:30:35,197 ] cleaning.py:73 root - INFO - ===================================
+[ 2026-05-14 21:30:35,208 ] cleaning.py:76 root - INFO - ===================================
+[ 2026-05-14 21:30:35,209 ] cleaning.py:77 root - INFO - Cleaned Dataset Preview (top 5 rows)
+[ 2026-05-14 21:30:35,210 ] cleaning.py:78 root - INFO - ===================================
+[ 2026-05-14 21:30:37,077 ] cleaning.py:81 root - INFO - ===================================
+[ 2026-05-14 21:30:37,081 ] cleaning.py:82 root - INFO - Summary Statistics
+[ 2026-05-14 21:30:37,082 ] cleaning.py:83 root - INFO - ===================================
+[ 2026-05-14 21:30:40,732 ] cleaning.py:87 root - INFO - Saving cleaned dataset to: data/processed/clean_traffic_data
+[ 2026-05-14 21:30:43,650 ] cleaning.py:89 root - INFO - ===================================
+[ 2026-05-14 21:30:43,652 ] cleaning.py:90 root - INFO - Cleaned data saved successfully
+[ 2026-05-14 21:30:43,655 ] cleaning.py:91 root - INFO - Path: data/processed/clean_traffic_data
+[ 2026-05-14 21:30:44,935 ] cleaning.py:92 root - INFO - Final row count  : 48120
+[ 2026-05-14 21:30:44,940 ] cleaning.py:93 root - INFO - Final column count: 7
+[ 2026-05-14 21:30:44,941 ] cleaning.py:94 root - INFO - ===================================
+[ 2026-05-14 21:30:44,942 ] cleaning.py:95 root - INFO - Data cleaning process completed successfully!
+[ 2026-05-14 21:30:44,978 ] clientserver.py:570 py4j.clientserver - INFO - Closing down clientserver connection
+[ 2026-05-14 21:30:55,791 ] transformation.py:12 root - INFO - Starting data transformation process...
+[ 2026-05-14 21:31:20,764 ] transformation.py:23 root - INFO - ===================================
+[ 2026-05-14 21:31:20,764 ] transformation.py:24 root - INFO - Loaded Cleaned Dataset
+[ 2026-05-14 21:31:22,270 ] transformation.py:25 root - INFO -   Rows    : 48120
+[ 2026-05-14 21:31:22,311 ] transformation.py:26 root - INFO -   Columns : ['DateTime', 'Junction', 'Vehicles', 'Year', 'Month', 'Hour', 'DayOfWeek']
+[ 2026-05-14 21:31:22,311 ] transformation.py:27 root - INFO - ===================================
+[ 2026-05-14 21:31:22,315 ] transformation.py:29 root - INFO - Parsing DateTime and extracting time features...
+[ 2026-05-14 21:31:22,412 ] transformation.py:42 root - INFO - Time features confirmed: Year, Month, Hour, DayOfWeek
+[ 2026-05-14 21:31:22,413 ] transformation.py:44 root - INFO - Applying OneHotEncoder to Junction, DayOfWeek, Hour...
+[ 2026-05-14 21:31:23,078 ] transformation.py:59 root - INFO - Assembling feature vector...
+[ 2026-05-14 21:31:23,104 ] transformation.py:72 root - INFO - Adding StandardScaler...
+[ 2026-05-14 21:31:23,123 ] transformation.py:81 root - INFO - Building and fitting Pipeline...
+[ 2026-05-14 21:31:28,226 ] transformation.py:87 root - INFO - Pipeline fitted successfully.
+[ 2026-05-14 21:31:28,227 ] transformation.py:88 root - INFO - ===================================
+[ 2026-05-14 21:31:28,231 ] transformation.py:89 root - INFO - Transformed Dataset Schema
+[ 2026-05-14 21:31:28,232 ] transformation.py:90 root - INFO - ===================================
+[ 2026-05-14 21:31:28,251 ] transformation.py:93 root - INFO - ===================================
+[ 2026-05-14 21:31:28,253 ] transformation.py:94 root - INFO - Transformed Dataset Preview (top 5 rows)
+[ 2026-05-14 21:31:28,254 ] transformation.py:95 root - INFO - ===================================
+[ 2026-05-14 21:31:29,254 ] transformation.py:104 root - INFO - ===================================
+[ 2026-05-14 21:31:29,255 ] transformation.py:105 root - INFO - Train/Test Split
+[ 2026-05-14 21:31:32,057 ] transformation.py:106 root - INFO -   Train rows : 38480
+[ 2026-05-14 21:31:34,137 ] transformation.py:107 root - INFO -   Test  rows : 9640
+[ 2026-05-14 21:31:34,138 ] transformation.py:108 root - INFO - ===================================
+[ 2026-05-14 21:31:44,735 ] transformation.py:120 root - INFO - Train data saved : data/transformed/train
+[ 2026-05-14 21:31:44,736 ] transformation.py:121 root - INFO - Test  data saved : data/transformed/test
+[ 2026-05-14 21:31:47,152 ] transformation.py:128 root - INFO - Pipeline model saved : models/pipeline
+[ 2026-05-14 21:31:47,152 ] transformation.py:130 root - INFO - ===================================
+[ 2026-05-14 21:31:47,155 ] transformation.py:131 root - INFO - Transformation Complete
+[ 2026-05-14 21:31:47,159 ] transformation.py:132 root - INFO -   data/transformed/train/
+[ 2026-05-14 21:31:47,160 ] transformation.py:133 root - INFO -   data/transformed/test/
+[ 2026-05-14 21:31:47,162 ] transformation.py:134 root - INFO -   models/pipeline/
+[ 2026-05-14 21:31:47,162 ] transformation.py:135 root - INFO - ===================================
+[ 2026-05-14 21:31:47,165 ] transformation.py:136 root - INFO - Data transformation process completed successfully!
+[ 2026-05-14 21:31:47,191 ] clientserver.py:570 py4j.clientserver - INFO - Closing down clientserver connection
+[ 2026-05-14 21:32:20,911 ] train.py:18 root - INFO - Starting model training process...
+[ 2026-05-14 21:32:40,429 ] train.py:26 root - INFO - ===================================
+[ 2026-05-14 21:32:40,430 ] train.py:27 root - INFO - Loaded Transformed Dataset
+[ 2026-05-14 21:32:44,260 ] train.py:28 root - INFO -   Train rows : 38480
+[ 2026-05-14 21:32:44,592 ] train.py:29 root - INFO -   Test  rows : 9640
+[ 2026-05-14 21:32:44,592 ] train.py:30 root - INFO - ===================================
+[ 2026-05-14 21:33:20,259 ] train.py:34 root - INFO - MLflow experiment set: Traffic_Vehicles_Regression_Experiment
+[ 2026-05-14 21:33:20,699 ] train.py:96 root - INFO - ===================================
+[ 2026-05-14 21:33:20,700 ] train.py:97 root - INFO - Training : PoissonGLM
+[ 2026-05-14 21:33:20,703 ] train.py:98 root - INFO - ===================================
+[ 2026-05-14 21:33:27,049 ] train.py:111 root - INFO -   ParamGrid size : 6 combinations
+[ 2026-05-14 21:45:28,520 ] clientserver.py:570 py4j.clientserver - INFO - Closing down clientserver connection
+[ 2026-05-14 21:45:29,360 ] train.py:128 root - INFO -   RMSE : 7.1342
+[ 2026-05-14 21:45:29,362 ] train.py:129 root - INFO -   R2   : 0.8865
+[ 2026-05-14 21:45:29,364 ] train.py:130 root - INFO -   MAE  : 4.3736
+[ 2026-05-14 21:46:16,547 ] train.py:149 root - INFO -   *** New best model: PoissonGLM (RMSE=7.1342) ***
+[ 2026-05-14 21:46:16,577 ] train.py:96 root - INFO - ===================================
+[ 2026-05-14 21:46:16,578 ] train.py:97 root - INFO - Training : DecisionTree
+[ 2026-05-14 21:46:16,579 ] train.py:98 root - INFO - ===================================
+[ 2026-05-14 21:46:16,623 ] train.py:111 root - INFO -   ParamGrid size : 9 combinations
+[ 2026-05-14 21:46:56,033 ] clientserver.py:570 py4j.clientserver - INFO - Closing down clientserver connection
+[ 2026-05-14 21:46:56,676 ] train.py:128 root - INFO -   RMSE : 9.6333
+[ 2026-05-14 21:46:56,677 ] train.py:129 root - INFO -   R2   : 0.7931
+[ 2026-05-14 21:46:56,686 ] train.py:130 root - INFO -   MAE  : 6.1894
+[ 2026-05-14 21:47:30,686 ] train.py:96 root - INFO - ===================================
+[ 2026-05-14 21:47:30,687 ] train.py:97 root - INFO - Training : RandomForest
+[ 2026-05-14 21:47:30,690 ] train.py:98 root - INFO - ===================================
+[ 2026-05-14 21:47:30,767 ] train.py:111 root - INFO -   ParamGrid size : 8 combinations
+[ 2026-05-14 21:50:16,092 ] train.py:195 root - ERROR - Error during model training: An error occurred while calling o32596.fit.
+: org.apache.spark.SparkException: Job 1137 cancelled because SparkContext was shut down
+	at org.apache.spark.scheduler.DAGScheduler.$anonfun$cleanUpAfterSchedulerStop$1(DAGScheduler.scala:1309)
+	at org.apache.spark.scheduler.DAGScheduler.$anonfun$cleanUpAfterSchedulerStop$1$adapted(DAGScheduler.scala:1307)
+	at scala.collection.mutable.HashSet$Node.foreach(HashSet.scala:450)
+	at scala.collection.mutable.HashSet.foreach(HashSet.scala:376)
+	at org.apache.spark.scheduler.DAGScheduler.cleanUpAfterSchedulerStop(DAGScheduler.scala:1307)
+	at org.apache.spark.scheduler.DAGSchedulerEventProcessLoop.onStop(DAGScheduler.scala:3424)
+	at org.apache.spark.util.EventLoop.stop(EventLoop.scala:85)
+	at org.apache.spark.scheduler.DAGScheduler.$anonfun$stop$3(DAGScheduler.scala:3307)
+	at org.apache.spark.util.Utils$.tryLogNonFatalError(Utils.scala:1314)
+	at org.apache.spark.scheduler.DAGScheduler.stop(DAGScheduler.scala:3307)
+	at org.apache.spark.SparkContext.$anonfun$stop$12(SparkContext.scala:2357)
+	at org.apache.spark.util.Utils$.tryLogNonFatalError(Utils.scala:1314)
+	at org.apache.spark.SparkContext.stop(SparkContext.scala:2357)
+	at org.apache.spark.SparkContext.stop(SparkContext.scala:2308)
+	at org.apache.spark.SparkContext.$anonfun$new$37(SparkContext.scala:712)
+	at org.apache.spark.util.SparkShutdownHook.run(ShutdownHookManager.scala:231)
+	at org.apache.spark.util.SparkShutdownHookManager.$anonfun$runAll$2(ShutdownHookManager.scala:205)
+	at scala.runtime.java8.JFunction0$mcV$sp.apply(JFunction0$mcV$sp.scala:18)
+	at org.apache.spark.util.Utils$.logUncaughtExceptions(Utils.scala:1941)
+	at org.apache.spark.util.SparkShutdownHookManager.$anonfun$runAll$1(ShutdownHookManager.scala:205)
+	at scala.runtime.java8.JFunction0$mcV$sp.apply(JFunction0$mcV$sp.scala:18)
+	at scala.util.Try$.apply(Try.scala:217)
+	at org.apache.spark.util.SparkShutdownHookManager.runAll(ShutdownHookManager.scala:205)
+	at org.apache.spark.util.SparkShutdownHookManager$$anon$2.run(ShutdownHookManager.scala:184)
+	at java.base/java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:539)
+	at java.base/java.util.concurrent.FutureTask.run(FutureTask.java:264)
+	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1136)
+	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:635)
+	at java.base/java.lang.Thread.run(Thread.java:840)
+	at org.apache.spark.scheduler.DAGScheduler.runJob(DAGScheduler.scala:1017)
+	at org.apache.spark.SparkContext.runJob(SparkContext.scala:2496)
+	at org.apache.spark.SparkContext.runJob(SparkContext.scala:2517)
+	at org.apache.spark.SparkContext.runJob(SparkContext.scala:2536)
+	at org.apache.spark.SparkContext.runJob(SparkContext.scala:2561)
+	at org.apache.spark.rdd.RDD.$anonfun$collect$1(RDD.scala:1057)
+	at org.apache.spark.rdd.RDDOperationScope$.withScope(RDDOperationScope.scala:151)
+	at org.apache.spark.rdd.RDDOperationScope$.withScope(RDDOperationScope.scala:112)
+	at org.apache.spark.rdd.RDD.withScope(RDD.scala:417)
+	at org.apache.spark.rdd.RDD.collect(RDD.scala:1056)
+	at org.apache.spark.rdd.PairRDDFunctions.$anonfun$collectAsMap$1(PairRDDFunctions.scala:740)
+	at org.apache.spark.rdd.RDDOperationScope$.withScope(RDDOperationScope.scala:151)
+	at org.apache.spark.rdd.RDDOperationScope$.withScope(RDDOperationScope.scala:112)
+	at org.apache.spark.rdd.RDD.withScope(RDD.scala:417)
+	at org.apache.spark.rdd.PairRDDFunctions.collectAsMap(PairRDDFunctions.scala:739)
+	at org.apache.spark.ml.tree.impl.RandomForest$.findBestSplits(RandomForest.scala:693)
+	at org.apache.spark.ml.tree.impl.RandomForest$.runBagged(RandomForest.scala:219)
+	at org.apache.spark.ml.tree.impl.RandomForest$.run(RandomForest.scala:332)
+	at org.apache.spark.ml.regression.RandomForestRegressor.$anonfun$train$1(RandomForestRegressor.scala:159)
+	at org.apache.spark.ml.util.Instrumentation$.$anonfun$instrumented$1(Instrumentation.scala:226)
+	at scala.util.Try$.apply(Try.scala:217)
+	at org.apache.spark.ml.util.Instrumentation$.instrumented(Instrumentation.scala:226)
+	at org.apache.spark.ml.regression.RandomForestRegressor.train(RandomForestRegressor.scala:137)
+	at org.apache.spark.ml.regression.RandomForestRegressor.train(RandomForestRegressor.scala:46)
+	at org.apache.spark.ml.Predictor.fit(Predictor.scala:115)
+	at org.apache.spark.ml.Predictor.fit(Predictor.scala:79)
+	at jdk.internal.reflect.GeneratedMethodAccessor144.invoke(Unknown Source)
+	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:569)
+	at py4j.reflection.MethodInvoker.invoke(MethodInvoker.java:244)
+	at py4j.reflection.ReflectionEngine.invoke(ReflectionEngine.java:374)
+	at py4j.Gateway.invoke(Gateway.java:282)
+	at py4j.commands.AbstractCommand.invokeMethod(AbstractCommand.java:132)
+	at py4j.commands.CallCommand.execute(CallCommand.java:79)
+	at py4j.ClientServerConnection.waitForCommands(ClientServerConnection.java:184)
+	at py4j.ClientServerConnection.run(ClientServerConnection.java:108)
+	at java.base/java.lang.Thread.run(Thread.java:840)
+
+[ 2026-05-14 21:50:16,096 ] train.py:202 root - ERROR - Error during model training: An error occurred while calling o32596.fit.
+: org.apache.spark.SparkException: Job 1137 cancelled because SparkContext was shut down
+	at org.apache.spark.scheduler.DAGScheduler.$anonfun$cleanUpAfterSchedulerStop$1(DAGScheduler.scala:1309)
+	at org.apache.spark.scheduler.DAGScheduler.$anonfun$cleanUpAfterSchedulerStop$1$adapted(DAGScheduler.scala:1307)
+	at scala.collection.mutable.HashSet$Node.foreach(HashSet.scala:450)
+	at scala.collection.mutable.HashSet.foreach(HashSet.scala:376)
+	at org.apache.spark.scheduler.DAGScheduler.cleanUpAfterSchedulerStop(DAGScheduler.scala:1307)
+	at org.apache.spark.scheduler.DAGSchedulerEventProcessLoop.onStop(DAGScheduler.scala:3424)
+	at org.apache.spark.util.EventLoop.stop(EventLoop.scala:85)
+	at org.apache.spark.scheduler.DAGScheduler.$anonfun$stop$3(DAGScheduler.scala:3307)
+	at org.apache.spark.util.Utils$.tryLogNonFatalError(Utils.scala:1314)
+	at org.apache.spark.scheduler.DAGScheduler.stop(DAGScheduler.scala:3307)
+	at org.apache.spark.SparkContext.$anonfun$stop$12(SparkContext.scala:2357)
+	at org.apache.spark.util.Utils$.tryLogNonFatalError(Utils.scala:1314)
+	at org.apache.spark.SparkContext.stop(SparkContext.scala:2357)
+	at org.apache.spark.SparkContext.stop(SparkContext.scala:2308)
+	at org.apache.spark.SparkContext.$anonfun$new$37(SparkContext.scala:712)
+	at org.apache.spark.util.SparkShutdownHook.run(ShutdownHookManager.scala:231)
+	at org.apache.spark.util.SparkShutdownHookManager.$anonfun$runAll$2(ShutdownHookManager.scala:205)
+	at scala.runtime.java8.JFunction0$mcV$sp.apply(JFunction0$mcV$sp.scala:18)
+	at org.apache.spark.util.Utils$.logUncaughtExceptions(Utils.scala:1941)
+	at org.apache.spark.util.SparkShutdownHookManager.$anonfun$runAll$1(ShutdownHookManager.scala:205)
+	at scala.runtime.java8.JFunction0$mcV$sp.apply(JFunction0$mcV$sp.scala:18)
+	at scala.util.Try$.apply(Try.scala:217)
+	at org.apache.spark.util.SparkShutdownHookManager.runAll(ShutdownHookManager.scala:205)
+	at org.apache.spark.util.SparkShutdownHookManager$$anon$2.run(ShutdownHookManager.scala:184)
+	at java.base/java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:539)
+	at java.base/java.util.concurrent.FutureTask.run(FutureTask.java:264)
+	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1136)
+	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:635)
+	at java.base/java.lang.Thread.run(Thread.java:840)
+	at org.apache.spark.scheduler.DAGScheduler.runJob(DAGScheduler.scala:1017)
+	at org.apache.spark.SparkContext.runJob(SparkContext.scala:2496)
+	at org.apache.spark.SparkContext.runJob(SparkContext.scala:2517)
+	at org.apache.spark.SparkContext.runJob(SparkContext.scala:2536)
+	at org.apache.spark.SparkContext.runJob(SparkContext.scala:2561)
+	at org.apache.spark.rdd.RDD.$anonfun$collect$1(RDD.scala:1057)
+	at org.apache.spark.rdd.RDDOperationScope$.withScope(RDDOperationScope.scala:151)
+	at org.apache.spark.rdd.RDDOperationScope$.withScope(RDDOperationScope.scala:112)
+	at org.apache.spark.rdd.RDD.withScope(RDD.scala:417)
+	at org.apache.spark.rdd.RDD.collect(RDD.scala:1056)
+	at org.apache.spark.rdd.PairRDDFunctions.$anonfun$collectAsMap$1(PairRDDFunctions.scala:740)
+	at org.apache.spark.rdd.RDDOperationScope$.withScope(RDDOperationScope.scala:151)
+	at org.apache.spark.rdd.RDDOperationScope$.withScope(RDDOperationScope.scala:112)
+	at org.apache.spark.rdd.RDD.withScope(RDD.scala:417)
+	at org.apache.spark.rdd.PairRDDFunctions.collectAsMap(PairRDDFunctions.scala:739)
+	at org.apache.spark.ml.tree.impl.RandomForest$.findBestSplits(RandomForest.scala:693)
+	at org.apache.spark.ml.tree.impl.RandomForest$.runBagged(RandomForest.scala:219)
+	at org.apache.spark.ml.tree.impl.RandomForest$.run(RandomForest.scala:332)
+	at org.apache.spark.ml.regression.RandomForestRegressor.$anonfun$train$1(RandomForestRegressor.scala:159)
+	at org.apache.spark.ml.util.Instrumentation$.$anonfun$instrumented$1(Instrumentation.scala:226)
+	at scala.util.Try$.apply(Try.scala:217)
+	at org.apache.spark.ml.util.Instrumentation$.instrumented(Instrumentation.scala:226)
+	at org.apache.spark.ml.regression.RandomForestRegressor.train(RandomForestRegressor.scala:137)
+	at org.apache.spark.ml.regression.RandomForestRegressor.train(RandomForestRegressor.scala:46)
+	at org.apache.spark.ml.Predictor.fit(Predictor.scala:115)
+	at org.apache.spark.ml.Predictor.fit(Predictor.scala:79)
+	at jdk.internal.reflect.GeneratedMethodAccessor144.invoke(Unknown Source)
+	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:569)
+	at py4j.reflection.MethodInvoker.invoke(MethodInvoker.java:244)
+	at py4j.reflection.ReflectionEngine.invoke(ReflectionEngine.java:374)
+	at py4j.Gateway.invoke(Gateway.java:282)
+	at py4j.commands.AbstractCommand.invokeMethod(AbstractCommand.java:132)
+	at py4j.commands.CallCommand.execute(CallCommand.java:79)
+	at py4j.ClientServerConnection.waitForCommands(ClientServerConnection.java:184)
+	at py4j.ClientServerConnection.run(ClientServerConnection.java:108)
+	at java.base/java.lang.Thread.run(Thread.java:840)
+
+[ 2026-05-14 21:50:16,141 ] clientserver.py:570 py4j.clientserver - INFO - Closing down clientserver connection
+[ 2026-05-14 21:51:49,234 ] train.py:18 root - INFO - Starting model training process...
+[ 2026-05-14 21:52:47,188 ] train.py:26 root - INFO - ===================================
+[ 2026-05-14 21:52:47,188 ] train.py:27 root - INFO - Loaded Transformed Dataset
+[ 2026-05-14 21:52:49,938 ] train.py:28 root - INFO -   Train rows : 38480
+[ 2026-05-14 21:52:50,193 ] train.py:29 root - INFO -   Test  rows : 9640
+[ 2026-05-14 21:52:50,193 ] train.py:30 root - INFO - ===================================
+[ 2026-05-14 21:52:51,851 ] train.py:34 root - INFO - MLflow experiment set: Traffic_Vehicles_Regression_Experiment
+[ 2026-05-14 21:52:51,986 ] train.py:96 root - INFO - ===================================
+[ 2026-05-14 21:52:51,986 ] train.py:97 root - INFO - Training : PoissonGLM
+[ 2026-05-14 21:52:51,987 ] train.py:98 root - INFO - ===================================
+[ 2026-05-14 21:52:52,648 ] train.py:111 root - INFO -   ParamGrid size : 6 combinations
+[ 2026-05-14 21:54:56,737 ] clientserver.py:570 py4j.clientserver - INFO - Closing down clientserver connection
+[ 2026-05-14 21:54:57,466 ] train.py:128 root - INFO -   RMSE : 7.1342
+[ 2026-05-14 21:54:57,466 ] train.py:129 root - INFO -   R2   : 0.8865
+[ 2026-05-14 21:54:57,475 ] train.py:130 root - INFO -   MAE  : 4.3736

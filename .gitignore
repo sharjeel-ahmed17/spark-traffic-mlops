@@ -245,3 +245,5 @@ models/
 .env
 
 .vscode/
+
+node_modules/

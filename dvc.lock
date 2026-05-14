@@ -5,8 +5,8 @@ stages:
     deps:
     - path: src/extraction.py
       hash: md5
-      md5: 314e7b167c6cdbd5164e329702698bd2
-      size: 1992
+      md5: 4bfc3d35aea16bf1f84d146a067cdc8e
+      size: 1727
     outs:
     - path: data/raw/traffic.csv
       hash: md5
@@ -21,12 +21,12 @@ stages:
       size: 1815392
     - path: src/cleaning.py
       hash: md5
-      md5: a144dd636a353e741ae8bb58e42d5677
-      size: 6773
+      md5: cd0e449eb7d7f55dd3185689d96fe1da
+      size: 4674
     outs:
     - path: data/processed/clean_traffic_data
       hash: md5
-      md5: d0c5dbf4c683a46a434b44c09d70e5fe.dir
+      md5: ba39a48b5c53955222b70ceebba15617.dir
       size: 2305469
       nfiles: 4
   transformation:
@@ -34,13 +34,13 @@ stages:
     deps:
     - path: data/processed/clean_traffic_data
       hash: md5
-      md5: d0c5dbf4c683a46a434b44c09d70e5fe.dir
+      md5: ba39a48b5c53955222b70ceebba15617.dir
       size: 2305469
       nfiles: 4
     - path: src/transformation.py
       hash: md5
-      md5: 51f1ad49f989b64a13e7751910c123a7
-      size: 8223
+      md5: 595991121e0b8b12bea0921c6c0d80ae
+      size: 5985
     params:
       params.yaml:
         transformation.random_split_seed: 42
@@ -48,17 +48,17 @@ stages:
     outs:
     - path: data/transformed/test
       hash: md5
-      md5: b17e1da41434d5f26e4c6553b7f03f60.dir
+      md5: 835430e2a99bc2bb87a91d12e8a75f78.dir
       size: 165075
       nfiles: 4
     - path: data/transformed/train
       hash: md5
-      md5: 9a915dc44045c2975172097b8299e303.dir
+      md5: 09de79f398a6c23e65ce5d2999fe62f8.dir
       size: 454458
       nfiles: 4
     - path: models/pipeline
       hash: md5
-      md5: a93ffe303622ca1d1743a5f67ace4b00.dir
+      md5: 0aebc7d3d8cfcd3e4dee9b132f507b96.dir
       size: 5300
       nfiles: 24
   train:
