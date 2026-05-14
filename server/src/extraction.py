@@ -1,8 +1,8 @@
 import os
 import pandas as pd
 import kagglehub
-from logger import logging
-from config_utils import load_config
+from server.src.logger import logging
+from server.src.config_utils import load_config
 
 def data_extraction():
     try:

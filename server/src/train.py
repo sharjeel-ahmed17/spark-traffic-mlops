@@ -1,7 +1,7 @@
 from dotenv import load_dotenv
 load_dotenv()
-from config_utils import load_config
-from logger import logging
+from server.src.config_utils import load_config
+from server.src.logger import logging
 from pyspark.sql import SparkSession
 from pyspark.ml.regression import GeneralizedLinearRegression,DecisionTreeRegressor,RandomForestRegressor,GBTRegressor
 from pyspark.ml.evaluation import RegressionEvaluator

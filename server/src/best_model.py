@@ -1,6 +1,6 @@
 from dotenv import load_dotenv
 load_dotenv()
-from logger import logging
+from server.src.logger import logging
 from mlflow.tracking import MlflowClient
 import mlflow
 import os

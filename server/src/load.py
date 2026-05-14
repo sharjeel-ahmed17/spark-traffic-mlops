@@ -1,4 +1,4 @@
-from logger import logging
+from server.src.logger import logging
 from pyspark.sql import SparkSession
 import os
 def load_data():

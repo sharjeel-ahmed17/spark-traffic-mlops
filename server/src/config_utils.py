@@ -1,6 +1,6 @@
 import yaml
 import os
-from logger import logging
+from server.src.logger import logging
 
 def load_config(config_path='config.yaml', params_path='params.yaml'):
     """Loads configuration from config.yaml and params.yaml."""

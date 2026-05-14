@@ -1,0 +1,45 @@
+services:
+  # mlflow:
+  #   image: ghcr.io/mlflow/mlflow:v3.12.1
+  #   container_name: mlflow-ui
+  #   ports:
+  #     - "5000:5000"
+  #   environment:
+  #     - MLFLOW_TRACKING_URI=${MLFLOW_TRACKING_URI}
+  #   command: mlflow ui --host 0.0.0.0 --port 5000
+  #   restart: unless-stopped
+
+  fastapi:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: fastapi-server
+    ports:
+      - "8000:8000"
+    environment:
+      - MLFLOW_TRACKING_URI=${MLFLOW_TRACKING_URI}
+      - PYSPARK_PYTHON=python3
+      - PYSPARK_DRIVER_PYTHON=python3
+    volumes:
+      - ./models:/app/models
+      - ./app:/app/app
+    command: uvicorn app.main:app --host 0.0.0.0 --port 8000 --reload
+    restart: unless-stopped
+    # depends_on:
+    #   - mlflow
+
+  streamlit:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: streamlit-ui
+    ports:
+      - "8501:8501"
+    environment:
+      - API_URL=http://fastapi:8000
+    volumes:
+      - ./ui:/app/ui
+    command: streamlit run ui/streamlit_app.py --server.address 0.0.0.0 --server.port 8501
+    restart: unless-stopped
+    depends_on:
+      - fastapi
