@@ -2,7 +2,7 @@ import { createFileRoute } from "@tanstack/react-router";
 import { motion, AnimatePresence } from "framer-motion";
 import { useState } from "react";
 import { Car, Calendar, Clock, MapPin, Sparkles, Loader2, AlertCircle, Gauge } from "lucide-react";
-import { predictTraffic } from "@/lib/predict";
+import { predictTraffic } from "@/lib/predict.ts";
 import { useHistory, type PredictionInputs } from "@/contexts/HistoryContext";
 
 export const Route = createFileRoute("/_authenticated/dashboard")({
