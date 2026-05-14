@@ -59,10 +59,11 @@ jobs:
 
       - name: Configure DagsHub DVC Remote
         run: |
-          dvc remote add -d dagshub https://dagshub.com/sharjeel-ahmed17/spark-traffic-mlops.dvc
+          dvc remote add -d dagshub https://dagshub.com/sharjeel-ahmed17/spark-traffic-mlops.dvc || true
           dvc remote modify dagshub auth basic
-          dvc remote modify dagshub -u ${{ secrets.DAGSHUB_USERNAME }}
-          dvc remote modify dagshub -p ${{ secrets.DAGSHUB_PASSWORD }}
+          # store credentials locally so they are not committed to the repo
+          dvc remote modify dagshub user ${{ secrets.DAGSHUB_USERNAME }} --local
+          dvc remote modify dagshub password ${{ secrets.DAGSHUB_PASSWORD }} --local
 
       - name: Configure Git for DagsHub
         run: |
