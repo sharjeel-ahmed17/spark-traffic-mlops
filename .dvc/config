@@ -1,4 +1,6 @@
 [core]
-    remote = default
+    remote = myremote
 ['remote "default"']
+    url = https://dagshub.com/sharjeel-ahmed17/spark-traffic-mlops.dvc
+['remote "myremote"']
     url = https://dagshub.com/sharjeel-ahmed17/spark-traffic-mlops.dvc

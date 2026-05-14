@@ -3,7 +3,9 @@ load_dotenv()
 from config_utils import load_config
 from logger import logging
 from pyspark.sql import SparkSession
-from pyspark.ml.regression import GeneralizedLinearRegression,DecisionTreeRegressor,RandomForestRegressor,GBTRegressor
+from pyspark.ml import Pipeline
+from pyspark.ml.feature import StandardScaler
+from pyspark.ml.regression import GeneralizedLinearRegression, DecisionTreeRegressor, RandomForestRegressor, GBTRegressor
 from pyspark.ml.evaluation import RegressionEvaluator
 from pyspark.ml.tuning import ParamGridBuilder, CrossValidator
 import mlflow
@@ -18,7 +20,11 @@ def train_models():
         logging.info("Starting model training process...")
         config, params = load_config()
 
-        spark = SparkSession.builder.appName("TrafficTraining").getOrCreate()
+        # FIX 1: Add Hadoop FileSystem mapping for mlflow-artifacts to fix Spark tracking errors
+        spark = SparkSession.builder \
+            .appName("TrafficTraining") \
+            .config("spark.hadoop.fs.mlflow-artifacts.impl", "org.mlflow.tracking.creds.MlflowContextFileSystem") \
+            .getOrCreate()
 
         train_df = spark.read.parquet(config["data"]["train_data"])
         test_df  = spark.read.parquet(config["data"]["test_data"])
@@ -52,6 +58,9 @@ def train_models():
         )
 
         models_config = params["training"]["models"]
+        
+        # FIX 2: Define basic GLM model. Add 'regParam' in your configuration params JSON/YAML
+        # to fix "regParam is zero" and "Cholesky solver failed" warnings.
         models = {
             "PoissonGLM": {
                 "model": GeneralizedLinearRegression(
@@ -61,6 +70,7 @@ def train_models():
                     link="log",
                 ),
                 "params": models_config["PoissonGLM"],
+                "use_pipeline": True # Recommended for linear/GLM variance scaling stability
             },
             "DecisionTree": {
                 "model": DecisionTreeRegressor(
@@ -68,6 +78,7 @@ def train_models():
                     featuresCol="features",
                 ),
                 "params": models_config["DecisionTree"],
+                "use_pipeline": False
             },
             "RandomForest": {
                 "model": RandomForestRegressor(
@@ -75,6 +86,7 @@ def train_models():
                     featuresCol="features",
                 ),
                 "params": models_config["RandomForest"],
+                "use_pipeline": False
             },
             "GradientBoosting": {
                 "model": GBTRegressor(
@@ -82,6 +94,7 @@ def train_models():
                     featuresCol="features",
                 ),
                 "params": models_config["GradientBoosting"],
+                "use_pipeline": False
             },
         }
 
@@ -99,19 +112,27 @@ def train_models():
 
             with mlflow.start_run(run_name=name):
 
-                model         = m_config["model"]
+                base_model    = m_config["model"]
                 param_builder = ParamGridBuilder()
 
                 for param_name, values in m_config["params"].items():
                     param_builder = param_builder.addGrid(
-                        getattr(model, param_name), values
+                        getattr(base_model, param_name), values
                     )
 
                 param_grid = param_builder.build()
                 logging.info("  ParamGrid size : %d combinations", len(param_grid))
 
+                # FIX 3: Wrap GLM in a feature scaling Pipeline to stabilize LBFGS line search zoom optimization
+                if m_config["use_pipeline"]:
+                    scaler = StandardScaler(inputCol="features", outputCol="scaled_features", withStd=True, withMean=False)
+                    base_model.setFeaturesCol("scaled_features")
+                    estimator_obj = Pipeline(stages=[scaler, base_model])
+                else:
+                    estimator_obj = base_model
+
                 cv = CrossValidator(
-                    estimator=model,
+                    estimator=estimator_obj,
                     estimatorParamMaps=param_grid,
                     evaluator=evaluator_rmse,
                     numFolds=params["training"]["cv_folds"],
@@ -136,7 +157,7 @@ def train_models():
                 }
 
                 mlflow.log_param("model",     name)
-                mlflow.log_param("num_folds", 3)
+                mlflow.log_param("num_folds", params["training"]["cv_folds"])
                 mlflow.log_metric("RMSE", rmse)
                 mlflow.log_metric("R2",   r2)
                 mlflow.log_metric("MAE",  mae)

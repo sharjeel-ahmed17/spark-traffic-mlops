@@ -17,11 +17,11 @@ training:
   cv_folds: 3
   seed: 42
   target_col: "Vehicles"
-  
+
   # Model Hyperparameters (as used in src/train.py)
   models:
     PoissonGLM:
-      regParam: [0.0, 0.01, 0.1]
+      regParam: [0.001, 0.01, 0.1] # Fixed: Replaced 0.0 with a small non-zero value
       maxIter: [25, 50]
     DecisionTree:
       maxDepth: [3, 5, 7]

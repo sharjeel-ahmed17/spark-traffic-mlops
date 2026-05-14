@@ -66,25 +66,25 @@ stages:
     deps:
     - path: data/transformed/test
       hash: md5
-      md5: b17e1da41434d5f26e4c6553b7f03f60.dir
+      md5: 835430e2a99bc2bb87a91d12e8a75f78.dir
       size: 165075
       nfiles: 4
     - path: data/transformed/train
       hash: md5
-      md5: 9a915dc44045c2975172097b8299e303.dir
+      md5: 09de79f398a6c23e65ce5d2999fe62f8.dir
       size: 454458
       nfiles: 4
     - path: src/train.py
       hash: md5
-      md5: dfb33927b2c470adda8dfed88c9a0b2c
-      size: 9712
+      md5: 26ccbcee77a2499f3fc14b7e2982f5ec
+      size: 8847
     params:
       params.yaml:
         training.cv_folds: 3
         training.models:
           PoissonGLM:
             regParam:
-            - 0.0
+            - 0.001
             - 0.01
             - 0.1
             maxIter:
@@ -119,5 +119,5 @@ stages:
     outs:
     - path: scores.json
       hash: md5
-      md5: 4733ca448daf9f7214ba8338c682c963
-      size: 2672
+      md5: 05483dbd4bbdf4401f0b57dc8a67bc1a
+      size: 741

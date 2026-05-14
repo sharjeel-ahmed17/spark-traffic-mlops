@@ -1171,3 +1171,271 @@ To use authentication, you must first:
 [ 2026-05-14 21:55:37,615 ] train.py:97 root - INFO - Training : DecisionTree
 [ 2026-05-14 21:55:37,616 ] train.py:98 root - INFO - ===================================
 [ 2026-05-14 21:55:37,662 ] train.py:111 root - INFO -   ParamGrid size : 9 combinations
+[ 2026-05-14 21:56:24,322 ] clientserver.py:570 py4j.clientserver - INFO - Closing down clientserver connection
+[ 2026-05-14 21:56:25,127 ] train.py:128 root - INFO -   RMSE : 9.6333
+[ 2026-05-14 21:56:25,127 ] train.py:129 root - INFO -   R2   : 0.7931
+[ 2026-05-14 21:56:25,133 ] train.py:130 root - INFO -   MAE  : 6.1894
+[ 2026-05-14 21:57:05,936 ] train.py:96 root - INFO - ===================================
+[ 2026-05-14 21:57:05,936 ] train.py:97 root - INFO - Training : RandomForest
+[ 2026-05-14 21:57:05,951 ] train.py:98 root - INFO - ===================================
+[ 2026-05-14 21:57:06,027 ] train.py:111 root - INFO -   ParamGrid size : 8 combinations
+[ 2026-05-14 22:05:09,857 ] clientserver.py:563 py4j.clientserver - INFO - Error while receiving.
+Traceback (most recent call last):
+  File "D:\spark-traffic-mlops\.venv\Lib\site-packages\py4j\clientserver.py", line 535, in send_command
+    answer = smart_decode(self.stream.readline()[:-1])
+                          ^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\SHARJEELAHMED\AppData\Roaming\uv\python\cpython-3.11-windows-x86_64-none\Lib\socket.py", line 718, in readinto
+    return self._sock.recv_into(b)
+           ^^^^^^^^^^^^^^^^^^^^^^^
+ConnectionResetError: [WinError 10054] An existing connection was forcibly closed by the remote host
+[ 2026-05-14 22:05:09,886 ] clientserver.py:570 py4j.clientserver - INFO - Closing down clientserver connection
+[ 2026-05-14 22:05:09,892 ] java_gateway.py:1059 root - ERROR - Exception while sending command.
+Traceback (most recent call last):
+  File "D:\spark-traffic-mlops\.venv\Lib\site-packages\py4j\clientserver.py", line 535, in send_command
+    answer = smart_decode(self.stream.readline()[:-1])
+                          ^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\SHARJEELAHMED\AppData\Roaming\uv\python\cpython-3.11-windows-x86_64-none\Lib\socket.py", line 718, in readinto
+    return self._sock.recv_into(b)
+           ^^^^^^^^^^^^^^^^^^^^^^^
+ConnectionResetError: [WinError 10054] An existing connection was forcibly closed by the remote host
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "D:\spark-traffic-mlops\.venv\Lib\site-packages\py4j\java_gateway.py", line 1038, in send_command
+    response = connection.send_command(command)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\spark-traffic-mlops\.venv\Lib\site-packages\py4j\clientserver.py", line 566, in send_command
+    raise Py4JNetworkError(
+py4j.protocol.Py4JNetworkError: Error while sending or receiving
+[ 2026-05-14 22:05:09,895 ] clientserver.py:570 py4j.clientserver - INFO - Closing down clientserver connection
+[ 2026-05-14 22:05:09,896 ] clientserver.py:529 py4j.clientserver - INFO - Error while sending or receiving.
+Traceback (most recent call last):
+  File "D:\spark-traffic-mlops\.venv\Lib\site-packages\pyspark\ml\util.py", line 1252, in _cache_spark_dataset
+    yield dataset
+  File "D:\spark-traffic-mlops\.venv\Lib\site-packages\pyspark\ml\tuning.py", line 863, in _fit
+    for j, metric, subModel in pool.imap_unordered(lambda f: f(), tasks):
+  File "C:\Users\SHARJEELAHMED\AppData\Roaming\uv\python\cpython-3.11-windows-x86_64-none\Lib\multiprocessing\pool.py", line 873, in next
+    raise value
+  File "C:\Users\SHARJEELAHMED\AppData\Roaming\uv\python\cpython-3.11-windows-x86_64-none\Lib\multiprocessing\pool.py", line 125, in worker
+    result = (True, func(*args, **kwds))
+                    ^^^^^^^^^^^^^^^^^^^
+  File "D:\spark-traffic-mlops\.venv\Lib\site-packages\pyspark\ml\tuning.py", line 863, in <lambda>
+    for j, metric, subModel in pool.imap_unordered(lambda f: f(), tasks):
+                                                             ^^^
+  File "D:\spark-traffic-mlops\.venv\Lib\site-packages\pyspark\util.py", line 451, in wrapped
+    return ff(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^
+  File "D:\spark-traffic-mlops\.venv\Lib\site-packages\pyspark\ml\tuning.py", line 114, in singleTask
+    index, model = next(modelIter)
+                   ^^^^^^^^^^^^^^^
+  File "D:\spark-traffic-mlops\.venv\Lib\site-packages\pyspark\ml\base.py", line 96, in __next__
+    return index, self.fitSingleModel(index)
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\spark-traffic-mlops\.venv\Lib\site-packages\pyspark\ml\base.py", line 154, in fitSingleModel
+    return estimator.fit(dataset, paramMaps[index])
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\spark-traffic-mlops\.venv\Lib\site-packages\pyspark\ml\base.py", line 201, in fit
+    return self.copy(params)._fit(dataset)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\spark-traffic-mlops\.venv\Lib\site-packages\pyspark\ml\util.py", line 211, in wrapped
+    return f(self, dataset)
+           ^^^^^^^^^^^^^^^^
+  File "D:\spark-traffic-mlops\.venv\Lib\site-packages\pyspark\ml\wrapper.py", line 417, in _fit
+    java_model = self._fit_java(dataset)
+                 ^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\spark-traffic-mlops\.venv\Lib\site-packages\pyspark\ml\wrapper.py", line 413, in _fit_java
+    return self._java_obj.fit(dataset._jdf)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\spark-traffic-mlops\.venv\Lib\site-packages\py4j\java_gateway.py", line 1362, in __call__
+    return_value = get_return_value(
+                   ^^^^^^^^^^^^^^^^^
+  File "D:\spark-traffic-mlops\.venv\Lib\site-packages\pyspark\errors\exceptions\captured.py", line 263, in deco
+    return f(*a, **kw)
+           ^^^^^^^^^^^
+  File "D:\spark-traffic-mlops\.venv\Lib\site-packages\py4j\protocol.py", line 335, in get_return_value
+    raise Py4JError(
+py4j.protocol.Py4JError: An error occurred while calling o43523.fit
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "D:\spark-traffic-mlops\.venv\Lib\site-packages\py4j\clientserver.py", line 527, in send_command
+    self.socket.sendall(command.encode("utf-8"))
+ConnectionResetError: [WinError 10054] An existing connection was forcibly closed by the remote host
+[ 2026-05-14 22:05:09,936 ] clientserver.py:570 py4j.clientserver - INFO - Closing down clientserver connection
+[ 2026-05-14 22:05:09,947 ] java_gateway.py:1056 root - INFO - Exception while sending command.
+Traceback (most recent call last):
+  File "D:\spark-traffic-mlops\.venv\Lib\site-packages\pyspark\ml\util.py", line 1252, in _cache_spark_dataset
+    yield dataset
+  File "D:\spark-traffic-mlops\.venv\Lib\site-packages\pyspark\ml\tuning.py", line 863, in _fit
+    for j, metric, subModel in pool.imap_unordered(lambda f: f(), tasks):
+  File "C:\Users\SHARJEELAHMED\AppData\Roaming\uv\python\cpython-3.11-windows-x86_64-none\Lib\multiprocessing\pool.py", line 873, in next
+    raise value
+  File "C:\Users\SHARJEELAHMED\AppData\Roaming\uv\python\cpython-3.11-windows-x86_64-none\Lib\multiprocessing\pool.py", line 125, in worker
+    result = (True, func(*args, **kwds))
+                    ^^^^^^^^^^^^^^^^^^^
+  File "D:\spark-traffic-mlops\.venv\Lib\site-packages\pyspark\ml\tuning.py", line 863, in <lambda>
+    for j, metric, subModel in pool.imap_unordered(lambda f: f(), tasks):
+                                                             ^^^
+  File "D:\spark-traffic-mlops\.venv\Lib\site-packages\pyspark\util.py", line 451, in wrapped
+    return ff(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^
+  File "D:\spark-traffic-mlops\.venv\Lib\site-packages\pyspark\ml\tuning.py", line 114, in singleTask
+    index, model = next(modelIter)
+                   ^^^^^^^^^^^^^^^
+  File "D:\spark-traffic-mlops\.venv\Lib\site-packages\pyspark\ml\base.py", line 96, in __next__
+    return index, self.fitSingleModel(index)
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\spark-traffic-mlops\.venv\Lib\site-packages\pyspark\ml\base.py", line 154, in fitSingleModel
+    return estimator.fit(dataset, paramMaps[index])
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\spark-traffic-mlops\.venv\Lib\site-packages\pyspark\ml\base.py", line 201, in fit
+    return self.copy(params)._fit(dataset)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\spark-traffic-mlops\.venv\Lib\site-packages\pyspark\ml\util.py", line 211, in wrapped
+    return f(self, dataset)
+           ^^^^^^^^^^^^^^^^
+  File "D:\spark-traffic-mlops\.venv\Lib\site-packages\pyspark\ml\wrapper.py", line 417, in _fit
+    java_model = self._fit_java(dataset)
+                 ^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\spark-traffic-mlops\.venv\Lib\site-packages\pyspark\ml\wrapper.py", line 413, in _fit_java
+    return self._java_obj.fit(dataset._jdf)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\spark-traffic-mlops\.venv\Lib\site-packages\py4j\java_gateway.py", line 1362, in __call__
+    return_value = get_return_value(
+                   ^^^^^^^^^^^^^^^^^
+  File "D:\spark-traffic-mlops\.venv\Lib\site-packages\pyspark\errors\exceptions\captured.py", line 263, in deco
+    return f(*a, **kw)
+           ^^^^^^^^^^^
+  File "D:\spark-traffic-mlops\.venv\Lib\site-packages\py4j\protocol.py", line 335, in get_return_value
+    raise Py4JError(
+py4j.protocol.Py4JError: An error occurred while calling o43523.fit
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "D:\spark-traffic-mlops\.venv\Lib\site-packages\py4j\clientserver.py", line 527, in send_command
+    self.socket.sendall(command.encode("utf-8"))
+ConnectionResetError: [WinError 10054] An existing connection was forcibly closed by the remote host
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "D:\spark-traffic-mlops\.venv\Lib\site-packages\py4j\java_gateway.py", line 1038, in send_command
+    response = connection.send_command(command)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\spark-traffic-mlops\.venv\Lib\site-packages\py4j\clientserver.py", line 530, in send_command
+    raise Py4JNetworkError(
+py4j.protocol.Py4JNetworkError: Error while sending
+[ 2026-05-15 00:46:13,209 ] train.py:18 root - INFO - Starting model training process...
+[ 2026-05-15 00:47:04,840 ] train.py:26 root - INFO - ===================================
+[ 2026-05-15 00:47:04,841 ] train.py:27 root - INFO - Loaded Transformed Dataset
+[ 2026-05-15 00:47:10,710 ] train.py:28 root - INFO -   Train rows : 38480
+[ 2026-05-15 00:47:11,291 ] train.py:29 root - INFO -   Test  rows : 9640
+[ 2026-05-15 00:47:11,291 ] train.py:30 root - INFO - ===================================
+[ 2026-05-15 00:47:12,809 ] train.py:34 root - INFO - MLflow experiment set: Traffic_Vehicles_Regression_Experiment
+[ 2026-05-15 00:47:13,086 ] train.py:96 root - INFO - ===================================
+[ 2026-05-15 00:47:13,086 ] train.py:97 root - INFO - Training : PoissonGLM
+[ 2026-05-15 00:47:13,086 ] train.py:98 root - INFO - ===================================
+[ 2026-05-15 00:47:14,450 ] train.py:111 root - INFO -   ParamGrid size : 6 combinations
+[ 2026-05-15 00:49:02,885 ] clientserver.py:570 py4j.clientserver - INFO - Closing down clientserver connection
+[ 2026-05-15 00:49:03,587 ] train.py:128 root - INFO -   RMSE : 7.1342
+[ 2026-05-15 00:49:03,590 ] train.py:129 root - INFO -   R2   : 0.8865
+[ 2026-05-15 00:49:03,591 ] train.py:130 root - INFO -   MAE  : 4.3736
+[ 2026-05-15 00:50:33,076 ] clientserver.py:529 py4j.clientserver - INFO - Error while sending or receiving.
+Traceback (most recent call last):
+  File "D:\spark-traffic-mlops\.venv\Lib\site-packages\py4j\clientserver.py", line 527, in send_command
+    self.socket.sendall(command.encode("utf-8"))
+ConnectionResetError: [WinError 10054] An existing connection was forcibly closed by the remote host
+[ 2026-05-15 00:50:33,077 ] clientserver.py:570 py4j.clientserver - INFO - Closing down clientserver connection
+[ 2026-05-15 00:50:33,077 ] java_gateway.py:1056 root - INFO - Exception while sending command.
+Traceback (most recent call last):
+  File "D:\spark-traffic-mlops\.venv\Lib\site-packages\py4j\clientserver.py", line 527, in send_command
+    self.socket.sendall(command.encode("utf-8"))
+ConnectionResetError: [WinError 10054] An existing connection was forcibly closed by the remote host
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "D:\spark-traffic-mlops\.venv\Lib\site-packages\py4j\java_gateway.py", line 1038, in send_command
+    response = connection.send_command(command)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\spark-traffic-mlops\.venv\Lib\site-packages\py4j\clientserver.py", line 530, in send_command
+    raise Py4JNetworkError(
+py4j.protocol.Py4JNetworkError: Error while sending
+[ 2026-05-15 00:50:35,106 ] clientserver.py:570 py4j.clientserver - INFO - Closing down clientserver connection
+[ 2026-05-15 00:50:35,109 ] clientserver.py:570 py4j.clientserver - INFO - Closing down clientserver connection
+[ 2026-05-15 00:50:35,109 ] clientserver.py:570 py4j.clientserver - INFO - Closing down clientserver connection
+[ 2026-05-15 00:50:37,198 ] clientserver.py:570 py4j.clientserver - INFO - Closing down clientserver connection
+[ 2026-05-15 00:50:37,199 ] clientserver.py:570 py4j.clientserver - INFO - Closing down clientserver connection
+[ 2026-05-15 00:50:39,219 ] clientserver.py:570 py4j.clientserver - INFO - Closing down clientserver connection
+[ 2026-05-15 00:50:41,258 ] clientserver.py:570 py4j.clientserver - INFO - Closing down clientserver connection
+[ 2026-05-15 00:50:41,258 ] clientserver.py:570 py4j.clientserver - INFO - Closing down clientserver connection
+[ 2026-05-15 00:50:43,287 ] clientserver.py:570 py4j.clientserver - INFO - Closing down clientserver connection
+[ 2026-05-15 00:50:43,287 ] train.py:195 root - ERROR - Error during model training: [WinError 10061] No connection could be made because the target machine actively refused it
+[ 2026-05-15 00:50:43,288 ] train.py:202 root - ERROR - Error during model training: [WinError 10061] No connection could be made because the target machine actively refused it
+[ 2026-05-15 00:50:43,288 ] clientserver.py:570 py4j.clientserver - INFO - Closing down clientserver connection
+[ 2026-05-15 00:50:43,289 ] clientserver.py:570 py4j.clientserver - INFO - Closing down clientserver connection
+[ 2026-05-15 00:50:43,317 ] clientserver.py:529 py4j.clientserver - INFO - Error while sending or receiving.
+Traceback (most recent call last):
+  File "D:\spark-traffic-mlops\.venv\Lib\site-packages\py4j\clientserver.py", line 527, in send_command
+    self.socket.sendall(command.encode("utf-8"))
+ConnectionResetError: [WinError 10054] An existing connection was forcibly closed by the remote host
+[ 2026-05-15 00:50:43,340 ] clientserver.py:570 py4j.clientserver - INFO - Closing down clientserver connection
+[ 2026-05-15 00:50:43,343 ] clientserver.py:570 py4j.clientserver - INFO - Closing down clientserver connection
+[ 2026-05-15 00:54:55,100 ] train.py:18 root - INFO - Starting model training process...
+[ 2026-05-15 00:55:10,431 ] train.py:26 root - INFO - ===================================
+[ 2026-05-15 00:55:10,432 ] train.py:27 root - INFO - Loaded Transformed Dataset
+[ 2026-05-15 00:55:13,656 ] train.py:28 root - INFO -   Train rows : 38480
+[ 2026-05-15 00:55:13,958 ] train.py:29 root - INFO -   Test  rows : 9640
+[ 2026-05-15 00:55:13,959 ] train.py:30 root - INFO - ===================================
+[ 2026-05-15 00:55:14,909 ] train.py:34 root - INFO - MLflow experiment set: Traffic_Vehicles_Regression_Experiment
+[ 2026-05-15 00:55:15,150 ] train.py:96 root - INFO - ===================================
+[ 2026-05-15 00:55:15,152 ] train.py:97 root - INFO - Training : PoissonGLM
+[ 2026-05-15 00:55:15,156 ] train.py:98 root - INFO - ===================================
+[ 2026-05-15 00:55:16,138 ] train.py:111 root - INFO -   ParamGrid size : 6 combinations
+[ 2026-05-15 00:56:51,660 ] clientserver.py:570 py4j.clientserver - INFO - Closing down clientserver connection
+[ 2026-05-15 00:56:52,208 ] train.py:128 root - INFO -   RMSE : 7.1342
+[ 2026-05-15 00:56:52,209 ] train.py:129 root - INFO -   R2   : 0.8865
+[ 2026-05-15 00:56:52,209 ] train.py:130 root - INFO -   MAE  : 4.3736
+[ 2026-05-15 00:57:47,098 ] train.py:149 root - INFO -   *** New best model: PoissonGLM (RMSE=7.1342) ***
+[ 2026-05-15 00:57:47,891 ] train.py:96 root - INFO - ===================================
+[ 2026-05-15 00:57:47,893 ] train.py:97 root - INFO - Training : DecisionTree
+[ 2026-05-15 00:57:47,893 ] train.py:98 root - INFO - ===================================
+[ 2026-05-15 00:57:48,404 ] train.py:111 root - INFO -   ParamGrid size : 9 combinations
+[ 2026-05-15 00:58:23,636 ] clientserver.py:570 py4j.clientserver - INFO - Closing down clientserver connection
+[ 2026-05-15 00:58:24,023 ] train.py:128 root - INFO -   RMSE : 9.6333
+[ 2026-05-15 00:58:24,023 ] train.py:129 root - INFO -   R2   : 0.7931
+[ 2026-05-15 00:58:24,023 ] train.py:130 root - INFO -   MAE  : 6.1894
+[ 2026-05-15 00:59:08,810 ] train.py:96 root - INFO - ===================================
+[ 2026-05-15 00:59:08,810 ] train.py:97 root - INFO - Training : RandomForest
+[ 2026-05-15 00:59:08,811 ] train.py:98 root - INFO - ===================================
+[ 2026-05-15 00:59:09,404 ] train.py:111 root - INFO -   ParamGrid size : 8 combinations
+[ 2026-05-15 01:07:32,715 ] clientserver.py:570 py4j.clientserver - INFO - Closing down clientserver connection
+[ 2026-05-15 01:07:36,374 ] train.py:128 root - INFO -   RMSE : 8.3242
+[ 2026-05-15 01:07:36,374 ] train.py:129 root - INFO -   R2   : 0.8455
+[ 2026-05-15 01:07:36,374 ] train.py:130 root - INFO -   MAE  : 5.2581
+[ 2026-05-15 01:08:44,202 ] train.py:96 root - INFO - ===================================
+[ 2026-05-15 01:08:44,202 ] train.py:97 root - INFO - Training : GradientBoosting
+[ 2026-05-15 01:08:44,203 ] train.py:98 root - INFO - ===================================
+[ 2026-05-15 01:08:44,699 ] train.py:111 root - INFO -   ParamGrid size : 4 combinations
+[ 2026-05-15 01:13:13,893 ] clientserver.py:570 py4j.clientserver - INFO - Closing down clientserver connection
+[ 2026-05-15 01:13:15,160 ] train.py:128 root - INFO -   RMSE : 6.7378
+[ 2026-05-15 01:13:15,161 ] train.py:129 root - INFO -   R2   : 0.8988
+[ 2026-05-15 01:13:15,161 ] train.py:130 root - INFO -   MAE  : 4.0889
+[ 2026-05-15 01:14:10,501 ] train.py:149 root - INFO -   *** New best model: GradientBoosting (RMSE=6.7378) ***
+[ 2026-05-15 01:14:11,176 ] train.py:153 root - INFO - ===================================
+[ 2026-05-15 01:14:11,177 ] train.py:154 root - INFO - BEST MODEL : GradientBoosting
+[ 2026-05-15 01:14:11,178 ] train.py:155 root - INFO - BEST RMSE  : 6.7378
+[ 2026-05-15 01:14:11,179 ] train.py:156 root - INFO - ===================================
+[ 2026-05-15 01:14:59,699 ] train.py:163 root - INFO - Best model logged to MLflow under 'best_model'.
+[ 2026-05-15 01:14:59,710 ] train.py:180 root - INFO - No scores.json found — creating new file.
+[ 2026-05-15 01:14:59,721 ] train.py:187 root - INFO - ===================================
+[ 2026-05-15 01:14:59,722 ] train.py:188 root - INFO - Scores saved to : D:\spark-traffic-mlops\scores.json
+[ 2026-05-15 01:14:59,722 ] train.py:189 root - INFO - Total runs in file : 1
+[ 2026-05-15 01:14:59,722 ] train.py:190 root - INFO - ===================================
+[ 2026-05-15 01:14:59,722 ] train.py:191 root - INFO - Training Completed Successfully
+[ 2026-05-15 01:14:59,723 ] train.py:192 root - INFO - ===================================
+[ 2026-05-15 01:14:59,748 ] clientserver.py:570 py4j.clientserver - INFO - Closing down clientserver connection
+[ 2026-05-15 01:14:59,748 ] clientserver.py:570 py4j.clientserver - INFO - Closing down clientserver connection
