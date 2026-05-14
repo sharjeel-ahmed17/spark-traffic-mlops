@@ -115,7 +115,7 @@ jobs:
 
       - name: Upload DVC artifacts
         if: always()
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: dvc-artifacts
           path: artifacts/
@@ -189,7 +189,7 @@ jobs:
           cat dag_output/pipeline_dag.md
 
       - name: Upload DAG
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: dvc-dag
           path: dag_output/
@@ -236,7 +236,7 @@ jobs:
         uses: actions/checkout@v4
 
       - name: Download artifacts
-        uses: actions/download-artifact@v3
+        uses: actions/download-artifact@v4
         with:
           name: dvc-artifacts
 
