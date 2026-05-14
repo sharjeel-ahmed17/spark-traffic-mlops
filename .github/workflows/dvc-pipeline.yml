@@ -30,6 +30,12 @@ jobs:
   dvc-pipeline:
     runs-on: ubuntu-latest
     timeout-minutes: 60
+    env:
+      MLFLOW_TRACKING_URI: ${{ secrets.MLFLOW_TRACKING_URI }}
+      MLFLOW_TRACKING_USERNAME: ${{ secrets.MLFLOW_TRACKING_USERNAME }}
+      MLFLOW_TRACKING_PASSWORD: ${{ secrets.MLFLOW_TRACKING_PASSWORD }}
+      DAGSHUB_USERNAME: ${{ secrets.DAGSHUB_USERNAME }}
+      DAGSHUB_PASSWORD: ${{ secrets.DAGSHUB_PASSWORD }}
     
     steps:
       - name: Checkout code
@@ -57,9 +63,6 @@ jobs:
           dvc remote modify dagshub auth basic
           dvc remote modify dagshub -u ${{ secrets.DAGSHUB_USERNAME }}
           dvc remote modify dagshub -p ${{ secrets.DAGSHUB_PASSWORD }}
-        env:
-          DAGSHUB_USERNAME: ${{ secrets.DAGSHUB_USERNAME }}
-          DAGSHUB_PASSWORD: ${{ secrets.DAGSHUB_PASSWORD }}
 
       - name: Configure Git for DagsHub
         run: |
@@ -80,6 +83,12 @@ jobs:
         run: |
           dvc pull -r dagshub || true
         continue-on-error: true
+
+      - name: Configure MLflow
+        run: |
+          echo "Configuring MLflow tracking environment"
+          echo "MLFLOW_TRACKING_URI=$MLFLOW_TRACKING_URI"
+          # If your code reads MLflow env vars, they are already available in the environment for subsequent steps.
 
       - name: Run DVC pipeline
         run: |
@@ -122,6 +131,7 @@ jobs:
               const metrics = JSON.parse(fs.readFileSync('artifacts/metrics.json', 'utf8'));
               const metricsStr = JSON.stringify(metrics, null, 2);
               
+              const mlflowUri = process.env.MLFLOW_TRACKING_URI || 'not set';
               const comment = `## 🚀 DVC Pipeline Report
               
               ### 📊 Metrics
@@ -129,8 +139,8 @@ jobs:
               ${metricsStr}
               \`\`\`
               
-              ### 📈 DagsHub Links
-              - [MLflow Tracking](https://dagshub.com/sharjeel-ahmed17/spark-traffic-mlops.mlflow/)
+              ### 📈 Links
+              - MLflow Tracking URI: ${mlflowUri}
               - [DVC Repository](https://dagshub.com/sharjeel-ahmed17/spark-traffic-mlops)
               
               ✅ Pipeline completed successfully!`;
@@ -155,7 +165,11 @@ jobs:
   dvc-dag:
     runs-on: ubuntu-latest
     if: github.event_name == 'pull_request'
-    
+    env:
+      MLFLOW_TRACKING_URI: ${{ secrets.MLFLOW_TRACKING_URI }}
+      MLFLOW_TRACKING_USERNAME: ${{ secrets.MLFLOW_TRACKING_USERNAME }}
+      MLFLOW_TRACKING_PASSWORD: ${{ secrets.MLFLOW_TRACKING_PASSWORD }}
+
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
@@ -187,11 +201,14 @@ jobs:
             const fs = require('fs');
             try {
               const dag = fs.readFileSync('dag_output/pipeline_dag.md', 'utf8');
+              const mlflowUri = process.env.MLFLOW_TRACKING_URI || 'not set';
               const comment = `## 📊 DVC Pipeline DAG
               
               \`\`\`
               ${dag}
               \`\`\`
+              
+              MLflow Tracking URI: ${mlflowUri}
               
               View the full pipeline on [DagsHub](https://dagshub.com/sharjeel-ahmed17/spark-traffic-mlops)`;
               
@@ -209,7 +226,11 @@ jobs:
     runs-on: ubuntu-latest
     if: github.event_name == 'push' && success()
     needs: dvc-pipeline
-    
+    env:
+      MLFLOW_TRACKING_URI: ${{ secrets.MLFLOW_TRACKING_URI }}
+      MLFLOW_TRACKING_USERNAME: ${{ secrets.MLFLOW_TRACKING_USERNAME }}
+      MLFLOW_TRACKING_PASSWORD: ${{ secrets.MLFLOW_TRACKING_PASSWORD }}
+
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
@@ -232,6 +253,7 @@ jobs:
             try {
               const metrics = JSON.parse(fs.readFileSync('metrics.json', 'utf8'));
               const metricsStr = JSON.stringify(metrics, null, 2);
+              const mlflowUri = process.env.MLFLOW_TRACKING_URI || 'not set';
               
               const comment = `## ✅ Pipeline Executed Successfully
               
@@ -239,6 +261,8 @@ jobs:
               \`\`\`json
               ${metricsStr}
               \`\`\`
+              
+              MLflow Tracking URI: ${mlflowUri}
               
               🔗 [View on DagsHub](https://dagshub.com/sharjeel-ahmed17/spark-traffic-mlops)
               📈 [MLflow Tracking](https://dagshub.com/sharjeel-ahmed17/spark-traffic-mlops.mlflow/)`;
