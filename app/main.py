@@ -8,6 +8,7 @@ from pyspark.sql import SparkSession
 from pyspark.ml.linalg import Vectors
 from pyspark.ml import PipelineModel
 from fastapi.middleware.cors import CORSMiddleware
+import sentry_sdk
 
 os.environ["PYSPARK_PYTHON"] = sys.executable
 os.environ["PYSPARK_DRIVER_PYTHON"] = sys.executable
@@ -15,7 +16,14 @@ os.environ["PYSPARK_DRIVER_PYTHON"] = sys.executable
 load_dotenv()
 
 mlflow.set_tracking_uri(os.getenv("MLFLOW_TRACKING_URI"))
+SENTRY_DSN = os.getenv("SENTRY_DSN")
 
+sentry_sdk.init(
+    dsn=SENTRY_DSN,
+    # Add data like request headers and IP for users,
+    # see https://docs.sentry.io/platforms/python/data-management/data-collected/ for more info
+    send_default_pii=True,
+)
 app = FastAPI(
     title="Traffic Vehicle Prediction API",
     version="1.0.0",
@@ -78,6 +86,7 @@ def predict(
         }
 
     except Exception as e:
+        sentry_sdk.capture_exception(e) # Capture the exception in Sentry
         return {
             "status": "failed",
             "error": str(e)
