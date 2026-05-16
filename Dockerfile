@@ -5,9 +5,9 @@ ENV PYTHONUNBUFFERED=1
 ENV PYSPARK_PYTHON=python3
 ENV PYSPARK_DRIVER_PYTHON=python3
 
-# Install Java
+# Install Java + utilities
 RUN apt-get update && \
-    apt-get install -y openjdk-17-jdk-headless && \
+    apt-get install -y openjdk-17-jdk-headless curl && \
     apt-get clean && \
     rm -rf /var/lib/apt/lists/*
 
@@ -18,8 +18,17 @@ WORKDIR /app
 
 COPY requirements.txt .
 
-RUN sed -i '/pywin32/d' requirements.txt && \
-    pip install --no-cache-dir -r requirements.txt
+# Remove Windows-only dependency
+RUN sed -i '/pywin32/d' requirements.txt
+
+# Upgrade pip first
+RUN pip install --upgrade pip
+
+# Install dependencies with larger timeout
+RUN pip install \
+    --default-timeout=1000 \
+    --no-cache-dir \
+    -r requirements.txt
 
 COPY . .
 
