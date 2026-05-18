@@ -5,8 +5,6 @@ import sys
 import mlflow
 import mlflow.spark
 from pyspark.sql import SparkSession
-from pyspark.ml.linalg import Vectors
-from pyspark.ml import PipelineModel
 from fastapi.middleware.cors import CORSMiddleware
 import sentry_sdk
 
@@ -44,8 +42,6 @@ spark = SparkSession.builder \
 
 MODEL_NAME = "Traffic_Vehicle_Prediction"
 
-pipeline_model = PipelineModel.load("models/pipeline")
-
 model = mlflow.spark.load_model(
     model_uri=f"models:/{MODEL_NAME}/Production"
 )
@@ -73,15 +69,8 @@ def predict(
         input_data = [(junction, day_of_week, hour, month, year)]
         columns = ["Junction", "DayOfWeek", "Hour", "Month", "Year"]
         input_df = spark.createDataFrame(input_data, columns)
-        from pyspark.sql.functions import col
-        input_df = (
-            input_df.withColumn("Junction_idx",   col("Junction").cast("double"))
-                   .withColumn("DayOfWeek_idx",  col("DayOfWeek").cast("double"))
-                   .withColumn("Hour_idx",       col("Hour").cast("double"))
-        )
 
-        transformed_df = pipeline_model.transform(input_df)
-        prediction_df = model.transform(transformed_df)
+        prediction_df = model.transform(input_df)
         prediction = prediction_df.select("prediction").collect()[0][0]
 
         return {
