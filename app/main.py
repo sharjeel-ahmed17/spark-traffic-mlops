@@ -43,7 +43,7 @@ spark = SparkSession.builder \
 MODEL_NAME = "Traffic_Vehicle_Prediction"
 
 model = mlflow.spark.load_model(
-    model_uri=f"models:/{MODEL_NAME}/Production"
+    model_uri=f"models:/{MODEL_NAME}/1"
 )
 
 @app.get("/")
