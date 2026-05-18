@@ -56,6 +56,11 @@ def home():
         "message": "Traffic Vehicle Prediction API Running"
     }
 
+# for sentry testing, you can call this endpoint to trigger an error and see it in Sentry dashboard
+@app.get("/sentry-debug")
+async def trigger_error():
+    division_by_zero = 1 / 0
+
 @app.post("/predict")
 def predict(
     junction: float,
