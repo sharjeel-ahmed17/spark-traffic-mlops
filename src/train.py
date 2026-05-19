@@ -22,8 +22,8 @@ def train_models():
 
         spark = SparkSession.builder \
             .appName("TrafficTraining") \
-            .config("spark.hadoop.fs.mlflow-artifacts.impl", "org.mlflow.tracking.creds.MlflowContextFileSystem") \
             .getOrCreate()
+            
 
         train_df = spark.read.parquet(config["data"]["train_data"])
         test_df  = spark.read.parquet(config["data"]["test_data"])

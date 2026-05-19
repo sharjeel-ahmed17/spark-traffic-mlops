@@ -25,5 +25,32 @@
                 "MAE": 4.0889
             }
         }
+    },
+    {
+        "run_timestamp": "2026-05-20 04:45:18",
+        "best_model": "GradientBoosting",
+        "best_rmse": 6.7378,
+        "models": {
+            "PoissonGLM": {
+                "RMSE": 7.1358,
+                "R2": 0.8865,
+                "MAE": 4.376
+            },
+            "DecisionTree": {
+                "RMSE": 9.6333,
+                "R2": 0.7931,
+                "MAE": 6.1894
+            },
+            "RandomForest": {
+                "RMSE": 8.2993,
+                "R2": 0.8465,
+                "MAE": 5.2582
+            },
+            "GradientBoosting": {
+                "RMSE": 6.7378,
+                "R2": 0.8988,
+                "MAE": 4.0889
+            }
+        }
     }
 ]
