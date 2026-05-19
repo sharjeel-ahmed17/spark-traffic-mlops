@@ -5,9 +5,8 @@ ENV PYTHONUNBUFFERED=1
 ENV PYSPARK_PYTHON=python3
 ENV PYSPARK_DRIVER_PYTHON=python3
 
-# Install Java
 RUN apt-get update && \
-    apt-get install -y openjdk-17-jdk-headless && \
+    apt-get install -y --no-install-recommends openjdk-17-jre-headless && \
     apt-get clean && \
     rm -rf /var/lib/apt/lists/*
 
@@ -16,12 +15,11 @@ ENV PATH=$JAVA_HOME/bin:$PATH
 
 WORKDIR /app
 
-COPY requirements.txt .
+COPY requirements.api.txt .
+RUN pip install --no-cache-dir --no-compile --timeout=300 -r requirements.api.txt
 
-RUN sed -i '/pywin32/d' requirements.txt && \
-    pip install --no-cache-dir -r requirements.txt
-
-COPY . .
+COPY app/ ./app/
+COPY models/pipeline ./models/pipeline
 
 EXPOSE 8000
 

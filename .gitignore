@@ -247,3 +247,5 @@ models/
 .vscode/
 
 node_modules/
+
+models/pipeline

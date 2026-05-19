@@ -59,8 +59,7 @@ def train_models():
 
         models_config = params["training"]["models"]
         
-        # FIX 2: Define basic GLM model. Add 'regParam' in your configuration params JSON/YAML
-        # to fix "regParam is zero" and "Cholesky solver failed" warnings.
+        
         models = {
             "PoissonGLM": {
                 "model": GeneralizedLinearRegression(

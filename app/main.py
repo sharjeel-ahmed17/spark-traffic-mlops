@@ -5,6 +5,7 @@ import sys
 import mlflow
 import mlflow.spark
 from pyspark.sql import SparkSession
+from pyspark.ml import PipelineModel
 from fastapi.middleware.cors import CORSMiddleware
 import sentry_sdk
 
@@ -18,16 +19,14 @@ SENTRY_DSN = os.getenv("SENTRY_DSN")
 
 sentry_sdk.init(
     dsn=SENTRY_DSN,
-    # Add data like request headers and IP for users,
-    # see https://docs.sentry.io/platforms/python/data-management/data-collected/ for more info
     send_default_pii=True,
 )
+
 app = FastAPI(
     title="Traffic Vehicle Prediction API",
     version="1.0.0",
     description="Traffic Vehicle Prediction using Spark MLlib + MLflow"
 )
-
 
 app.add_middleware(
     CORSMiddleware,
@@ -36,23 +35,30 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
+
 spark = SparkSession.builder \
     .appName("TrafficPredictionAPI") \
     .getOrCreate()
 
 MODEL_NAME = "Traffic_Vehicle_Prediction"
 
+# Prediction model
 model = mlflow.spark.load_model(
     model_uri=f"models:/{MODEL_NAME}/1"
 )
 
+# Transformation pipeline — same jo training mein use hui thi
+PIPELINE_PATH = os.getenv("PIPELINE_PATH", "models/pipeline")
+pipeline_model = PipelineModel.load(PIPELINE_PATH)
+
 @app.get("/")
 def home():
-    return {
-        "message": "Traffic Vehicle Prediction API Running"
-    }
+    return {"message": "Traffic Vehicle Prediction API Running"}
 
-# for sentry testing, you can call this endpoint to trigger an error and see it in Sentry dashboard
+@app.get("/tester")
+def tester():
+    return {"message": "tester endpoint is working fine"}
+
 @app.get("/sentry-debug")
 async def trigger_error():
     division_by_zero = 1 / 0
@@ -70,7 +76,16 @@ def predict(
         columns = ["Junction", "DayOfWeek", "Hour", "Month", "Year"]
         input_df = spark.createDataFrame(input_data, columns)
 
-        prediction_df = model.transform(input_df)
+        # Pehle same transformation pipeline apply karo
+        input_df = input_df \
+            .withColumn("Junction_idx", input_df["Junction"].cast("double")) \
+            .withColumn("DayOfWeek_idx", input_df["DayOfWeek"].cast("double")) \
+            .withColumn("Hour_idx", input_df["Hour"].cast("double"))
+
+        transformed_df = pipeline_model.transform(input_df)
+
+        # Phir prediction
+        prediction_df = model.transform(transformed_df)
         prediction = prediction_df.select("prediction").collect()[0][0]
 
         return {
@@ -80,7 +95,7 @@ def predict(
         }
 
     except Exception as e:
-        sentry_sdk.capture_exception(e) # Capture the exception in Sentry
+        sentry_sdk.capture_exception(e)
         return {
             "status": "failed",
             "error": str(e)
