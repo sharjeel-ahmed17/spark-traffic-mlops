@@ -19,7 +19,7 @@ COPY requirements.api.txt .
 RUN pip install --no-cache-dir --no-compile --timeout=300 -r requirements.api.txt
 
 COPY app/ ./app/
-COPY models/pipeline ./models/pipeline
+# COPY models/pipeline ./models/pipeline
 
 EXPOSE 8000
 
