@@ -1,220 +1,220 @@
-name: Complete MLOps CI/CD Pipeline
+# name: Complete MLOps CI/CD Pipeline
 
-on:
-  push:
-    branches:
-      - main
-      - develop
+# on:
+#   push:
+#     branches:
+#       - main
+#       - develop
 
-    paths:
-      - "src/**"
-      - "params.yaml"
-      - "dvc.yaml"
-      - "dvc.lock"
-      - "Dockerfile"
-      - ".github/workflows/**"
+#     paths:
+#       - "src/**"
+#       - "params.yaml"
+#       - "dvc.yaml"
+#       - "dvc.lock"
+#       - "Dockerfile"
+#       - ".github/workflows/**"
 
-  pull_request:
-    branches:
-      - main
-      - develop
+#   pull_request:
+#     branches:
+#       - main
+#       - develop
 
-    paths:
-      - "src/**"
-      - "params.yaml"
-      - "dvc.yaml"
-      - "dvc.lock"
+#     paths:
+#       - "src/**"
+#       - "params.yaml"
+#       - "dvc.yaml"
+#       - "dvc.lock"
 
-  workflow_dispatch:
+#   workflow_dispatch:
 
-permissions:
-  contents: write
-  pull-requests: write
+# permissions:
+#   contents: write
+#   pull-requests: write
 
-jobs:
-  # =========================================
-  # DVC + MLFLOW + DAGSHUB PIPELINE
-  # =========================================
+# jobs:
+#   # =========================================
+#   # DVC + MLFLOW + DAGSHUB PIPELINE
+#   # =========================================
 
-  dvc-pipeline:
-    runs-on: ubuntu-latest
-    timeout-minutes: 60
+#   dvc-pipeline:
+#     runs-on: ubuntu-latest
+#     timeout-minutes: 60
 
-    env:
-      MLFLOW_TRACKING_URI: ${{ secrets.MLFLOW_TRACKING_URI }}
-      MLFLOW_TRACKING_USERNAME: ${{ secrets.MLFLOW_TRACKING_USERNAME }}
-      MLFLOW_TRACKING_PASSWORD: ${{ secrets.MLFLOW_TRACKING_PASSWORD }}
-      DAGSHUB_USERNAME: ${{ secrets.DAGSHUB_USERNAME }}
-      DAGSHUB_PASSWORD: ${{ secrets.DAGSHUB_PASSWORD }}
+#     env:
+#       MLFLOW_TRACKING_URI: ${{ secrets.MLFLOW_TRACKING_URI }}
+#       MLFLOW_TRACKING_USERNAME: ${{ secrets.MLFLOW_TRACKING_USERNAME }}
+#       MLFLOW_TRACKING_PASSWORD: ${{ secrets.MLFLOW_TRACKING_PASSWORD }}
+#       DAGSHUB_USERNAME: ${{ secrets.DAGSHUB_USERNAME }}
+#       DAGSHUB_PASSWORD: ${{ secrets.DAGSHUB_PASSWORD }}
 
-    steps:
-      # Checkout Repository
-      - name: Checkout Code
-        uses: actions/checkout@v4
-        with:
-          fetch-depth: 0
+#     steps:
+#       # Checkout Repository
+#       - name: Checkout Code
+#         uses: actions/checkout@v4
+#         with:
+#           fetch-depth: 0
 
-      # Setup Python
-      - name: Set up Python
-        uses: actions/setup-python@v4
-        with:
-          python-version: "3.11"
-          cache: "pip"
+#       # Setup Python
+#       - name: Set up Python
+#         uses: actions/setup-python@v4
+#         with:
+#           python-version: "3.11"
+#           cache: "pip"
 
-      # Install Dependencies
-      - name: Install Dependencies
-        run: |
-          python -m pip install --upgrade pip
-          pip install -r requirements.txt
+#       # Install Dependencies
+#       - name: Install Dependencies
+#         run: |
+#           python -m pip install --upgrade pip
+#           pip install -r requirements.txt
 
-      # Setup DVC
-      - name: Setup DVC
-        uses: iterative/setup-dvc@v1
+#       # Setup DVC
+#       - name: Setup DVC
+#         uses: iterative/setup-dvc@v1
 
-      # Configure DagsHub Remote
-      - name: Configure DagsHub DVC Remote
-        run: |
-          dvc remote add -d dagshub https://dagshub.com/sharjeel-ahmed17/spark-traffic-mlops.dvc || true
-          dvc remote modify dagshub auth basic
-          dvc remote modify dagshub user ${{ secrets.DAGSHUB_USERNAME }} --local
-          dvc remote modify dagshub password ${{ secrets.DAGSHUB_PASSWORD }} --local
+#       # Configure DagsHub Remote
+#       - name: Configure DagsHub DVC Remote
+#         run: |
+#           dvc remote add -d dagshub https://dagshub.com/sharjeel-ahmed17/spark-traffic-mlops.dvc || true
+#           dvc remote modify dagshub auth basic
+#           dvc remote modify dagshub user ${{ secrets.DAGSHUB_USERNAME }} --local
+#           dvc remote modify dagshub password ${{ secrets.DAGSHUB_PASSWORD }} --local
 
-      # Configure Git
-      - name: Configure Git for DagsHub
-        run: |
-          git remote set-url origin https://${{ secrets.DAGSHUB_USERNAME }}:${{ secrets.DAGSHUB_PASSWORD }}@dagshub.com/sharjeel-ahmed17/spark-traffic-mlops.git
+#       # Configure Git
+#       - name: Configure Git for DagsHub
+#         run: |
+#           git remote set-url origin https://${{ secrets.DAGSHUB_USERNAME }}:${{ secrets.DAGSHUB_PASSWORD }}@dagshub.com/sharjeel-ahmed17/spark-traffic-mlops.git
 
-          git config user.name "github-actions[bot]"
-          git config user.email "github-actions[bot]@users.noreply.github.com"
+#           git config user.name "github-actions[bot]"
+#           git config user.email "github-actions[bot]@users.noreply.github.com"
 
-      # Cache DVC
-      - name: Cache DVC Files
-        uses: actions/cache@v3
-        with:
-          path: .dvc/cache
-          key: dvc-cache-${{ hashFiles('dvc.lock') }}
-          restore-keys: |
-            dvc-cache-
+#       # Cache DVC
+#       - name: Cache DVC Files
+#         uses: actions/cache@v3
+#         with:
+#           path: .dvc/cache
+#           key: dvc-cache-${{ hashFiles('dvc.lock') }}
+#           restore-keys: |
+#             dvc-cache-
 
-      # Pull Existing DVC Data
-      - name: Pull DVC Data
-        run: |
-          dvc pull -r dagshub || true
-        continue-on-error: true
+#       # Pull Existing DVC Data
+#       - name: Pull DVC Data
+#         run: |
+#           dvc pull -r dagshub || true
+#         continue-on-error: true
 
-      # Run DVC Pipeline
-      - name: Run DVC Pipeline
-        run: |
-          dvc repro --force
+#       # Run DVC Pipeline
+#       - name: Run DVC Pipeline
+#         run: |
+#           dvc repro --force
 
-      # Push DVC Data
-      - name: Push DVC Data
-        if: github.event_name == 'push'
-        run: |
-          dvc push -r dagshub || true
-        continue-on-error: true
+#       # Push DVC Data
+#       - name: Push DVC Data
+#         if: github.event_name == 'push'
+#         run: |
+#           dvc push -r dagshub || true
+#         continue-on-error: true
 
-      # Generate Metrics
-      - name: Generate Metrics
-        if: always()
-        run: |
-          mkdir -p artifacts
-          dvc metrics show -a --json > artifacts/metrics.json || true
-          cat artifacts/metrics.json
+#       # Generate Metrics
+#       - name: Generate Metrics
+#         if: always()
+#         run: |
+#           mkdir -p artifacts
+#           dvc metrics show -a --json > artifacts/metrics.json || true
+#           cat artifacts/metrics.json
 
-      # Upload Artifacts
-      - name: Upload Artifacts
-        if: always()
-        uses: actions/upload-artifact@v4
-        with:
-          name: dvc-artifacts
-          path: artifacts/
+#       # Upload Artifacts
+#       - name: Upload Artifacts
+#         if: always()
+#         uses: actions/upload-artifact@v4
+#         with:
+#           name: dvc-artifacts
+#           path: artifacts/
 
-      # Push updated dvc.lock
-      - name: Push Updated dvc.lock
-        if: github.event_name == 'push'
-        run: |
-          git add dvc.lock
+#       # Push updated dvc.lock
+#       - name: Push Updated dvc.lock
+#         if: github.event_name == 'push'
+#         run: |
+#           git add dvc.lock
 
-          git diff --quiet && git diff --staged --quiet || \
-          (git commit -m "chore: update dvc.lock from pipeline run" && \
-          git push origin HEAD:${{ github.ref }})
+#           git diff --quiet && git diff --staged --quiet || \
+#           (git commit -m "chore: update dvc.lock from pipeline run" && \
+#           git push origin HEAD:${{ github.ref }})
 
-        continue-on-error: true
+#         continue-on-error: true
 
-  # =========================================
-  # BUILD DOCKER + PUSH + HUGGING FACE
-  # =========================================
+#   # =========================================
+#   # BUILD DOCKER + PUSH + HUGGING FACE
+#   # =========================================
 
-  deploy:
-    runs-on: ubuntu-latest
-    needs: dvc-pipeline
+#   deploy:
+#     runs-on: ubuntu-latest
+#     needs: dvc-pipeline
 
-    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+#     if: github.event_name == 'push' && github.ref == 'refs/heads/main'
 
-    steps:
-      # Checkout
-      - name: Checkout Code
-        uses: actions/checkout@v4
+#     steps:
+#       # Checkout
+#       - name: Checkout Code
+#         uses: actions/checkout@v4
 
-      # Login DockerHub
-      - name: Login to Docker Hub
-        uses: docker/login-action@v3
-        with:
-          username: ${{ secrets.DOCKERHUB_USERNAME }}
-          password: ${{ secrets.DOCKERHUB_TOKEN }}
+#       # Login DockerHub
+#       - name: Login to Docker Hub
+#         uses: docker/login-action@v3
+#         with:
+#           username: ${{ secrets.DOCKERHUB_USERNAME }}
+#           password: ${{ secrets.DOCKERHUB_TOKEN }}
 
-      # Setup Buildx
-      - name: Set up Docker Buildx
-        uses: docker/setup-buildx-action@v3
+#       # Setup Buildx
+#       - name: Set up Docker Buildx
+#         uses: docker/setup-buildx-action@v3
 
-      # Build Docker Image
-      - name: Build and Push Docker Image
-        uses: docker/build-push-action@v5
-        with:
-          context: .
-          file: ./Dockerfile
-          push: true
-          no-cache: true
-          tags: |
-            sharjeelahmed017/traffic-prediction-api:latest
-            sharjeelahmed017/traffic-prediction-api:${{ github.sha }}
+#       # Build Docker Image
+#       - name: Build and Push Docker Image
+#         uses: docker/build-push-action@v5
+#         with:
+#           context: .
+#           file: ./Dockerfile
+#           push: true
+#           no-cache: true
+#           tags: |
+#             sharjeelahmed017/traffic-prediction-api:latest
+#             sharjeelahmed017/traffic-prediction-api:${{ github.sha }}
 
-      # Restart Hugging Face Space
-      - name: Restart Hugging Face Space
-        run: |
-          curl -X POST \
-            -H "Authorization: Bearer ${{ secrets.HF_TOKEN }}" \
-            https://huggingface.co/api/spaces/sharjeel17/traffic/restart
+#       # Restart Hugging Face Space
+#       - name: Restart Hugging Face Space
+#         run: |
+#           curl -X POST \
+#             -H "Authorization: Bearer ${{ secrets.HF_TOKEN }}" \
+#             https://huggingface.co/api/spaces/sharjeel17/traffic/restart
 
-  # =========================================
-  # DVC DAG GENERATION
-  # =========================================
+#   # =========================================
+#   # DVC DAG GENERATION
+#   # =========================================
 
-  dvc-dag:
-    runs-on: ubuntu-latest
+#   dvc-dag:
+#     runs-on: ubuntu-latest
 
-    if: github.event_name == 'pull_request'
+#     if: github.event_name == 'pull_request'
 
-    steps:
-      - name: Checkout Code
-        uses: actions/checkout@v4
+#     steps:
+#       - name: Checkout Code
+#         uses: actions/checkout@v4
 
-      - name: Set up Python
-        uses: actions/setup-python@v4
-        with:
-          python-version: "3.11"
+#       - name: Set up Python
+#         uses: actions/setup-python@v4
+#         with:
+#           python-version: "3.11"
 
-      - name: Install DVC
-        run: pip install dvc
+#       - name: Install DVC
+#         run: pip install dvc
 
-      - name: Generate DVC DAG
-        run: |
-          mkdir -p dag_output
-          dvc dag --md > dag_output/pipeline_dag.md
+#       - name: Generate DVC DAG
+#         run: |
+#           mkdir -p dag_output
+#           dvc dag --md > dag_output/pipeline_dag.md
 
-      - name: Upload DAG
-        uses: actions/upload-artifact@v4
-        with:
-          name: dvc-dag
-          path: dag_output/
+#       - name: Upload DAG
+#         uses: actions/upload-artifact@v4
+#         with:
+#           name: dvc-dag
+#           path: dag_output/
