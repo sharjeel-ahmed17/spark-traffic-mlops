@@ -5,7 +5,6 @@ import sys
 import mlflow
 import mlflow.spark
 from pyspark.sql import SparkSession
-from pyspark.ml import PipelineModel
 from fastapi.middleware.cors import CORSMiddleware
 import sentry_sdk
 
@@ -40,16 +39,18 @@ spark = SparkSession.builder \
     .appName("TrafficPredictionAPI") \
     .getOrCreate()
 
-MODEL_NAME = "Traffic_Vehicle_Prediction"
+MODEL_NAME     = "Traffic_Vehicle_Prediction"
+PIPELINE_NAME  = "Traffic_Transformation_Pipeline"
 
-# Prediction model
+# Prediction model — MLflow se
 model = mlflow.spark.load_model(
     model_uri=f"models:/{MODEL_NAME}/1"
 )
 
-# Transformation pipeline — same jo training mein use hui thi
-PIPELINE_PATH = os.getenv("PIPELINE_PATH", "models/pipeline")
-pipeline_model = PipelineModel.load(PIPELINE_PATH)
+# Transformation pipeline — MLflow se (local path nahi)
+pipeline_model = mlflow.spark.load_model(
+    model_uri=f"models:/{PIPELINE_NAME}/1"
+)
 
 @app.get("/")
 def home():
@@ -76,15 +77,18 @@ def predict(
         columns = ["Junction", "DayOfWeek", "Hour", "Month", "Year"]
         input_df = spark.createDataFrame(input_data, columns)
 
-        # Pehle same transformation pipeline apply karo
-        input_df = input_df \
-            .withColumn("Junction_idx", input_df["Junction"].cast("double")) \
-            .withColumn("DayOfWeek_idx", input_df["DayOfWeek"].cast("double")) \
-            .withColumn("Hour_idx", input_df["Hour"].cast("double"))
+        # idx columns banao — pipeline ke liye
+        input_df = (
+            input_df
+            .withColumn("Junction_idx",  input_df["Junction"].cast("double"))
+            .withColumn("DayOfWeek_idx", input_df["DayOfWeek"].cast("double"))
+            .withColumn("Hour_idx",      input_df["Hour"].cast("double"))
+        )
 
+        # Transformation pipeline apply karo
         transformed_df = pipeline_model.transform(input_df)
 
-        # Phir prediction
+        # Prediction
         prediction_df = model.transform(transformed_df)
         prediction = prediction_df.select("prediction").collect()[0][0]
 

@@ -1,8 +1,12 @@
+from dotenv import load_dotenv
+load_dotenv()
 from logger import logging
 from pyspark.sql import SparkSession
 from pyspark.sql.functions import col, to_timestamp, hour, dayofweek, month, year
 from pyspark.ml.feature import VectorAssembler, StandardScaler, OneHotEncoder
 from pyspark.ml import Pipeline
+import mlflow
+import mlflow.spark
 import os
 import shutil
 from config_utils import load_config
@@ -11,6 +15,8 @@ def transform_data():
     try:
         logging.info("Starting data transformation process...")
         config, params = load_config()
+
+        mlflow.set_tracking_uri(os.getenv("MLFLOW_TRACKING_URI"))
 
         spark = SparkSession.builder.appName("TrafficTransformation").getOrCreate()
 
@@ -37,30 +43,25 @@ def transform_data():
         if "Hour" not in existing:
             df = df.withColumn("Hour", hour(col("DateTime")))
         if "DayOfWeek" not in existing:
-            df = df.withColumn("DayOfWeek", dayofweek(col("DateTime")))   # 1=Sun … 7=Sat
+            df = df.withColumn("DayOfWeek", dayofweek(col("DateTime")))
 
         logging.info("Time features confirmed: Year, Month, Hour, DayOfWeek")
 
-        logging.info("Applying OneHotEncoder to Junction, DayOfWeek, Hour...")
-
         df = (
-            df.withColumn("Junction_idx",   col("Junction").cast("double"))
-              .withColumn("DayOfWeek_idx",  col("DayOfWeek").cast("double"))
-              .withColumn("Hour_idx",       col("Hour").cast("double"))
+            df.withColumn("Junction_idx",  col("Junction").cast("double"))
+              .withColumn("DayOfWeek_idx", col("DayOfWeek").cast("double"))
+              .withColumn("Hour_idx",      col("Hour").cast("double"))
         )
 
         ohe = OneHotEncoder(
             inputCols=["Junction_idx", "DayOfWeek_idx", "Hour_idx"],
             outputCols=["Junction_ohe", "DayOfWeek_ohe", "Hour_ohe"],
-            dropLast=True,          # avoids dummy-variable trap
+            dropLast=True,
             handleInvalid="keep",
         )
 
-        logging.info("Assembling feature vector...")
-
         categorical_features = [f"{col_name}_ohe" for col_name in params["transformation"]["categorical_cols"]]
         numeric_features = params["transformation"]["numeric_cols"]
-        
         assembler_input_cols = numeric_features + categorical_features
 
         assembler = VectorAssembler(
@@ -69,38 +70,23 @@ def transform_data():
             handleInvalid="skip",
         )
 
-        logging.info("Adding StandardScaler...")
-
         scaler = StandardScaler(
             inputCol="features_raw",
             outputCol="features",
-            withMean=False,   # False is safer for sparse OHE vectors
+            withMean=False,
             withStd=True,
         )
-
-        logging.info("Building and fitting Pipeline...")
 
         pipeline = Pipeline(stages=[ohe, assembler, scaler])
         pipeline_model = pipeline.fit(df)
         df_final = pipeline_model.transform(df)
 
         logging.info("Pipeline fitted successfully.")
-        logging.info("===================================")
-        logging.info("Transformed Dataset Schema")
-        logging.info("===================================")
-        df_final.printSchema()
 
-        logging.info("===================================")
-        logging.info("Transformed Dataset Preview (top 5 rows)")
-        logging.info("===================================")
-        df_final.select(
-            "DateTime", "Junction", "Hour", "DayOfWeek",
-            "Month", "Year", "Vehicles", "features"
-        ).show(5, truncate=False)
-
-        test_size = params["transformation"]["test_size"]
+        test_size         = params["transformation"]["test_size"]
         random_split_seed = params["transformation"]["random_split_seed"]
         train_df, test_df = df_final.randomSplit([1.0 - test_size, test_size], seed=random_split_seed)
+
         logging.info("===================================")
         logging.info("Train/Test Split")
         logging.info("  Train rows : %d", train_df.count())
@@ -112,28 +98,25 @@ def transform_data():
             shutil.rmtree(output_dir)
         os.makedirs(output_dir, exist_ok=True)
 
-        train_path = config["data"]["train_data"]
-        test_path  = config["data"]["test_data"]
+        train_df.write.mode("overwrite").parquet(config["data"]["train_data"])
+        test_df.write.mode("overwrite").parquet(config["data"]["test_data"])
 
-        train_df.write.mode("overwrite").parquet(train_path)
-        test_df.write.mode("overwrite").parquet(test_path)
-        logging.info("Train data saved : %s", train_path)
-        logging.info("Test  data saved : %s", test_path)
-
+        # Local backup
         models_dir = config["artifacts"]["pipeline_model"]
         if os.path.exists(models_dir):
             shutil.rmtree(models_dir)
-
         pipeline_model.save(models_dir)
-        logging.info("Pipeline model saved : %s", models_dir)
+        logging.info("Pipeline saved locally : %s", models_dir)
+
+        # MLflow mein log karo
+        with mlflow.start_run(run_name="Transformation_Pipeline"):
+            mlflow.spark.log_model(pipeline_model, "transformation_pipeline")
+            run_id = mlflow.active_run().info.run_id
+            logging.info("Pipeline logged to MLflow — run_id: %s", run_id)
 
         logging.info("===================================")
-        logging.info("Transformation Complete")
-        logging.info("  %s/", config["data"]["train_data"])
-        logging.info("  %s/", config["data"]["test_data"])
-        logging.info("  %s/", config["artifacts"]["pipeline_model"])
+        logging.info("Transformation Complete!")
         logging.info("===================================")
-        logging.info("Data transformation process completed successfully!")
 
     except Exception as e:
         logging.error("Error during data transformation: %s", str(e))
@@ -143,4 +126,4 @@ if __name__ == "__main__":
     try:
         transform_data()
     except Exception as e:
-        logging.error("Error during data transformation: %s", str(e))
+        logging.error("Error: %s", str(e))
