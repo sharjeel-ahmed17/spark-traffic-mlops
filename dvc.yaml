@@ -39,3 +39,13 @@ stages:
     metrics:
       - scores.json:
           cache: false
+
+  best_model:
+    cmd: python src/best_model.py
+    deps:
+      - src/best_model.py
+      - scores.json
+      - logs/best_run_id.txt
+    outs:
+      - logs/best_model.log:
+          cache: false
