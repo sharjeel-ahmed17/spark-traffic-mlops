@@ -1,0 +1,131 @@
+[ 2026-05-20 04:25:58,278 ] transformation.py:16 root - INFO - Starting data transformation process...
+[ 2026-05-20 04:26:23,738 ] transformation.py:29 root - INFO - ===================================
+[ 2026-05-20 04:26:23,738 ] transformation.py:30 root - INFO - Loaded Cleaned Dataset
+[ 2026-05-20 04:26:24,681 ] transformation.py:31 root - INFO -   Rows    : 48120
+[ 2026-05-20 04:26:24,696 ] transformation.py:32 root - INFO -   Columns : ['DateTime', 'Junction', 'Vehicles', 'Year', 'Month', 'Hour', 'DayOfWeek']
+[ 2026-05-20 04:26:24,696 ] transformation.py:33 root - INFO - ===================================
+[ 2026-05-20 04:26:24,712 ] transformation.py:35 root - INFO - Parsing DateTime and extracting time features...
+[ 2026-05-20 04:26:24,768 ] transformation.py:48 root - INFO - Time features confirmed: Year, Month, Hour, DayOfWeek
+[ 2026-05-20 04:26:29,006 ] transformation.py:84 root - INFO - Pipeline fitted successfully.
+[ 2026-05-20 04:26:29,076 ] transformation.py:90 root - INFO - ===================================
+[ 2026-05-20 04:26:29,077 ] transformation.py:91 root - INFO - Train/Test Split
+[ 2026-05-20 04:26:31,669 ] transformation.py:92 root - INFO -   Train rows : 38480
+[ 2026-05-20 04:26:33,206 ] transformation.py:93 root - INFO -   Test  rows : 9640
+[ 2026-05-20 04:26:33,207 ] transformation.py:94 root - INFO - ===================================
+[ 2026-05-20 04:26:39,865 ] transformation.py:109 root - INFO - Pipeline saved locally : models/pipeline
+[ 2026-05-20 04:27:41,343 ] transformation.py:115 root - INFO - Pipeline logged to MLflow — run_id: fc3b0194911249bfb94cd9821aa3a63b
+[ 2026-05-20 04:27:45,269 ] transformation.py:117 root - INFO - ===================================
+[ 2026-05-20 04:27:45,270 ] transformation.py:118 root - INFO - Transformation Complete!
+[ 2026-05-20 04:27:45,271 ] transformation.py:119 root - INFO - ===================================
+[ 2026-05-20 04:27:45,288 ] clientserver.py:570 py4j.clientserver - INFO - Closing down clientserver connection
+[ 2026-05-20 04:27:45,289 ] clientserver.py:570 py4j.clientserver - INFO - Closing down clientserver connection
+[ 2026-05-20 04:29:40,247 ] train.py:20 root - INFO - Starting model training process...
+[ 2026-05-20 04:29:50,709 ] train.py:31 root - INFO - ===================================
+[ 2026-05-20 04:29:50,709 ] train.py:32 root - INFO - Loaded Transformed Dataset
+[ 2026-05-20 04:29:53,342 ] train.py:33 root - INFO -   Train rows : 38480
+[ 2026-05-20 04:29:53,568 ] train.py:34 root - INFO -   Test  rows : 9640
+[ 2026-05-20 04:29:53,568 ] train.py:35 root - INFO - ===================================
+[ 2026-05-20 04:29:54,741 ] train.py:77 root - INFO - Training : PoissonGLM
+[ 2026-05-20 04:31:23,323 ] clientserver.py:570 py4j.clientserver - INFO - Closing down clientserver connection
+[ 2026-05-20 04:31:23,788 ] train.py:110 root - INFO -   RMSE : 7.1358 | R2 : 0.8865 | MAE : 4.3760
+[ 2026-05-20 04:32:04,711 ] train.py:125 root - INFO -   *** New best: PoissonGLM (RMSE=7.1358) ***
+[ 2026-05-20 04:32:12,756 ] train.py:77 root - INFO - Training : DecisionTree
+[ 2026-05-20 04:32:30,312 ] clientserver.py:570 py4j.clientserver - INFO - Closing down clientserver connection
+[ 2026-05-20 04:32:30,595 ] train.py:110 root - INFO -   RMSE : 9.6333 | R2 : 0.7931 | MAE : 6.1894
+[ 2026-05-20 04:33:00,574 ] train.py:77 root - INFO - Training : RandomForest
+[ 2026-05-20 04:38:56,134 ] clientserver.py:570 py4j.clientserver - INFO - Closing down clientserver connection
+[ 2026-05-20 04:38:58,685 ] train.py:110 root - INFO -   RMSE : 8.2993 | R2 : 0.8465 | MAE : 5.2582
+[ 2026-05-20 04:40:02,479 ] train.py:77 root - INFO - Training : GradientBoosting
+[ 2026-05-20 04:42:51,835 ] clientserver.py:570 py4j.clientserver - INFO - Closing down clientserver connection
+[ 2026-05-20 04:42:52,343 ] train.py:110 root - INFO -   RMSE : 6.7378 | R2 : 0.8988 | MAE : 4.0889
+[ 2026-05-20 04:43:31,570 ] train.py:125 root - INFO -   *** New best: GradientBoosting (RMSE=6.7378) ***
+[ 2026-05-20 04:43:32,185 ] train.py:127 root - INFO - BEST MODEL : GradientBoosting | RMSE : 6.7378
+[ 2026-05-20 04:45:14,453 ] train.py:143 root - INFO - Best model + transformation pipeline logged to MLflow.
+[ 2026-05-20 04:45:18,431 ] train.py:163 root - INFO - Scores saved : D:\spark-traffic-mlops\scores.json
+[ 2026-05-20 04:45:18,431 ] train.py:164 root - INFO - Training Completed Successfully!
+[ 2026-05-20 04:45:18,456 ] clientserver.py:570 py4j.clientserver - INFO - Closing down clientserver connection
+[ 2026-05-20 04:45:18,456 ] clientserver.py:570 py4j.clientserver - INFO - Closing down clientserver connection
+[ 2026-05-20 04:48:57,558 ] best_model.py:10 root - INFO - Starting best model selection process...
+[ 2026-05-20 04:48:59,296 ] best_model.py:37 root - INFO - ===================================
+[ 2026-05-20 04:48:59,296 ] best_model.py:38 root - INFO - BEST RUN FOUND
+[ 2026-05-20 04:48:59,297 ] best_model.py:39 root - INFO -   Run ID : 3cf31f9b7e9044fe9c93944be64dd6f9
+[ 2026-05-20 04:48:59,298 ] best_model.py:40 root - INFO -   RMSE   : 6.7378
+[ 2026-05-20 04:48:59,298 ] best_model.py:41 root - INFO - ===================================
+[ 2026-05-20 04:49:00,965 ] best_model.py:49 root - INFO - Prediction model registered — version 2
+[ 2026-05-20 04:49:02,569 ] best_model.py:77 root - ERROR - Error: Unable to find a logged_model with artifact_path transformation_pipeline under run 3cf31f9b7e9044fe9c93944be64dd6f9
+[ 2026-05-20 04:49:02,569 ] best_model.py:84 root - ERROR - Error: Unable to find a logged_model with artifact_path transformation_pipeline under run 3cf31f9b7e9044fe9c93944be64dd6f9
+[ 2026-05-20 04:53:46,639 ] train.py:20 root - INFO - Starting model training process...
+[ 2026-05-20 04:54:02,703 ] train.py:31 root - INFO - ===================================
+[ 2026-05-20 04:54:02,704 ] train.py:32 root - INFO - Loaded Transformed Dataset
+[ 2026-05-20 04:54:06,001 ] train.py:33 root - INFO -   Train rows : 38480
+[ 2026-05-20 04:54:06,368 ] train.py:34 root - INFO -   Test  rows : 9640
+[ 2026-05-20 04:54:06,378 ] train.py:35 root - INFO - ===================================
+[ 2026-05-20 04:54:07,537 ] train.py:77 root - INFO - Training : PoissonGLM
+[ 2026-05-20 04:56:09,783 ] clientserver.py:570 py4j.clientserver - INFO - Closing down clientserver connection
+[ 2026-05-20 04:56:10,345 ] train.py:110 root - INFO -   RMSE : 7.1358 | R2 : 0.8865 | MAE : 4.3760
+[ 2026-05-20 04:56:56,519 ] train.py:125 root - INFO -   *** New best: PoissonGLM (RMSE=7.1358) ***
+[ 2026-05-20 04:57:00,174 ] train.py:77 root - INFO - Training : DecisionTree
+[ 2026-05-20 04:57:50,691 ] clientserver.py:570 py4j.clientserver - INFO - Closing down clientserver connection
+[ 2026-05-20 04:57:52,130 ] train.py:110 root - INFO -   RMSE : 9.6333 | R2 : 0.7931 | MAE : 6.1894
+[ 2026-05-20 04:58:58,255 ] train.py:77 root - INFO - Training : RandomForest
+[ 2026-05-20 05:05:38,591 ] clientserver.py:570 py4j.clientserver - INFO - Closing down clientserver connection
+[ 2026-05-20 05:05:40,761 ] train.py:110 root - INFO -   RMSE : 8.2602 | R2 : 0.8479 | MAE : 5.2264
+[ 2026-05-20 05:06:34,652 ] train.py:77 root - INFO - Training : GradientBoosting
+[ 2026-05-20 08:13:24,385 ] clientserver.py:570 py4j.clientserver - INFO - Closing down clientserver connection
+[ 2026-05-20 08:13:24,861 ] train.py:110 root - INFO -   RMSE : 6.7378 | R2 : 0.8988 | MAE : 4.0889
+[ 2026-05-20 08:13:58,486 ] train.py:125 root - INFO -   *** New best: GradientBoosting (RMSE=6.7378) ***
+[ 2026-05-20 08:13:59,152 ] train.py:127 root - INFO - BEST MODEL : GradientBoosting | RMSE : 6.7378
+[ 2026-05-20 08:15:48,903 ] train.py:143 root - INFO - Best model + transformation pipeline logged to MLflow.
+[ 2026-05-20 08:15:49,552 ] train.py:163 root - INFO - Scores saved : D:\spark-traffic-mlops\scores.json
+[ 2026-05-20 08:15:49,553 ] train.py:164 root - INFO - Training Completed Successfully!
+[ 2026-05-20 08:15:49,573 ] clientserver.py:570 py4j.clientserver - INFO - Closing down clientserver connection
+[ 2026-05-20 08:15:49,573 ] clientserver.py:570 py4j.clientserver - INFO - Closing down clientserver connection
+[ 2026-05-20 13:18:33,044 ] best_model.py:10 root - INFO - Starting best model selection process...
+[ 2026-05-20 13:18:35,451 ] best_model.py:37 root - INFO - ===================================
+[ 2026-05-20 13:18:35,458 ] best_model.py:38 root - INFO - BEST RUN FOUND
+[ 2026-05-20 13:18:35,458 ] best_model.py:39 root - INFO -   Run ID : c9e4101a0f62499abe1d24e4aaafa5a8
+[ 2026-05-20 13:18:35,459 ] best_model.py:40 root - INFO -   RMSE   : 6.7378
+[ 2026-05-20 13:18:35,460 ] best_model.py:41 root - INFO - ===================================
+[ 2026-05-20 13:18:37,582 ] best_model.py:49 root - INFO - Prediction model registered — version 3
+[ 2026-05-20 13:18:39,624 ] best_model.py:77 root - ERROR - Error: Unable to find a logged_model with artifact_path transformation_pipeline under run c9e4101a0f62499abe1d24e4aaafa5a8
+[ 2026-05-20 13:18:39,626 ] best_model.py:84 root - ERROR - Error: Unable to find a logged_model with artifact_path transformation_pipeline under run c9e4101a0f62499abe1d24e4aaafa5a8
+[ 2026-05-20 13:28:36,021 ] train.py:20 root - INFO - Starting model training process...
+[ 2026-05-20 13:29:19,030 ] train.py:30 root - INFO - ===================================
+[ 2026-05-20 13:29:19,033 ] train.py:31 root - INFO - Loaded Transformed Dataset
+[ 2026-05-20 13:29:22,148 ] train.py:32 root - INFO -   Train rows : 38480
+[ 2026-05-20 13:29:22,435 ] train.py:33 root - INFO -   Test  rows : 9640
+[ 2026-05-20 13:29:22,436 ] train.py:34 root - INFO - ===================================
+[ 2026-05-20 13:29:23,866 ] train.py:76 root - INFO - Training : PoissonGLM
+[ 2026-05-20 13:31:30,319 ] clientserver.py:570 py4j.clientserver - INFO - Closing down clientserver connection
+[ 2026-05-20 13:31:31,098 ] train.py:109 root - INFO -   RMSE : 7.1358 | R2 : 0.8865 | MAE : 4.3760
+[ 2026-05-20 13:43:07,897 ] connectionpool.py:868 urllib3.connectionpool - WARNING - Retrying (Retry(total=6, connect=7, read=6, redirect=7, status=7)) after connection broken by 'RemoteDisconnected('Remote end closed connection without response')': /sharjeel-ahmed17/spark-traffic-mlops.mlflow/api/2.0/mlflow-artifacts/artifacts/29cecfa0d9c3432e915a72038f2e25ab/4ed4f746340344ad83f23fbac33641a6/artifacts/model/MLmodel
+[ 2026-05-20 13:43:22,818 ] train.py:124 root - INFO -   *** New best: PoissonGLM (RMSE=7.1358) ***
+[ 2026-05-20 13:43:26,886 ] train.py:76 root - INFO - Training : DecisionTree
+[ 2026-05-20 13:44:00,866 ] clientserver.py:570 py4j.clientserver - INFO - Closing down clientserver connection
+[ 2026-05-20 13:44:01,294 ] train.py:109 root - INFO -   RMSE : 9.6333 | R2 : 0.7931 | MAE : 6.1894
+[ 2026-05-20 13:44:40,306 ] train.py:76 root - INFO - Training : RandomForest
+[ 2026-05-20 13:54:58,922 ] clientserver.py:570 py4j.clientserver - INFO - Closing down clientserver connection
+[ 2026-05-20 13:55:02,255 ] train.py:109 root - INFO -   RMSE : 8.2723 | R2 : 0.8475 | MAE : 5.2375
+[ 2026-05-20 13:56:06,313 ] train.py:76 root - INFO - Training : GradientBoosting
+[ 2026-05-20 14:00:55,575 ] clientserver.py:570 py4j.clientserver - INFO - Closing down clientserver connection
+[ 2026-05-20 14:00:56,766 ] train.py:109 root - INFO -   RMSE : 6.7378 | R2 : 0.8988 | MAE : 4.0889
+[ 2026-05-20 14:01:45,033 ] train.py:124 root - INFO -   *** New best: GradientBoosting (RMSE=6.7378) ***
+[ 2026-05-20 14:01:45,843 ] train.py:126 root - INFO - BEST MODEL : GradientBoosting | RMSE : 6.7378
+[ 2026-05-20 14:04:00,916 ] train.py:143 root - INFO - Best model run_id : c4e748c874ad4ec6b481d71d80951dbc
+[ 2026-05-20 14:04:00,917 ] train.py:144 root - INFO - Best model + transformation pipeline logged to MLflow.
+[ 2026-05-20 14:04:04,878 ] train.py:151 root - INFO - Best run_id saved : logs/best_run_id.txt
+[ 2026-05-20 14:04:04,909 ] train.py:172 root - INFO - Scores saved : D:\spark-traffic-mlops\scores.json
+[ 2026-05-20 14:04:04,909 ] train.py:173 root - INFO - Training Completed Successfully!
+[ 2026-05-20 14:04:04,966 ] clientserver.py:570 py4j.clientserver - INFO - Closing down clientserver connection
+[ 2026-05-20 14:04:04,968 ] clientserver.py:570 py4j.clientserver - INFO - Closing down clientserver connection
+[ 2026-05-20 14:04:37,993 ] best_model.py:10 root - INFO - Starting best model selection process...
+[ 2026-05-20 14:04:37,997 ] best_model.py:26 root - INFO - ===================================
+[ 2026-05-20 14:04:38,001 ] best_model.py:27 root - INFO - BEST RUN ID : c4e748c874ad4ec6b481d71d80951dbc
+[ 2026-05-20 14:04:38,004 ] best_model.py:28 root - INFO - ===================================
+[ 2026-05-20 14:04:41,352 ] best_model.py:35 root - INFO - Prediction model registered — version 4
+[ 2026-05-20 14:04:43,458 ] best_model.py:42 root - INFO - Transformation pipeline registered — version 1
+[ 2026-05-20 14:04:44,302 ] best_model.py:55 root - INFO - Traffic_Vehicle_Prediction v4 → Production
+[ 2026-05-20 14:04:45,047 ] best_model.py:55 root - INFO - Traffic_Transformation_Pipeline v1 → Production
+[ 2026-05-20 14:04:45,055 ] best_model.py:57 root - INFO - ===================================
+[ 2026-05-20 14:04:45,064 ] best_model.py:58 root - INFO - Best model selection completed!
+[ 2026-05-20 14:04:45,064 ] best_model.py:59 root - INFO - ===================================

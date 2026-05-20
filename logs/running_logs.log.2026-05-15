@@ -1,0 +1,1441 @@
+<<<<<<< HEAD
+[ 2026-05-12 04:18:27,353 ] extraction.py:12 root - INFO - Using project folder: D:\spark-traffic-mlops
+[ 2026-05-12 04:18:27,354 ] extraction.py:15 root - INFO - Downloading traffic dataset...
+[ 2026-05-12 04:18:29,159 ] extraction.py:26 root - INFO - File read successfully with default utf-8 encoding.
+[ 2026-05-12 04:18:29,159 ] extraction.py:31 root - INFO - Downloaded! Shape: (48120, 4)
+[ 2026-05-12 04:18:29,160 ] extraction.py:32 root - INFO - Columns: ['DateTime', 'Junction', 'Vehicles', 'ID']
+[ 2026-05-12 04:18:29,161 ] extraction.py:33 root - INFO - First 5 records:
+              DateTime  Junction  Vehicles           ID
+0  2015-11-01 00:00:00         1        15  20151101001
+1  2015-11-01 01:00:00         1        13  20151101011
+2  2015-11-01 02:00:00         1        10  20151101021
+3  2015-11-01 03:00:00         1         7  20151101031
+4  2015-11-01 04:00:00         1         9  20151101041
+[ 2026-05-12 04:18:29,423 ] extraction.py:38 root - INFO - Data saved at: D:\spark-traffic-mlops\data\raw\traffic.csv
+[ 2026-05-12 04:18:29,424 ] extraction.py:41 root - INFO - Final files in data/raw: ['traffic.csv']
+[ 2026-05-12 04:18:29,425 ] extraction.py:42 root - INFO - Data extraction process completed successfully!
+[ 2026-05-12 04:28:18,610 ] main.py:3 root - INFO - Starting the Spark Traffic MLOps project.
+[ 2026-05-12 04:32:11,696 ] cleaning.py:9 root - INFO - Starting data cleaning process...
+[ 2026-05-12 04:33:10,888 ] cleaning.py:20 root - INFO - ===================================
+[ 2026-05-12 04:33:10,889 ] cleaning.py:21 root - INFO - Original Dataset Shape
+[ 2026-05-12 04:33:12,646 ] cleaning.py:22 root - INFO - Rows    : 48120
+[ 2026-05-12 04:33:12,704 ] cleaning.py:23 root - INFO - Columns : 4
+[ 2026-05-12 04:33:12,705 ] cleaning.py:24 root - INFO - ===================================
+[ 2026-05-12 04:33:12,705 ] cleaning.py:27 root - INFO - Checking Null Values...
+[ 2026-05-12 04:33:13,824 ] cleaning.py:30 root - INFO -   DateTime     : 0 null values
+[ 2026-05-12 04:33:14,561 ] cleaning.py:30 root - INFO -   Junction     : 0 null values
+[ 2026-05-12 04:33:14,938 ] cleaning.py:30 root - INFO -   Vehicles     : 0 null values
+[ 2026-05-12 04:33:15,335 ] cleaning.py:30 root - INFO -   ID           : 0 null values
+[ 2026-05-12 04:33:17,621 ] cleaning.py:36 root - INFO - ===================================
+[ 2026-05-12 04:33:17,621 ] cleaning.py:37 root - INFO - Duplicate Removal
+[ 2026-05-12 04:33:17,621 ] cleaning.py:38 root - INFO -   Rows before      : 48120
+[ 2026-05-12 04:33:17,622 ] cleaning.py:39 root - INFO -   Rows after       : 48120
+[ 2026-05-12 04:33:17,622 ] cleaning.py:40 root - INFO -   Duplicates removed: 0
+[ 2026-05-12 04:33:17,622 ] cleaning.py:41 root - INFO - ===================================
+[ 2026-05-12 04:33:17,622 ] cleaning.py:44 root - INFO - Removing unnecessary column: ID
+[ 2026-05-12 04:33:17,646 ] cleaning.py:46 root - INFO - ID column removed successfully.
+[ 2026-05-12 04:33:17,646 ] cleaning.py:49 root - INFO - Casting DateTime column to TimestampType...
+[ 2026-05-12 04:33:17,682 ] cleaning.py:51 root - INFO - DateTime cast completed.
+[ 2026-05-12 04:33:18,346 ] cleaning.py:55 root - INFO - Vehicles <= 0 (invalid rows): 0
+[ 2026-05-12 04:33:18,855 ] cleaning.py:62 root - INFO - Invalid Junction values: 0
+[ 2026-05-12 04:33:18,855 ] cleaning.py:68 root - INFO - Adding time-based feature columns...
+[ 2026-05-12 04:33:18,950 ] cleaning.py:75 root - INFO - Feature columns added: Year, Month, Hour, DayOfWeek
+[ 2026-05-12 04:33:18,950 ] cleaning.py:78 root - INFO - ===================================
+[ 2026-05-12 04:33:18,950 ] cleaning.py:79 root - INFO - Final Dataset Schema
+[ 2026-05-12 04:33:18,951 ] cleaning.py:80 root - INFO - ===================================
+[ 2026-05-12 04:33:18,954 ] cleaning.py:84 root - INFO - ===================================
+[ 2026-05-12 04:33:18,955 ] cleaning.py:85 root - INFO - Cleaned Dataset Preview (top 5 rows)
+[ 2026-05-12 04:33:18,956 ] cleaning.py:86 root - INFO - ===================================
+[ 2026-05-12 04:33:20,050 ] cleaning.py:90 root - INFO - ===================================
+[ 2026-05-12 04:33:20,050 ] cleaning.py:91 root - INFO - Summary Statistics
+[ 2026-05-12 04:33:20,051 ] cleaning.py:92 root - INFO - ===================================
+[ 2026-05-12 04:33:22,213 ] cleaning.py:97 root - INFO - Saving cleaned dataset to: data/processed/clean_traffic_data
+[ 2026-05-12 04:33:24,084 ] cleaning.py:99 root - INFO - ===================================
+[ 2026-05-12 04:33:24,085 ] cleaning.py:100 root - INFO - Cleaned data saved successfully
+[ 2026-05-12 04:33:24,089 ] cleaning.py:101 root - INFO - Path: data/processed/clean_traffic_data
+[ 2026-05-12 04:33:24,919 ] cleaning.py:102 root - INFO - Final row count  : 48120
+[ 2026-05-12 04:33:24,925 ] cleaning.py:103 root - INFO - Final column count: 7
+[ 2026-05-12 04:33:24,925 ] cleaning.py:104 root - INFO - ===================================
+[ 2026-05-12 04:33:24,931 ] cleaning.py:105 root - INFO - Data cleaning process completed successfully!
+[ 2026-05-12 04:33:24,966 ] clientserver.py:570 py4j.clientserver - INFO - Closing down clientserver connection
+[ 2026-05-12 04:35:18,169 ] transformation.py:12 root - INFO - Starting data transformation process...
+[ 2026-05-12 04:35:35,192 ] transformation.py:23 root - INFO - ===================================
+[ 2026-05-12 04:35:35,195 ] transformation.py:24 root - INFO - Loaded Cleaned Dataset
+[ 2026-05-12 04:35:36,223 ] transformation.py:25 root - INFO -   Rows    : 48120
+[ 2026-05-12 04:35:36,252 ] transformation.py:26 root - INFO -   Columns : ['DateTime', 'Junction', 'Vehicles', 'Year', 'Month', 'Hour', 'DayOfWeek']
+[ 2026-05-12 04:35:36,253 ] transformation.py:27 root - INFO - ===================================
+[ 2026-05-12 04:35:36,253 ] transformation.py:31 root - INFO - Parsing DateTime and extracting time features...
+[ 2026-05-12 04:35:36,319 ] transformation.py:45 root - INFO - Time features confirmed: Year, Month, Hour, DayOfWeek
+[ 2026-05-12 04:35:36,319 ] transformation.py:53 root - INFO - Applying OneHotEncoder to Junction, DayOfWeek, Hour...
+[ 2026-05-12 04:35:36,766 ] transformation.py:73 root - INFO - Assembling feature vector...
+[ 2026-05-12 04:35:36,776 ] transformation.py:88 root - INFO - Adding StandardScaler...
+[ 2026-05-12 04:35:36,786 ] transformation.py:98 root - INFO - Building and fitting Pipeline...
+[ 2026-05-12 04:35:40,097 ] transformation.py:104 root - INFO - Pipeline fitted successfully.
+[ 2026-05-12 04:35:40,099 ] transformation.py:105 root - INFO - ===================================
+[ 2026-05-12 04:35:40,099 ] transformation.py:106 root - INFO - Transformed Dataset Schema
+[ 2026-05-12 04:35:40,100 ] transformation.py:107 root - INFO - ===================================
+[ 2026-05-12 04:35:40,104 ] transformation.py:111 root - INFO - ===================================
+[ 2026-05-12 04:35:40,104 ] transformation.py:112 root - INFO - Transformed Dataset Preview (top 5 rows)
+[ 2026-05-12 04:35:40,104 ] transformation.py:113 root - INFO - ===================================
+[ 2026-05-12 04:35:40,667 ] transformation.py:121 root - INFO - ===================================
+[ 2026-05-12 04:35:40,667 ] transformation.py:122 root - INFO - Train/Test Split
+[ 2026-05-12 04:35:42,833 ] transformation.py:123 root - INFO -   Train rows : 38480
+[ 2026-05-12 04:35:44,564 ] transformation.py:124 root - INFO -   Test  rows : 9640
+[ 2026-05-12 04:35:44,564 ] transformation.py:125 root - INFO - ===================================
+[ 2026-05-12 04:35:53,181 ] transformation.py:138 root - INFO - Train data saved : data/transformed\train
+[ 2026-05-12 04:35:53,182 ] transformation.py:139 root - INFO - Test  data saved : data/transformed\test
+[ 2026-05-12 04:35:55,303 ] transformation.py:147 root - INFO - Pipeline model saved : models/pipeline
+[ 2026-05-12 04:35:55,304 ] transformation.py:149 root - INFO - ===================================
+[ 2026-05-12 04:35:55,308 ] transformation.py:150 root - INFO - Transformation Complete
+[ 2026-05-12 04:35:55,317 ] transformation.py:151 root - INFO -   data/transformed/train/
+[ 2026-05-12 04:35:55,318 ] transformation.py:152 root - INFO -   data/transformed/test/
+[ 2026-05-12 04:35:55,319 ] transformation.py:153 root - INFO -   models/pipeline/
+[ 2026-05-12 04:35:55,325 ] transformation.py:154 root - INFO - ===================================
+[ 2026-05-12 04:35:55,325 ] transformation.py:155 root - INFO - Data transformation process completed successfully!
+[ 2026-05-12 04:35:55,361 ] clientserver.py:570 py4j.clientserver - INFO - Closing down clientserver connection
+[ 2026-05-12 04:37:06,623 ] load.py:6 root - INFO - Starting data loading process...
+[ 2026-05-12 04:37:27,232 ] load.py:16 root - INFO - Data loading  process completed successfully!
+[ 2026-05-12 04:37:27,252 ] clientserver.py:570 py4j.clientserver - INFO - Closing down clientserver connection
+[ 2026-05-12 04:39:11,634 ] train.py:23 root - INFO - Starting model training process...
+[ 2026-05-12 04:39:32,772 ] train.py:32 root - INFO - ===================================
+[ 2026-05-12 04:39:32,772 ] train.py:33 root - INFO - Loaded Transformed Dataset
+[ 2026-05-12 04:39:36,607 ] train.py:34 root - INFO -   Train rows : 38480
+[ 2026-05-12 04:39:36,882 ] train.py:35 root - INFO -   Test  rows : 9640
+[ 2026-05-12 04:39:36,882 ] train.py:36 root - INFO - ===================================
+[ 2026-05-12 04:39:38,196 ] train.py:247 root - ERROR - Error during model training: API request to endpoint /api/2.0/mlflow/experiments/get-by-name failed with error code 401 != 200. Response body: '=============== ATTENTION! ===============
+
+To use authentication, you must first: 
+    Get your default access token from: https://dagshub.com/user/settings/tokens
+    OR 
+    Set a password: https://dagshub.com/user/settings/password 
+=========================================='
+[ 2026-05-12 04:39:38,196 ] train.py:255 root - ERROR - Error during model training: API request to endpoint /api/2.0/mlflow/experiments/get-by-name failed with error code 401 != 200. Response body: '=============== ATTENTION! ===============
+
+To use authentication, you must first: 
+    Get your default access token from: https://dagshub.com/user/settings/tokens
+    OR 
+    Set a password: https://dagshub.com/user/settings/password 
+=========================================='
+[ 2026-05-12 04:39:38,243 ] clientserver.py:570 py4j.clientserver - INFO - Closing down clientserver connection
+[ 2026-05-12 04:41:21,407 ] train.py:23 root - INFO - Starting model training process...
+[ 2026-05-12 04:41:38,021 ] train.py:32 root - INFO - ===================================
+[ 2026-05-12 04:41:38,021 ] train.py:33 root - INFO - Loaded Transformed Dataset
+[ 2026-05-12 04:41:41,855 ] train.py:34 root - INFO -   Train rows : 38480
+[ 2026-05-12 04:41:42,135 ] train.py:35 root - INFO -   Test  rows : 9640
+[ 2026-05-12 04:41:42,136 ] train.py:36 root - INFO - ===================================
+[ 2026-05-12 04:41:43,693 ] train.py:41 root - INFO - MLflow experiment set: Traffic_Vehicles_Regression_Experiment
+[ 2026-05-12 04:41:44,058 ] train.py:137 root - INFO - ===================================
+[ 2026-05-12 04:41:44,059 ] train.py:138 root - INFO - Training : PoissonGLM
+[ 2026-05-12 04:41:44,072 ] train.py:139 root - INFO - ===================================
+[ 2026-05-12 04:41:48,039 ] train.py:153 root - INFO -   ParamGrid size : 6 combinations
+[ 2026-05-12 04:43:25,674 ] clientserver.py:570 py4j.clientserver - INFO - Closing down clientserver connection
+[ 2026-05-12 04:43:26,253 ] train.py:172 root - INFO -   RMSE : 7.1342
+[ 2026-05-12 04:43:26,254 ] train.py:173 root - INFO -   R2   : 0.8865
+[ 2026-05-12 04:43:26,257 ] train.py:174 root - INFO -   MAE  : 4.3736
+[ 2026-05-12 04:44:29,576 ] train.py:196 root - INFO -   *** New best model: PoissonGLM (RMSE=7.1342) ***
+[ 2026-05-12 04:44:33,300 ] train.py:137 root - INFO - ===================================
+[ 2026-05-12 04:44:33,301 ] train.py:138 root - INFO - Training : DecisionTree
+[ 2026-05-12 04:44:33,301 ] train.py:139 root - INFO - ===================================
+[ 2026-05-12 04:44:33,825 ] train.py:153 root - INFO -   ParamGrid size : 9 combinations
+[ 2026-05-12 04:45:18,177 ] clientserver.py:570 py4j.clientserver - INFO - Closing down clientserver connection
+[ 2026-05-12 04:45:19,018 ] train.py:172 root - INFO -   RMSE : 9.6333
+[ 2026-05-12 04:45:19,018 ] train.py:173 root - INFO -   R2   : 0.7931
+[ 2026-05-12 04:45:19,024 ] train.py:174 root - INFO -   MAE  : 6.1894
+[ 2026-05-12 04:46:11,636 ] train.py:137 root - INFO - ===================================
+[ 2026-05-12 04:46:11,636 ] train.py:138 root - INFO - Training : RandomForest
+[ 2026-05-12 04:46:11,640 ] train.py:139 root - INFO - ===================================
+[ 2026-05-12 04:46:12,129 ] train.py:153 root - INFO -   ParamGrid size : 8 combinations
+[ 2026-05-12 04:53:13,660 ] clientserver.py:570 py4j.clientserver - INFO - Closing down clientserver connection
+[ 2026-05-12 04:53:16,043 ] train.py:172 root - INFO -   RMSE : 8.2313
+[ 2026-05-12 04:53:16,044 ] train.py:173 root - INFO -   R2   : 0.8490
+[ 2026-05-12 04:53:16,044 ] train.py:174 root - INFO -   MAE  : 5.2100
+[ 2026-05-12 04:54:16,518 ] train.py:137 root - INFO - ===================================
+[ 2026-05-12 04:54:16,520 ] train.py:138 root - INFO - Training : GradientBoosting
+[ 2026-05-12 04:54:16,532 ] train.py:139 root - INFO - ===================================
+[ 2026-05-12 04:54:17,048 ] train.py:153 root - INFO -   ParamGrid size : 4 combinations
+[ 2026-05-12 04:58:31,444 ] clientserver.py:570 py4j.clientserver - INFO - Closing down clientserver connection
+[ 2026-05-12 04:58:32,057 ] train.py:172 root - INFO -   RMSE : 6.7378
+[ 2026-05-12 04:58:32,058 ] train.py:173 root - INFO -   R2   : 0.8988
+[ 2026-05-12 04:58:32,059 ] train.py:174 root - INFO -   MAE  : 4.0889
+[ 2026-05-12 04:59:28,630 ] train.py:196 root - INFO -   *** New best model: GradientBoosting (RMSE=6.7378) ***
+[ 2026-05-12 04:59:29,357 ] train.py:201 root - INFO - ===================================
+[ 2026-05-12 04:59:29,358 ] train.py:202 root - INFO - BEST MODEL : GradientBoosting
+[ 2026-05-12 04:59:29,361 ] train.py:203 root - INFO - BEST RMSE  : 6.7378
+[ 2026-05-12 04:59:29,368 ] train.py:204 root - INFO - ===================================
+[ 2026-05-12 05:00:19,593 ] train.py:212 root - INFO - Best model logged to MLflow under 'best_model'.
+[ 2026-05-12 05:00:19,594 ] train.py:232 root - INFO - No scores.json found — creating new file.
+[ 2026-05-12 05:00:19,604 ] train.py:239 root - INFO - ===================================
+[ 2026-05-12 05:00:19,605 ] train.py:240 root - INFO - Scores saved to : D:\spark-traffic-mlops\scores.json
+[ 2026-05-12 05:00:19,606 ] train.py:241 root - INFO - Total runs in file : 1
+[ 2026-05-12 05:00:19,606 ] train.py:242 root - INFO - ===================================
+[ 2026-05-12 05:00:19,608 ] train.py:243 root - INFO - Training Completed Successfully
+[ 2026-05-12 05:00:19,609 ] train.py:244 root - INFO - ===================================
+[ 2026-05-12 05:00:19,639 ] clientserver.py:570 py4j.clientserver - INFO - Closing down clientserver connection
+[ 2026-05-12 05:00:19,640 ] clientserver.py:570 py4j.clientserver - INFO - Closing down clientserver connection
+[ 2026-05-12 05:03:48,340 ] best_model.py:12 root - INFO - Starting best model selection process...
+[ 2026-05-12 05:03:48,340 ] best_model.py:21 root - INFO - MLflow tracking URI : https://dagshub.com/sharjeel-ahmed17/spark-traffic-mlops.mlflow
+[ 2026-05-12 05:03:48,343 ] best_model.py:22 root - INFO - Experiment          : Traffic_Vehicles_Regression_Experiment
+[ 2026-05-12 05:03:49,311 ] best_model.py:34 root - INFO - Experiment ID : 0
+[ 2026-05-12 05:03:49,735 ] best_model.py:54 root - INFO - ===================================
+[ 2026-05-12 05:03:49,736 ] best_model.py:55 root - INFO - BEST RUN FOUND
+[ 2026-05-12 05:03:49,737 ] best_model.py:56 root - INFO -   Run ID     : 6fce8fa3b0c448a89301ad97bd5fe44f
+[ 2026-05-12 05:03:49,738 ] best_model.py:57 root - INFO -   Model name : GradientBoosting
+[ 2026-05-12 05:03:49,738 ] best_model.py:58 root - INFO -   RMSE       : 6.7378
+[ 2026-05-12 05:03:49,740 ] best_model.py:59 root - INFO -   R2         : 0.8988
+[ 2026-05-12 05:03:49,740 ] best_model.py:60 root - INFO -   MAE        : 4.0889
+[ 2026-05-12 05:03:49,740 ] best_model.py:61 root - INFO - ===================================
+[ 2026-05-12 05:03:49,741 ] best_model.py:68 root - INFO - Registering model from URI : runs:/6fce8fa3b0c448a89301ad97bd5fe44f/model
+[ 2026-05-12 05:03:51,570 ] best_model.py:75 root - INFO - ===================================
+[ 2026-05-12 05:03:51,570 ] best_model.py:76 root - INFO - MODEL REGISTERED
+[ 2026-05-12 05:03:51,570 ] best_model.py:77 root - INFO -   Name    : Traffic_Vehicle_Prediction
+[ 2026-05-12 05:03:51,570 ] best_model.py:78 root - INFO -   Version : 1
+[ 2026-05-12 05:03:51,570 ] best_model.py:79 root - INFO - ===================================
+[ 2026-05-12 05:03:52,279 ] best_model.py:89 root - INFO - Model v1 transitioned to stage: Production
+[ 2026-05-12 05:03:52,279 ] best_model.py:90 root - INFO - ===================================
+[ 2026-05-12 05:03:52,280 ] best_model.py:91 root - INFO - Best model selection process completed successfully!
+[ 2026-05-12 05:03:52,280 ] best_model.py:92 root - INFO - ===================================
+[ 2026-05-13 09:29:32,402 ] train.py:27 root - INFO - Starting model training process...
+[ 2026-05-13 09:29:49,387 ] train.py:36 root - INFO - ===================================
+[ 2026-05-13 09:29:49,387 ] train.py:37 root - INFO - Loaded Transformed Dataset
+[ 2026-05-13 09:29:52,357 ] train.py:38 root - INFO -   Train rows : 38480
+[ 2026-05-13 09:29:52,618 ] train.py:39 root - INFO -   Test  rows : 9640
+[ 2026-05-13 09:29:52,619 ] train.py:40 root - INFO - ===================================
+[ 2026-05-13 09:29:53,618 ] train.py:45 root - INFO - MLflow experiment set: Traffic_Vehicles_Regression_Experiment
+[ 2026-05-13 09:29:53,757 ] train.py:145 root - INFO - ===================================
+[ 2026-05-13 09:29:53,758 ] train.py:146 root - INFO - Training : PoissonGLM
+[ 2026-05-13 09:29:53,759 ] train.py:147 root - INFO - ===================================
+[ 2026-05-13 09:29:54,850 ] train.py:161 root - INFO -   ParamGrid size : 6 combinations
+[ 2026-05-13 09:31:42,025 ] clientserver.py:570 py4j.clientserver - INFO - Closing down clientserver connection
+[ 2026-05-13 09:31:42,675 ] train.py:180 root - INFO -   RMSE : 7.6929
+[ 2026-05-13 09:31:42,677 ] train.py:181 root - INFO -   R2   : 0.8681
+[ 2026-05-13 09:31:42,677 ] train.py:182 root - INFO -   MAE  : 4.9001
+[ 2026-05-13 09:31:49,439 ] train.py:266 root - ERROR - Error during model training: An error occurred while calling o4634.save.
+: java.io.IOException: Path models/runs/PoissonGLM already exists. To overwrite it, please use write.overwrite().save(path) for Scala and use write().overwrite().save(path) for Java and Python.
+	at org.apache.spark.ml.util.FileSystemOverwrite.handleOverwrite(ReadWrite.scala:841)
+	at org.apache.spark.ml.util.MLWriter.save(ReadWrite.scala:175)
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:77)
+	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:569)
+	at py4j.reflection.MethodInvoker.invoke(MethodInvoker.java:244)
+	at py4j.reflection.ReflectionEngine.invoke(ReflectionEngine.java:374)
+	at py4j.Gateway.invoke(Gateway.java:282)
+	at py4j.commands.AbstractCommand.invokeMethod(AbstractCommand.java:132)
+	at py4j.commands.CallCommand.execute(CallCommand.java:79)
+	at py4j.ClientServerConnection.waitForCommands(ClientServerConnection.java:184)
+	at py4j.ClientServerConnection.run(ClientServerConnection.java:108)
+	at java.base/java.lang.Thread.run(Thread.java:840)
+
+[ 2026-05-13 09:31:49,440 ] train.py:274 root - ERROR - Error during model training: An error occurred while calling o4634.save.
+: java.io.IOException: Path models/runs/PoissonGLM already exists. To overwrite it, please use write.overwrite().save(path) for Scala and use write().overwrite().save(path) for Java and Python.
+	at org.apache.spark.ml.util.FileSystemOverwrite.handleOverwrite(ReadWrite.scala:841)
+	at org.apache.spark.ml.util.MLWriter.save(ReadWrite.scala:175)
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:77)
+	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:569)
+	at py4j.reflection.MethodInvoker.invoke(MethodInvoker.java:244)
+	at py4j.reflection.ReflectionEngine.invoke(ReflectionEngine.java:374)
+	at py4j.Gateway.invoke(Gateway.java:282)
+	at py4j.commands.AbstractCommand.invokeMethod(AbstractCommand.java:132)
+	at py4j.commands.CallCommand.execute(CallCommand.java:79)
+	at py4j.ClientServerConnection.waitForCommands(ClientServerConnection.java:184)
+	at py4j.ClientServerConnection.run(ClientServerConnection.java:108)
+	at java.base/java.lang.Thread.run(Thread.java:840)
+
+[ 2026-05-13 09:31:49,514 ] clientserver.py:570 py4j.clientserver - INFO - Closing down clientserver connection
+[ 2026-05-13 09:31:49,514 ] clientserver.py:570 py4j.clientserver - INFO - Closing down clientserver connection
+[ 2026-05-13 09:43:58,396 ] train.py:25 root - INFO - Starting model training process...
+[ 2026-05-13 09:44:16,602 ] train.py:32 root - INFO - ===================================
+[ 2026-05-13 09:44:16,616 ] train.py:33 root - INFO - Loaded Transformed Dataset
+[ 2026-05-13 09:44:20,410 ] train.py:34 root - INFO -   Train rows : 38480
+[ 2026-05-13 09:44:20,793 ] train.py:35 root - INFO -   Test  rows : 9640
+[ 2026-05-13 09:44:20,793 ] train.py:36 root - INFO - ===================================
+[ 2026-05-13 09:44:21,720 ] train.py:41 root - INFO - MLflow experiment set: Traffic_Vehicles_Regression_Experiment
+[ 2026-05-13 09:44:22,057 ] train.py:121 root - INFO - ===================================
+[ 2026-05-13 09:44:22,058 ] train.py:122 root - INFO - Training : PoissonGLM
+[ 2026-05-13 09:44:22,059 ] train.py:123 root - INFO - ===================================
+[ 2026-05-13 09:44:23,130 ] train.py:137 root - INFO -   ParamGrid size : 6 combinations
+[ 2026-05-13 12:50:59,621 ] train.py:23 root - INFO - Starting model training process...
+[ 2026-05-13 12:51:30,804 ] train.py:32 root - INFO - ===================================
+[ 2026-05-13 12:51:30,805 ] train.py:33 root - INFO - Loaded Transformed Dataset
+[ 2026-05-13 12:51:33,591 ] train.py:34 root - INFO -   Train rows : 38480
+[ 2026-05-13 12:51:33,894 ] train.py:35 root - INFO -   Test  rows : 9640
+[ 2026-05-13 12:51:33,894 ] train.py:36 root - INFO - ===================================
+[ 2026-05-13 12:51:35,005 ] train.py:41 root - INFO - MLflow experiment set: Traffic_Vehicles_Regression_Experiment
+[ 2026-05-13 12:51:35,124 ] train.py:137 root - INFO - ===================================
+[ 2026-05-13 12:51:35,124 ] train.py:138 root - INFO - Training : PoissonGLM
+[ 2026-05-13 12:51:35,124 ] train.py:139 root - INFO - ===================================
+[ 2026-05-13 12:51:35,888 ] train.py:153 root - INFO -   ParamGrid size : 6 combinations
+[ 2026-05-13 12:52:47,562 ] clientserver.py:570 py4j.clientserver - INFO - Closing down clientserver connection
+[ 2026-05-13 12:52:48,001 ] train.py:172 root - INFO -   RMSE : 7.1342
+[ 2026-05-13 12:52:48,002 ] train.py:173 root - INFO -   R2   : 0.8865
+[ 2026-05-13 12:52:48,002 ] train.py:174 root - INFO -   MAE  : 4.3736
+[ 2026-05-13 12:53:28,715 ] train.py:196 root - INFO -   *** New best model: PoissonGLM (RMSE=7.1342) ***
+[ 2026-05-13 12:53:29,338 ] train.py:137 root - INFO - ===================================
+[ 2026-05-13 12:53:29,338 ] train.py:138 root - INFO - Training : DecisionTree
+[ 2026-05-13 12:53:29,339 ] train.py:139 root - INFO - ===================================
+[ 2026-05-13 12:53:29,781 ] train.py:153 root - INFO -   ParamGrid size : 9 combinations
+[ 2026-05-13 12:53:59,206 ] clientserver.py:570 py4j.clientserver - INFO - Closing down clientserver connection
+[ 2026-05-13 12:53:59,583 ] train.py:172 root - INFO -   RMSE : 9.6333
+[ 2026-05-13 12:53:59,583 ] train.py:173 root - INFO -   R2   : 0.7931
+[ 2026-05-13 12:53:59,583 ] train.py:174 root - INFO -   MAE  : 6.1894
+[ 2026-05-13 12:55:00,581 ] train.py:137 root - INFO - ===================================
+[ 2026-05-13 12:55:00,582 ] train.py:138 root - INFO - Training : RandomForest
+[ 2026-05-13 12:55:00,582 ] train.py:139 root - INFO - ===================================
+[ 2026-05-13 12:55:01,036 ] train.py:153 root - INFO -   ParamGrid size : 8 combinations
+[ 2026-05-13 12:59:45,502 ] clientserver.py:570 py4j.clientserver - INFO - Closing down clientserver connection
+[ 2026-05-13 12:59:47,459 ] train.py:172 root - INFO -   RMSE : 8.2499
+[ 2026-05-13 12:59:47,460 ] train.py:173 root - INFO -   R2   : 0.8483
+[ 2026-05-13 12:59:47,460 ] train.py:174 root - INFO -   MAE  : 5.2274
+[ 2026-05-13 13:00:34,902 ] train.py:137 root - INFO - ===================================
+[ 2026-05-13 13:00:34,902 ] train.py:138 root - INFO - Training : GradientBoosting
+[ 2026-05-13 13:00:34,902 ] train.py:139 root - INFO - ===================================
+[ 2026-05-13 13:00:35,407 ] train.py:153 root - INFO -   ParamGrid size : 4 combinations
+[ 2026-05-13 13:03:10,257 ] clientserver.py:570 py4j.clientserver - INFO - Closing down clientserver connection
+[ 2026-05-13 13:03:10,848 ] train.py:172 root - INFO -   RMSE : 6.7378
+[ 2026-05-13 13:03:10,848 ] train.py:173 root - INFO -   R2   : 0.8988
+[ 2026-05-13 13:03:10,848 ] train.py:174 root - INFO -   MAE  : 4.0889
+[ 2026-05-13 13:03:54,759 ] train.py:196 root - INFO -   *** New best model: GradientBoosting (RMSE=6.7378) ***
+[ 2026-05-13 13:03:55,378 ] train.py:201 root - INFO - ===================================
+[ 2026-05-13 13:03:55,378 ] train.py:202 root - INFO - BEST MODEL : GradientBoosting
+[ 2026-05-13 13:03:55,379 ] train.py:203 root - INFO - BEST RMSE  : 6.7378
+[ 2026-05-13 13:03:55,379 ] train.py:204 root - INFO - ===================================
+[ 2026-05-13 13:04:39,805 ] train.py:212 root - INFO - Best model logged to MLflow under 'best_model'.
+[ 2026-05-13 13:04:39,813 ] train.py:229 root - INFO - Existing scores.json found — appending new run.
+[ 2026-05-13 13:04:39,814 ] train.py:239 root - INFO - ===================================
+[ 2026-05-13 13:04:39,815 ] train.py:240 root - INFO - Scores saved to : D:\spark-traffic-mlops\scores.json
+[ 2026-05-13 13:04:39,815 ] train.py:241 root - INFO - Total runs in file : 2
+[ 2026-05-13 13:04:39,815 ] train.py:242 root - INFO - ===================================
+[ 2026-05-13 13:04:39,815 ] train.py:243 root - INFO - Training Completed Successfully
+[ 2026-05-13 13:04:39,815 ] train.py:244 root - INFO - ===================================
+[ 2026-05-13 13:04:39,831 ] clientserver.py:570 py4j.clientserver - INFO - Closing down clientserver connection
+[ 2026-05-13 13:04:39,832 ] clientserver.py:570 py4j.clientserver - INFO - Closing down clientserver connection
+[ 2026-05-13 13:09:46,931 ] train.py:23 root - INFO - Starting model training process...
+[ 2026-05-13 13:10:01,877 ] train.py:32 root - INFO - ===================================
+[ 2026-05-13 13:10:01,878 ] train.py:33 root - INFO - Loaded Transformed Dataset
+[ 2026-05-13 13:10:04,968 ] train.py:34 root - INFO -   Train rows : 38480
+[ 2026-05-13 13:10:05,265 ] train.py:35 root - INFO -   Test  rows : 9640
+[ 2026-05-13 13:10:05,265 ] train.py:36 root - INFO - ===================================
+[ 2026-05-13 13:10:07,501 ] train.py:41 root - INFO - MLflow experiment set: Traffic_Vehicles_Regression_Experiment
+[ 2026-05-13 13:10:07,621 ] train.py:137 root - INFO - ===================================
+[ 2026-05-13 13:10:07,621 ] train.py:138 root - INFO - Training : PoissonGLM
+[ 2026-05-13 13:10:07,621 ] train.py:139 root - INFO - ===================================
+[ 2026-05-13 13:10:07,970 ] train.py:153 root - INFO -   ParamGrid size : 6 combinations
+[ 2026-05-13 13:12:01,136 ] clientserver.py:570 py4j.clientserver - INFO - Closing down clientserver connection
+[ 2026-05-13 13:12:02,116 ] train.py:172 root - INFO -   RMSE : 7.1342
+[ 2026-05-13 13:12:02,117 ] train.py:173 root - INFO -   R2   : 0.8865
+[ 2026-05-13 13:12:02,117 ] train.py:174 root - INFO -   MAE  : 4.3736
+[ 2026-05-13 13:12:42,142 ] train.py:196 root - INFO -   *** New best model: PoissonGLM (RMSE=7.1342) ***
+[ 2026-05-13 13:12:42,159 ] train.py:137 root - INFO - ===================================
+[ 2026-05-13 13:12:42,160 ] train.py:138 root - INFO - Training : DecisionTree
+[ 2026-05-13 13:12:42,160 ] train.py:139 root - INFO - ===================================
+[ 2026-05-13 13:12:42,211 ] train.py:153 root - INFO -   ParamGrid size : 9 combinations
+[ 2026-05-13 13:13:10,909 ] clientserver.py:570 py4j.clientserver - INFO - Closing down clientserver connection
+[ 2026-05-13 13:13:11,325 ] train.py:172 root - INFO -   RMSE : 9.6333
+[ 2026-05-13 13:13:11,325 ] train.py:173 root - INFO -   R2   : 0.7931
+[ 2026-05-13 13:13:11,325 ] train.py:174 root - INFO -   MAE  : 6.1894
+[ 2026-05-13 13:13:37,152 ] train.py:137 root - INFO - ===================================
+[ 2026-05-13 13:13:37,152 ] train.py:138 root - INFO - Training : RandomForest
+[ 2026-05-13 13:13:37,152 ] train.py:139 root - INFO - ===================================
+[ 2026-05-13 13:13:37,181 ] train.py:153 root - INFO -   ParamGrid size : 8 combinations
+[ 2026-05-13 13:20:01,778 ] clientserver.py:570 py4j.clientserver - INFO - Closing down clientserver connection
+[ 2026-05-13 13:20:04,866 ] train.py:172 root - INFO -   RMSE : 8.2647
+[ 2026-05-13 13:20:04,866 ] train.py:173 root - INFO -   R2   : 0.8477
+[ 2026-05-13 13:20:04,866 ] train.py:174 root - INFO -   MAE  : 5.2121
+[ 2026-05-13 13:39:30,834 ] train.py:137 root - INFO - ===================================
+[ 2026-05-13 13:39:30,836 ] train.py:138 root - INFO - Training : GradientBoosting
+[ 2026-05-13 13:39:30,837 ] train.py:139 root - INFO - ===================================
+[ 2026-05-13 13:39:30,896 ] train.py:153 root - INFO -   ParamGrid size : 4 combinations
+[ 2026-05-13 13:43:31,486 ] clientserver.py:570 py4j.clientserver - INFO - Closing down clientserver connection
+[ 2026-05-13 13:43:32,098 ] train.py:172 root - INFO -   RMSE : 6.7378
+[ 2026-05-13 13:43:32,098 ] train.py:173 root - INFO -   R2   : 0.8988
+[ 2026-05-13 13:43:32,098 ] train.py:174 root - INFO -   MAE  : 4.0889
+[ 2026-05-13 13:44:01,608 ] train.py:196 root - INFO -   *** New best model: GradientBoosting (RMSE=6.7378) ***
+[ 2026-05-13 13:44:01,619 ] train.py:201 root - INFO - ===================================
+[ 2026-05-13 13:44:01,619 ] train.py:202 root - INFO - BEST MODEL : GradientBoosting
+[ 2026-05-13 13:44:01,620 ] train.py:203 root - INFO - BEST RMSE  : 6.7378
+[ 2026-05-13 13:44:01,620 ] train.py:204 root - INFO - ===================================
+[ 2026-05-13 13:44:30,997 ] train.py:212 root - INFO - Best model logged to MLflow under 'best_model'.
+[ 2026-05-13 13:44:31,008 ] train.py:229 root - INFO - Existing scores.json found — appending new run.
+[ 2026-05-13 13:44:31,022 ] train.py:239 root - INFO - ===================================
+[ 2026-05-13 13:44:31,045 ] train.py:240 root - INFO - Scores saved to : D:\spark-traffic-mlops\scores.json
+[ 2026-05-13 13:44:31,059 ] train.py:241 root - INFO - Total runs in file : 3
+[ 2026-05-13 13:44:31,075 ] train.py:242 root - INFO - ===================================
+[ 2026-05-13 13:44:31,080 ] train.py:243 root - INFO - Training Completed Successfully
+[ 2026-05-13 13:44:31,080 ] train.py:244 root - INFO - ===================================
+[ 2026-05-13 13:44:31,099 ] clientserver.py:570 py4j.clientserver - INFO - Closing down clientserver connection
+[ 2026-05-13 13:52:38,266 ] best_model.py:12 root - INFO - Starting best model selection process...
+[ 2026-05-13 13:52:39,588 ] best_model.py:21 root - INFO - MLflow tracking URI : sqlite:///mlflow.db
+[ 2026-05-13 13:52:39,588 ] best_model.py:22 root - INFO - Experiment          : Traffic_Vehicles_Regression_Experiment
+[ 2026-05-13 13:52:39,601 ] best_model.py:34 root - INFO - Experiment ID : 1
+[ 2026-05-13 13:52:39,654 ] best_model.py:54 root - INFO - ===================================
+[ 2026-05-13 13:52:39,655 ] best_model.py:55 root - INFO - BEST RUN FOUND
+[ 2026-05-13 13:52:39,655 ] best_model.py:56 root - INFO -   Run ID     : 213c4be4c92040bfbebe1cd5fadae108
+[ 2026-05-13 13:52:39,655 ] best_model.py:57 root - INFO -   Model name : GradientBoosting
+[ 2026-05-13 13:52:39,656 ] best_model.py:58 root - INFO -   RMSE       : 6.7378
+[ 2026-05-13 13:52:39,656 ] best_model.py:59 root - INFO -   R2         : 0.8988
+[ 2026-05-13 13:52:39,657 ] best_model.py:60 root - INFO -   MAE        : 4.0889
+[ 2026-05-13 13:52:39,657 ] best_model.py:61 root - INFO - ===================================
+[ 2026-05-13 13:52:39,657 ] best_model.py:68 root - INFO - Registering model from URI : runs:/213c4be4c92040bfbebe1cd5fadae108/model
+[ 2026-05-13 13:52:39,916 ] best_model.py:75 root - INFO - ===================================
+[ 2026-05-13 13:52:39,917 ] best_model.py:76 root - INFO - MODEL REGISTERED
+[ 2026-05-13 13:52:39,917 ] best_model.py:77 root - INFO -   Name    : Traffic_Vehicle_Prediction
+[ 2026-05-13 13:52:39,917 ] best_model.py:78 root - INFO -   Version : 1
+[ 2026-05-13 13:52:39,918 ] best_model.py:79 root - INFO - ===================================
+[ 2026-05-13 13:52:39,965 ] best_model.py:89 root - INFO - Model v1 transitioned to stage: Production
+[ 2026-05-13 13:52:39,966 ] best_model.py:90 root - INFO - ===================================
+[ 2026-05-13 13:52:39,966 ] best_model.py:91 root - INFO - Best model selection process completed successfully!
+[ 2026-05-13 13:52:39,967 ] best_model.py:92 root - INFO - ===================================
+=======
+[ 2026-05-12 04:18:27,353 ] extraction.py:12 root - INFO - Using project folder: D:\spark-traffic-mlops
+[ 2026-05-12 04:18:27,354 ] extraction.py:15 root - INFO - Downloading traffic dataset...
+[ 2026-05-12 04:18:29,159 ] extraction.py:26 root - INFO - File read successfully with default utf-8 encoding.
+[ 2026-05-12 04:18:29,159 ] extraction.py:31 root - INFO - Downloaded! Shape: (48120, 4)
+[ 2026-05-12 04:18:29,160 ] extraction.py:32 root - INFO - Columns: ['DateTime', 'Junction', 'Vehicles', 'ID']
+[ 2026-05-12 04:18:29,161 ] extraction.py:33 root - INFO - First 5 records:
+              DateTime  Junction  Vehicles           ID
+0  2015-11-01 00:00:00         1        15  20151101001
+1  2015-11-01 01:00:00         1        13  20151101011
+2  2015-11-01 02:00:00         1        10  20151101021
+3  2015-11-01 03:00:00         1         7  20151101031
+4  2015-11-01 04:00:00         1         9  20151101041
+[ 2026-05-12 04:18:29,423 ] extraction.py:38 root - INFO - Data saved at: D:\spark-traffic-mlops\data\raw\traffic.csv
+[ 2026-05-12 04:18:29,424 ] extraction.py:41 root - INFO - Final files in data/raw: ['traffic.csv']
+[ 2026-05-12 04:18:29,425 ] extraction.py:42 root - INFO - Data extraction process completed successfully!
+[ 2026-05-12 04:28:18,610 ] main.py:3 root - INFO - Starting the Spark Traffic MLOps project.
+[ 2026-05-12 04:32:11,696 ] cleaning.py:9 root - INFO - Starting data cleaning process...
+[ 2026-05-12 04:33:10,888 ] cleaning.py:20 root - INFO - ===================================
+[ 2026-05-12 04:33:10,889 ] cleaning.py:21 root - INFO - Original Dataset Shape
+[ 2026-05-12 04:33:12,646 ] cleaning.py:22 root - INFO - Rows    : 48120
+[ 2026-05-12 04:33:12,704 ] cleaning.py:23 root - INFO - Columns : 4
+[ 2026-05-12 04:33:12,705 ] cleaning.py:24 root - INFO - ===================================
+[ 2026-05-12 04:33:12,705 ] cleaning.py:27 root - INFO - Checking Null Values...
+[ 2026-05-12 04:33:13,824 ] cleaning.py:30 root - INFO -   DateTime     : 0 null values
+[ 2026-05-12 04:33:14,561 ] cleaning.py:30 root - INFO -   Junction     : 0 null values
+[ 2026-05-12 04:33:14,938 ] cleaning.py:30 root - INFO -   Vehicles     : 0 null values
+[ 2026-05-12 04:33:15,335 ] cleaning.py:30 root - INFO -   ID           : 0 null values
+[ 2026-05-12 04:33:17,621 ] cleaning.py:36 root - INFO - ===================================
+[ 2026-05-12 04:33:17,621 ] cleaning.py:37 root - INFO - Duplicate Removal
+[ 2026-05-12 04:33:17,621 ] cleaning.py:38 root - INFO -   Rows before      : 48120
+[ 2026-05-12 04:33:17,622 ] cleaning.py:39 root - INFO -   Rows after       : 48120
+[ 2026-05-12 04:33:17,622 ] cleaning.py:40 root - INFO -   Duplicates removed: 0
+[ 2026-05-12 04:33:17,622 ] cleaning.py:41 root - INFO - ===================================
+[ 2026-05-12 04:33:17,622 ] cleaning.py:44 root - INFO - Removing unnecessary column: ID
+[ 2026-05-12 04:33:17,646 ] cleaning.py:46 root - INFO - ID column removed successfully.
+[ 2026-05-12 04:33:17,646 ] cleaning.py:49 root - INFO - Casting DateTime column to TimestampType...
+[ 2026-05-12 04:33:17,682 ] cleaning.py:51 root - INFO - DateTime cast completed.
+[ 2026-05-12 04:33:18,346 ] cleaning.py:55 root - INFO - Vehicles <= 0 (invalid rows): 0
+[ 2026-05-12 04:33:18,855 ] cleaning.py:62 root - INFO - Invalid Junction values: 0
+[ 2026-05-12 04:33:18,855 ] cleaning.py:68 root - INFO - Adding time-based feature columns...
+[ 2026-05-12 04:33:18,950 ] cleaning.py:75 root - INFO - Feature columns added: Year, Month, Hour, DayOfWeek
+[ 2026-05-12 04:33:18,950 ] cleaning.py:78 root - INFO - ===================================
+[ 2026-05-12 04:33:18,950 ] cleaning.py:79 root - INFO - Final Dataset Schema
+[ 2026-05-12 04:33:18,951 ] cleaning.py:80 root - INFO - ===================================
+[ 2026-05-12 04:33:18,954 ] cleaning.py:84 root - INFO - ===================================
+[ 2026-05-12 04:33:18,955 ] cleaning.py:85 root - INFO - Cleaned Dataset Preview (top 5 rows)
+[ 2026-05-12 04:33:18,956 ] cleaning.py:86 root - INFO - ===================================
+[ 2026-05-12 04:33:20,050 ] cleaning.py:90 root - INFO - ===================================
+[ 2026-05-12 04:33:20,050 ] cleaning.py:91 root - INFO - Summary Statistics
+[ 2026-05-12 04:33:20,051 ] cleaning.py:92 root - INFO - ===================================
+[ 2026-05-12 04:33:22,213 ] cleaning.py:97 root - INFO - Saving cleaned dataset to: data/processed/clean_traffic_data
+[ 2026-05-12 04:33:24,084 ] cleaning.py:99 root - INFO - ===================================
+[ 2026-05-12 04:33:24,085 ] cleaning.py:100 root - INFO - Cleaned data saved successfully
+[ 2026-05-12 04:33:24,089 ] cleaning.py:101 root - INFO - Path: data/processed/clean_traffic_data
+[ 2026-05-12 04:33:24,919 ] cleaning.py:102 root - INFO - Final row count  : 48120
+[ 2026-05-12 04:33:24,925 ] cleaning.py:103 root - INFO - Final column count: 7
+[ 2026-05-12 04:33:24,925 ] cleaning.py:104 root - INFO - ===================================
+[ 2026-05-12 04:33:24,931 ] cleaning.py:105 root - INFO - Data cleaning process completed successfully!
+[ 2026-05-12 04:33:24,966 ] clientserver.py:570 py4j.clientserver - INFO - Closing down clientserver connection
+[ 2026-05-12 04:35:18,169 ] transformation.py:12 root - INFO - Starting data transformation process...
+[ 2026-05-12 04:35:35,192 ] transformation.py:23 root - INFO - ===================================
+[ 2026-05-12 04:35:35,195 ] transformation.py:24 root - INFO - Loaded Cleaned Dataset
+[ 2026-05-12 04:35:36,223 ] transformation.py:25 root - INFO -   Rows    : 48120
+[ 2026-05-12 04:35:36,252 ] transformation.py:26 root - INFO -   Columns : ['DateTime', 'Junction', 'Vehicles', 'Year', 'Month', 'Hour', 'DayOfWeek']
+[ 2026-05-12 04:35:36,253 ] transformation.py:27 root - INFO - ===================================
+[ 2026-05-12 04:35:36,253 ] transformation.py:31 root - INFO - Parsing DateTime and extracting time features...
+[ 2026-05-12 04:35:36,319 ] transformation.py:45 root - INFO - Time features confirmed: Year, Month, Hour, DayOfWeek
+[ 2026-05-12 04:35:36,319 ] transformation.py:53 root - INFO - Applying OneHotEncoder to Junction, DayOfWeek, Hour...
+[ 2026-05-12 04:35:36,766 ] transformation.py:73 root - INFO - Assembling feature vector...
+[ 2026-05-12 04:35:36,776 ] transformation.py:88 root - INFO - Adding StandardScaler...
+[ 2026-05-12 04:35:36,786 ] transformation.py:98 root - INFO - Building and fitting Pipeline...
+[ 2026-05-12 04:35:40,097 ] transformation.py:104 root - INFO - Pipeline fitted successfully.
+[ 2026-05-12 04:35:40,099 ] transformation.py:105 root - INFO - ===================================
+[ 2026-05-12 04:35:40,099 ] transformation.py:106 root - INFO - Transformed Dataset Schema
+[ 2026-05-12 04:35:40,100 ] transformation.py:107 root - INFO - ===================================
+[ 2026-05-12 04:35:40,104 ] transformation.py:111 root - INFO - ===================================
+[ 2026-05-12 04:35:40,104 ] transformation.py:112 root - INFO - Transformed Dataset Preview (top 5 rows)
+[ 2026-05-12 04:35:40,104 ] transformation.py:113 root - INFO - ===================================
+[ 2026-05-12 04:35:40,667 ] transformation.py:121 root - INFO - ===================================
+[ 2026-05-12 04:35:40,667 ] transformation.py:122 root - INFO - Train/Test Split
+[ 2026-05-12 04:35:42,833 ] transformation.py:123 root - INFO -   Train rows : 38480
+[ 2026-05-12 04:35:44,564 ] transformation.py:124 root - INFO -   Test  rows : 9640
+[ 2026-05-12 04:35:44,564 ] transformation.py:125 root - INFO - ===================================
+[ 2026-05-12 04:35:53,181 ] transformation.py:138 root - INFO - Train data saved : data/transformed\train
+[ 2026-05-12 04:35:53,182 ] transformation.py:139 root - INFO - Test  data saved : data/transformed\test
+[ 2026-05-12 04:35:55,303 ] transformation.py:147 root - INFO - Pipeline model saved : models/pipeline
+[ 2026-05-12 04:35:55,304 ] transformation.py:149 root - INFO - ===================================
+[ 2026-05-12 04:35:55,308 ] transformation.py:150 root - INFO - Transformation Complete
+[ 2026-05-12 04:35:55,317 ] transformation.py:151 root - INFO -   data/transformed/train/
+[ 2026-05-12 04:35:55,318 ] transformation.py:152 root - INFO -   data/transformed/test/
+[ 2026-05-12 04:35:55,319 ] transformation.py:153 root - INFO -   models/pipeline/
+[ 2026-05-12 04:35:55,325 ] transformation.py:154 root - INFO - ===================================
+[ 2026-05-12 04:35:55,325 ] transformation.py:155 root - INFO - Data transformation process completed successfully!
+[ 2026-05-12 04:35:55,361 ] clientserver.py:570 py4j.clientserver - INFO - Closing down clientserver connection
+[ 2026-05-12 04:37:06,623 ] load.py:6 root - INFO - Starting data loading process...
+[ 2026-05-12 04:37:27,232 ] load.py:16 root - INFO - Data loading  process completed successfully!
+[ 2026-05-12 04:37:27,252 ] clientserver.py:570 py4j.clientserver - INFO - Closing down clientserver connection
+[ 2026-05-12 04:39:11,634 ] train.py:23 root - INFO - Starting model training process...
+[ 2026-05-12 04:39:32,772 ] train.py:32 root - INFO - ===================================
+[ 2026-05-12 04:39:32,772 ] train.py:33 root - INFO - Loaded Transformed Dataset
+[ 2026-05-12 04:39:36,607 ] train.py:34 root - INFO -   Train rows : 38480
+[ 2026-05-12 04:39:36,882 ] train.py:35 root - INFO -   Test  rows : 9640
+[ 2026-05-12 04:39:36,882 ] train.py:36 root - INFO - ===================================
+[ 2026-05-12 04:39:38,196 ] train.py:247 root - ERROR - Error during model training: API request to endpoint /api/2.0/mlflow/experiments/get-by-name failed with error code 401 != 200. Response body: '=============== ATTENTION! ===============
+
+To use authentication, you must first: 
+    Get your default access token from: https://dagshub.com/user/settings/tokens
+    OR 
+    Set a password: https://dagshub.com/user/settings/password 
+=========================================='
+[ 2026-05-12 04:39:38,196 ] train.py:255 root - ERROR - Error during model training: API request to endpoint /api/2.0/mlflow/experiments/get-by-name failed with error code 401 != 200. Response body: '=============== ATTENTION! ===============
+
+To use authentication, you must first: 
+    Get your default access token from: https://dagshub.com/user/settings/tokens
+    OR 
+    Set a password: https://dagshub.com/user/settings/password 
+=========================================='
+[ 2026-05-12 04:39:38,243 ] clientserver.py:570 py4j.clientserver - INFO - Closing down clientserver connection
+[ 2026-05-12 04:41:21,407 ] train.py:23 root - INFO - Starting model training process...
+[ 2026-05-12 04:41:38,021 ] train.py:32 root - INFO - ===================================
+[ 2026-05-12 04:41:38,021 ] train.py:33 root - INFO - Loaded Transformed Dataset
+[ 2026-05-12 04:41:41,855 ] train.py:34 root - INFO -   Train rows : 38480
+[ 2026-05-12 04:41:42,135 ] train.py:35 root - INFO -   Test  rows : 9640
+[ 2026-05-12 04:41:42,136 ] train.py:36 root - INFO - ===================================
+[ 2026-05-12 04:41:43,693 ] train.py:41 root - INFO - MLflow experiment set: Traffic_Vehicles_Regression_Experiment
+[ 2026-05-12 04:41:44,058 ] train.py:137 root - INFO - ===================================
+[ 2026-05-12 04:41:44,059 ] train.py:138 root - INFO - Training : PoissonGLM
+[ 2026-05-12 04:41:44,072 ] train.py:139 root - INFO - ===================================
+[ 2026-05-12 04:41:48,039 ] train.py:153 root - INFO -   ParamGrid size : 6 combinations
+[ 2026-05-12 04:43:25,674 ] clientserver.py:570 py4j.clientserver - INFO - Closing down clientserver connection
+[ 2026-05-12 04:43:26,253 ] train.py:172 root - INFO -   RMSE : 7.1342
+[ 2026-05-12 04:43:26,254 ] train.py:173 root - INFO -   R2   : 0.8865
+[ 2026-05-12 04:43:26,257 ] train.py:174 root - INFO -   MAE  : 4.3736
+[ 2026-05-12 04:44:29,576 ] train.py:196 root - INFO -   *** New best model: PoissonGLM (RMSE=7.1342) ***
+[ 2026-05-12 04:44:33,300 ] train.py:137 root - INFO - ===================================
+[ 2026-05-12 04:44:33,301 ] train.py:138 root - INFO - Training : DecisionTree
+[ 2026-05-12 04:44:33,301 ] train.py:139 root - INFO - ===================================
+[ 2026-05-12 04:44:33,825 ] train.py:153 root - INFO -   ParamGrid size : 9 combinations
+[ 2026-05-12 04:45:18,177 ] clientserver.py:570 py4j.clientserver - INFO - Closing down clientserver connection
+[ 2026-05-12 04:45:19,018 ] train.py:172 root - INFO -   RMSE : 9.6333
+[ 2026-05-12 04:45:19,018 ] train.py:173 root - INFO -   R2   : 0.7931
+[ 2026-05-12 04:45:19,024 ] train.py:174 root - INFO -   MAE  : 6.1894
+[ 2026-05-12 04:46:11,636 ] train.py:137 root - INFO - ===================================
+[ 2026-05-12 04:46:11,636 ] train.py:138 root - INFO - Training : RandomForest
+[ 2026-05-12 04:46:11,640 ] train.py:139 root - INFO - ===================================
+[ 2026-05-12 04:46:12,129 ] train.py:153 root - INFO -   ParamGrid size : 8 combinations
+[ 2026-05-12 04:53:13,660 ] clientserver.py:570 py4j.clientserver - INFO - Closing down clientserver connection
+[ 2026-05-12 04:53:16,043 ] train.py:172 root - INFO -   RMSE : 8.2313
+[ 2026-05-12 04:53:16,044 ] train.py:173 root - INFO -   R2   : 0.8490
+[ 2026-05-12 04:53:16,044 ] train.py:174 root - INFO -   MAE  : 5.2100
+[ 2026-05-12 04:54:16,518 ] train.py:137 root - INFO - ===================================
+[ 2026-05-12 04:54:16,520 ] train.py:138 root - INFO - Training : GradientBoosting
+[ 2026-05-12 04:54:16,532 ] train.py:139 root - INFO - ===================================
+[ 2026-05-12 04:54:17,048 ] train.py:153 root - INFO -   ParamGrid size : 4 combinations
+[ 2026-05-12 04:58:31,444 ] clientserver.py:570 py4j.clientserver - INFO - Closing down clientserver connection
+[ 2026-05-12 04:58:32,057 ] train.py:172 root - INFO -   RMSE : 6.7378
+[ 2026-05-12 04:58:32,058 ] train.py:173 root - INFO -   R2   : 0.8988
+[ 2026-05-12 04:58:32,059 ] train.py:174 root - INFO -   MAE  : 4.0889
+[ 2026-05-12 04:59:28,630 ] train.py:196 root - INFO -   *** New best model: GradientBoosting (RMSE=6.7378) ***
+[ 2026-05-12 04:59:29,357 ] train.py:201 root - INFO - ===================================
+[ 2026-05-12 04:59:29,358 ] train.py:202 root - INFO - BEST MODEL : GradientBoosting
+[ 2026-05-12 04:59:29,361 ] train.py:203 root - INFO - BEST RMSE  : 6.7378
+[ 2026-05-12 04:59:29,368 ] train.py:204 root - INFO - ===================================
+[ 2026-05-12 05:00:19,593 ] train.py:212 root - INFO - Best model logged to MLflow under 'best_model'.
+[ 2026-05-12 05:00:19,594 ] train.py:232 root - INFO - No scores.json found — creating new file.
+[ 2026-05-12 05:00:19,604 ] train.py:239 root - INFO - ===================================
+[ 2026-05-12 05:00:19,605 ] train.py:240 root - INFO - Scores saved to : D:\spark-traffic-mlops\scores.json
+[ 2026-05-12 05:00:19,606 ] train.py:241 root - INFO - Total runs in file : 1
+[ 2026-05-12 05:00:19,606 ] train.py:242 root - INFO - ===================================
+[ 2026-05-12 05:00:19,608 ] train.py:243 root - INFO - Training Completed Successfully
+[ 2026-05-12 05:00:19,609 ] train.py:244 root - INFO - ===================================
+[ 2026-05-12 05:00:19,639 ] clientserver.py:570 py4j.clientserver - INFO - Closing down clientserver connection
+[ 2026-05-12 05:00:19,640 ] clientserver.py:570 py4j.clientserver - INFO - Closing down clientserver connection
+[ 2026-05-12 05:03:48,340 ] best_model.py:12 root - INFO - Starting best model selection process...
+[ 2026-05-12 05:03:48,340 ] best_model.py:21 root - INFO - MLflow tracking URI : https://dagshub.com/sharjeel-ahmed17/spark-traffic-mlops.mlflow
+[ 2026-05-12 05:03:48,343 ] best_model.py:22 root - INFO - Experiment          : Traffic_Vehicles_Regression_Experiment
+[ 2026-05-12 05:03:49,311 ] best_model.py:34 root - INFO - Experiment ID : 0
+[ 2026-05-12 05:03:49,735 ] best_model.py:54 root - INFO - ===================================
+[ 2026-05-12 05:03:49,736 ] best_model.py:55 root - INFO - BEST RUN FOUND
+[ 2026-05-12 05:03:49,737 ] best_model.py:56 root - INFO -   Run ID     : 6fce8fa3b0c448a89301ad97bd5fe44f
+[ 2026-05-12 05:03:49,738 ] best_model.py:57 root - INFO -   Model name : GradientBoosting
+[ 2026-05-12 05:03:49,738 ] best_model.py:58 root - INFO -   RMSE       : 6.7378
+[ 2026-05-12 05:03:49,740 ] best_model.py:59 root - INFO -   R2         : 0.8988
+[ 2026-05-12 05:03:49,740 ] best_model.py:60 root - INFO -   MAE        : 4.0889
+[ 2026-05-12 05:03:49,740 ] best_model.py:61 root - INFO - ===================================
+[ 2026-05-12 05:03:49,741 ] best_model.py:68 root - INFO - Registering model from URI : runs:/6fce8fa3b0c448a89301ad97bd5fe44f/model
+[ 2026-05-12 05:03:51,570 ] best_model.py:75 root - INFO - ===================================
+[ 2026-05-12 05:03:51,570 ] best_model.py:76 root - INFO - MODEL REGISTERED
+[ 2026-05-12 05:03:51,570 ] best_model.py:77 root - INFO -   Name    : Traffic_Vehicle_Prediction
+[ 2026-05-12 05:03:51,570 ] best_model.py:78 root - INFO -   Version : 1
+[ 2026-05-12 05:03:51,570 ] best_model.py:79 root - INFO - ===================================
+[ 2026-05-12 05:03:52,279 ] best_model.py:89 root - INFO - Model v1 transitioned to stage: Production
+[ 2026-05-12 05:03:52,279 ] best_model.py:90 root - INFO - ===================================
+[ 2026-05-12 05:03:52,280 ] best_model.py:91 root - INFO - Best model selection process completed successfully!
+[ 2026-05-12 05:03:52,280 ] best_model.py:92 root - INFO - ===================================
+[ 2026-05-13 11:15:47,691 ] extraction.py:12 root - INFO - Using project folder: C:\Users\DELL\Desktop\spark-traffic-mlops
+[ 2026-05-13 11:15:47,691 ] extraction.py:15 root - INFO - Downloading traffic dataset...
+[ 2026-05-13 11:15:50,416 ] extraction.py:26 root - INFO - File read successfully with default utf-8 encoding.
+[ 2026-05-13 11:15:50,416 ] extraction.py:31 root - INFO - Downloaded! Shape: (48120, 4)
+[ 2026-05-13 11:15:50,417 ] extraction.py:32 root - INFO - Columns: ['DateTime', 'Junction', 'Vehicles', 'ID']
+[ 2026-05-13 11:15:50,417 ] extraction.py:33 root - INFO - First 5 records:
+              DateTime  Junction  Vehicles           ID
+0  2015-11-01 00:00:00         1        15  20151101001
+1  2015-11-01 01:00:00         1        13  20151101011
+2  2015-11-01 02:00:00         1        10  20151101021
+3  2015-11-01 03:00:00         1         7  20151101031
+4  2015-11-01 04:00:00         1         9  20151101041
+[ 2026-05-13 11:15:50,485 ] extraction.py:38 root - INFO - Data saved at: C:\Users\DELL\Desktop\spark-traffic-mlops\data\raw\traffic.csv
+[ 2026-05-13 11:15:50,485 ] extraction.py:41 root - INFO - Final files in data/raw: ['traffic.csv']
+[ 2026-05-13 11:15:50,485 ] extraction.py:42 root - INFO - Data extraction process completed successfully!
+[ 2026-05-13 11:16:18,019 ] cleaning.py:9 root - INFO - Starting data cleaning process...
+[ 2026-05-13 11:16:30,544 ] cleaning.py:20 root - INFO - ===================================
+[ 2026-05-13 11:16:30,547 ] cleaning.py:21 root - INFO - Original Dataset Shape
+[ 2026-05-13 11:16:31,054 ] cleaning.py:22 root - INFO - Rows    : 48120
+[ 2026-05-13 11:16:31,071 ] cleaning.py:23 root - INFO - Columns : 4
+[ 2026-05-13 11:16:31,072 ] cleaning.py:24 root - INFO - ===================================
+[ 2026-05-13 11:16:31,072 ] cleaning.py:27 root - INFO - Checking Null Values...
+[ 2026-05-13 11:16:31,380 ] cleaning.py:30 root - INFO -   DateTime     : 0 null values
+[ 2026-05-13 11:16:31,579 ] cleaning.py:30 root - INFO -   Junction     : 0 null values
+[ 2026-05-13 11:16:31,752 ] cleaning.py:30 root - INFO -   Vehicles     : 0 null values
+[ 2026-05-13 11:16:31,932 ] cleaning.py:30 root - INFO -   ID           : 0 null values
+[ 2026-05-13 11:16:33,060 ] cleaning.py:36 root - INFO - ===================================
+[ 2026-05-13 11:16:33,060 ] cleaning.py:37 root - INFO - Duplicate Removal
+[ 2026-05-13 11:16:33,060 ] cleaning.py:38 root - INFO -   Rows before      : 48120
+[ 2026-05-13 11:16:33,060 ] cleaning.py:39 root - INFO -   Rows after       : 48120
+[ 2026-05-13 11:16:33,060 ] cleaning.py:40 root - INFO -   Duplicates removed: 0
+[ 2026-05-13 11:16:33,060 ] cleaning.py:41 root - INFO - ===================================
+[ 2026-05-13 11:16:33,060 ] cleaning.py:44 root - INFO - Removing unnecessary column: ID
+[ 2026-05-13 11:16:33,079 ] cleaning.py:46 root - INFO - ID column removed successfully.
+[ 2026-05-13 11:16:33,079 ] cleaning.py:49 root - INFO - Casting DateTime column to TimestampType...
+[ 2026-05-13 11:16:33,099 ] cleaning.py:51 root - INFO - DateTime cast completed.
+[ 2026-05-13 11:16:33,392 ] cleaning.py:55 root - INFO - Vehicles <= 0 (invalid rows): 0
+[ 2026-05-13 11:16:33,641 ] cleaning.py:62 root - INFO - Invalid Junction values: 0
+[ 2026-05-13 11:16:33,641 ] cleaning.py:68 root - INFO - Adding time-based feature columns...
+[ 2026-05-13 11:16:33,697 ] cleaning.py:75 root - INFO - Feature columns added: Year, Month, Hour, DayOfWeek
+[ 2026-05-13 11:16:33,697 ] cleaning.py:78 root - INFO - ===================================
+[ 2026-05-13 11:16:33,697 ] cleaning.py:79 root - INFO - Final Dataset Schema
+[ 2026-05-13 11:16:33,698 ] cleaning.py:80 root - INFO - ===================================
+[ 2026-05-13 11:16:33,700 ] cleaning.py:84 root - INFO - ===================================
+[ 2026-05-13 11:16:33,700 ] cleaning.py:85 root - INFO - Cleaned Dataset Preview (top 5 rows)
+[ 2026-05-13 11:16:33,700 ] cleaning.py:86 root - INFO - ===================================
+[ 2026-05-13 11:16:34,396 ] cleaning.py:90 root - INFO - ===================================
+[ 2026-05-13 11:16:34,396 ] cleaning.py:91 root - INFO - Summary Statistics
+[ 2026-05-13 11:16:34,396 ] cleaning.py:92 root - INFO - ===================================
+[ 2026-05-13 11:16:35,569 ] cleaning.py:97 root - INFO - Saving cleaned dataset to: data/processed/clean_traffic_data
+[ 2026-05-13 11:16:36,651 ] cleaning.py:99 root - INFO - ===================================
+[ 2026-05-13 11:16:36,651 ] cleaning.py:100 root - INFO - Cleaned data saved successfully
+[ 2026-05-13 11:16:36,651 ] cleaning.py:101 root - INFO - Path: data/processed/clean_traffic_data
+[ 2026-05-13 11:16:37,187 ] cleaning.py:102 root - INFO - Final row count  : 48120
+[ 2026-05-13 11:16:37,187 ] cleaning.py:103 root - INFO - Final column count: 7
+[ 2026-05-13 11:16:37,187 ] cleaning.py:104 root - INFO - ===================================
+[ 2026-05-13 11:16:37,187 ] cleaning.py:105 root - INFO - Data cleaning process completed successfully!
+[ 2026-05-13 11:16:43,229 ] clientserver.py:570 py4j.clientserver - INFO - Closing down clientserver connection
+[ 2026-05-13 11:17:14,626 ] transformation.py:12 root - INFO - Starting data transformation process...
+[ 2026-05-13 11:17:25,589 ] transformation.py:23 root - INFO - ===================================
+[ 2026-05-13 11:17:25,589 ] transformation.py:24 root - INFO - Loaded Cleaned Dataset
+[ 2026-05-13 11:17:26,140 ] transformation.py:25 root - INFO -   Rows    : 48120
+[ 2026-05-13 11:17:26,156 ] transformation.py:26 root - INFO -   Columns : ['DateTime', 'Junction', 'Vehicles', 'Year', 'Month', 'Hour', 'DayOfWeek']
+[ 2026-05-13 11:17:26,156 ] transformation.py:27 root - INFO - ===================================
+[ 2026-05-13 11:17:26,156 ] transformation.py:31 root - INFO - Parsing DateTime and extracting time features...
+[ 2026-05-13 11:17:26,205 ] transformation.py:45 root - INFO - Time features confirmed: Year, Month, Hour, DayOfWeek
+[ 2026-05-13 11:17:26,205 ] transformation.py:53 root - INFO - Applying OneHotEncoder to Junction, DayOfWeek, Hour...
+[ 2026-05-13 11:17:26,457 ] transformation.py:73 root - INFO - Assembling feature vector...
+[ 2026-05-13 11:17:26,469 ] transformation.py:88 root - INFO - Adding StandardScaler...
+[ 2026-05-13 11:17:26,475 ] transformation.py:98 root - INFO - Building and fitting Pipeline...
+[ 2026-05-13 11:17:28,235 ] transformation.py:104 root - INFO - Pipeline fitted successfully.
+[ 2026-05-13 11:17:28,235 ] transformation.py:105 root - INFO - ===================================
+[ 2026-05-13 11:17:28,237 ] transformation.py:106 root - INFO - Transformed Dataset Schema
+[ 2026-05-13 11:17:28,237 ] transformation.py:107 root - INFO - ===================================
+[ 2026-05-13 11:17:28,237 ] transformation.py:111 root - INFO - ===================================
+[ 2026-05-13 11:17:28,237 ] transformation.py:112 root - INFO - Transformed Dataset Preview (top 5 rows)
+[ 2026-05-13 11:17:28,237 ] transformation.py:113 root - INFO - ===================================
+[ 2026-05-13 11:17:28,495 ] transformation.py:121 root - INFO - ===================================
+[ 2026-05-13 11:17:28,495 ] transformation.py:122 root - INFO - Train/Test Split
+[ 2026-05-13 11:17:29,555 ] transformation.py:123 root - INFO -   Train rows : 38480
+[ 2026-05-13 11:17:30,354 ] transformation.py:124 root - INFO -   Test  rows : 9640
+[ 2026-05-13 11:17:30,354 ] transformation.py:125 root - INFO - ===================================
+[ 2026-05-13 11:17:33,397 ] transformation.py:138 root - INFO - Train data saved : data/transformed\train
+[ 2026-05-13 11:17:33,398 ] transformation.py:139 root - INFO - Test  data saved : data/transformed\test
+[ 2026-05-13 11:17:34,232 ] transformation.py:147 root - INFO - Pipeline model saved : models/pipeline
+[ 2026-05-13 11:17:34,232 ] transformation.py:149 root - INFO - ===================================
+[ 2026-05-13 11:17:34,232 ] transformation.py:150 root - INFO - Transformation Complete
+[ 2026-05-13 11:17:34,232 ] transformation.py:151 root - INFO -   data/transformed/train/
+[ 2026-05-13 11:17:34,232 ] transformation.py:152 root - INFO -   data/transformed/test/
+[ 2026-05-13 11:17:34,232 ] transformation.py:153 root - INFO -   models/pipeline/
+[ 2026-05-13 11:17:34,232 ] transformation.py:154 root - INFO - ===================================
+[ 2026-05-13 11:17:34,232 ] transformation.py:155 root - INFO - Data transformation process completed successfully!
+[ 2026-05-13 11:17:34,255 ] clientserver.py:570 py4j.clientserver - INFO - Closing down clientserver connection
+[ 2026-05-13 11:17:54,184 ] load.py:6 root - INFO - Starting data loading process...
+[ 2026-05-13 11:18:03,271 ] load.py:16 root - INFO - Data loading  process completed successfully!
+[ 2026-05-13 11:18:03,300 ] clientserver.py:570 py4j.clientserver - INFO - Closing down clientserver connection
+[ 2026-05-13 11:18:26,805 ] train.py:27 root - INFO - Starting model training process...
+[ 2026-05-13 11:18:35,056 ] train.py:36 root - INFO - ===================================
+[ 2026-05-13 11:18:35,056 ] train.py:37 root - INFO - Loaded Transformed Dataset
+[ 2026-05-13 11:18:36,589 ] train.py:38 root - INFO -   Train rows : 38480
+[ 2026-05-13 11:18:36,788 ] train.py:39 root - INFO -   Test  rows : 9640
+[ 2026-05-13 11:18:36,788 ] train.py:40 root - INFO - ===================================
+[ 2026-05-13 11:18:39,290 ] train.py:45 root - INFO - MLflow experiment set: Traffic_Vehicles_Regression_Experiment
+[ 2026-05-13 11:18:39,425 ] train.py:145 root - INFO - ===================================
+[ 2026-05-13 11:18:39,425 ] train.py:146 root - INFO - Training : PoissonGLM
+[ 2026-05-13 11:18:39,425 ] train.py:147 root - INFO - ===================================
+[ 2026-05-13 11:18:39,573 ] train.py:161 root - INFO -   ParamGrid size : 6 combinations
+[ 2026-05-13 11:19:18,796 ] clientserver.py:570 py4j.clientserver - INFO - Closing down clientserver connection
+[ 2026-05-13 11:19:19,070 ] train.py:180 root - INFO -   RMSE : 7.6929
+[ 2026-05-13 11:19:19,070 ] train.py:181 root - INFO -   R2   : 0.8681
+[ 2026-05-13 11:19:19,070 ] train.py:182 root - INFO -   MAE  : 4.9001
+[ 2026-05-13 11:19:19,740 ] train.py:211 root - INFO -   *** New best model: PoissonGLM (RMSE=7.6929) ***
+[ 2026-05-13 11:19:19,761 ] train.py:145 root - INFO - ===================================
+[ 2026-05-13 11:19:19,761 ] train.py:146 root - INFO - Training : DecisionTree
+[ 2026-05-13 11:19:19,761 ] train.py:147 root - INFO - ===================================
+[ 2026-05-13 11:19:19,779 ] train.py:161 root - INFO -   ParamGrid size : 9 combinations
+[ 2026-05-13 11:19:37,215 ] clientserver.py:570 py4j.clientserver - INFO - Closing down clientserver connection
+[ 2026-05-13 11:19:37,433 ] train.py:180 root - INFO -   RMSE : 9.6333
+[ 2026-05-13 11:19:37,433 ] train.py:181 root - INFO -   R2   : 0.7931
+[ 2026-05-13 11:19:37,433 ] train.py:182 root - INFO -   MAE  : 6.1894
+[ 2026-05-13 11:19:37,883 ] train.py:145 root - INFO - ===================================
+[ 2026-05-13 11:19:37,892 ] train.py:146 root - INFO - Training : RandomForest
+[ 2026-05-13 11:19:37,892 ] train.py:147 root - INFO - ===================================
+[ 2026-05-13 11:19:37,913 ] train.py:161 root - INFO -   ParamGrid size : 8 combinations
+[ 2026-05-13 11:22:41,429 ] clientserver.py:570 py4j.clientserver - INFO - Closing down clientserver connection
+[ 2026-05-13 11:22:42,683 ] train.py:180 root - INFO -   RMSE : 8.3103
+[ 2026-05-13 11:22:42,683 ] train.py:181 root - INFO -   R2   : 0.8461
+[ 2026-05-13 11:22:42,683 ] train.py:182 root - INFO -   MAE  : 5.2654
+[ 2026-05-13 11:22:44,629 ] train.py:145 root - INFO - ===================================
+[ 2026-05-13 11:22:44,629 ] train.py:146 root - INFO - Training : GradientBoosting
+[ 2026-05-13 11:22:44,629 ] train.py:147 root - INFO - ===================================
+[ 2026-05-13 11:22:44,653 ] train.py:161 root - INFO -   ParamGrid size : 4 combinations
+[ 2026-05-13 11:24:39,113 ] clientserver.py:570 py4j.clientserver - INFO - Closing down clientserver connection
+[ 2026-05-13 11:24:39,464 ] train.py:180 root - INFO -   RMSE : 6.7378
+[ 2026-05-13 11:24:39,464 ] train.py:181 root - INFO -   R2   : 0.8988
+[ 2026-05-13 11:24:39,478 ] train.py:182 root - INFO -   MAE  : 4.0889
+[ 2026-05-13 11:24:40,080 ] train.py:211 root - INFO -   *** New best model: GradientBoosting (RMSE=6.7378) ***
+[ 2026-05-13 11:24:40,096 ] train.py:216 root - INFO - ===================================
+[ 2026-05-13 11:24:40,096 ] train.py:217 root - INFO - BEST MODEL : GradientBoosting
+[ 2026-05-13 11:24:40,096 ] train.py:218 root - INFO - BEST RMSE  : 6.7378
+[ 2026-05-13 11:24:40,096 ] train.py:219 root - INFO - ===================================
+[ 2026-05-13 11:24:40,747 ] train.py:231 root - INFO - Best model logged to MLflow under 'best_model'.
+[ 2026-05-13 11:24:40,747 ] train.py:248 root - INFO - Existing scores.json found — appending new run.
+[ 2026-05-13 11:24:40,747 ] train.py:258 root - INFO - ===================================
+[ 2026-05-13 11:24:40,747 ] train.py:259 root - INFO - Scores saved to : C:\Users\DELL\Desktop\spark-traffic-mlops\scores.json
+[ 2026-05-13 11:24:40,747 ] train.py:260 root - INFO - Total runs in file : 2
+[ 2026-05-13 11:24:40,747 ] train.py:261 root - INFO - ===================================
+[ 2026-05-13 11:24:40,747 ] train.py:262 root - INFO - Training Completed Successfully
+[ 2026-05-13 11:24:40,747 ] train.py:263 root - INFO - ===================================
+[ 2026-05-13 11:24:40,791 ] clientserver.py:570 py4j.clientserver - INFO - Closing down clientserver connection
+[ 2026-05-13 11:25:59,992 ] best_model.py:12 root - INFO - Starting best model selection process...
+[ 2026-05-13 11:26:00,586 ] best_model.py:21 root - INFO - MLflow tracking URI : None
+[ 2026-05-13 11:26:00,587 ] best_model.py:22 root - INFO - Experiment          : Traffic_Vehicles_Regression_Experiment
+[ 2026-05-13 11:26:00,590 ] best_model.py:34 root - INFO - Experiment ID : 1
+[ 2026-05-13 11:26:00,608 ] best_model.py:54 root - INFO - ===================================
+[ 2026-05-13 11:26:00,608 ] best_model.py:55 root - INFO - BEST RUN FOUND
+[ 2026-05-13 11:26:00,608 ] best_model.py:56 root - INFO -   Run ID     : 8dd9a06e16df414bad6b01088cab96bc
+[ 2026-05-13 11:26:00,608 ] best_model.py:57 root - INFO -   Model name : GradientBoosting
+[ 2026-05-13 11:26:00,608 ] best_model.py:58 root - INFO -   RMSE       : 6.7378
+[ 2026-05-13 11:26:00,608 ] best_model.py:59 root - INFO -   R2         : 0.8988
+[ 2026-05-13 11:26:00,608 ] best_model.py:60 root - INFO -   MAE        : 4.0889
+[ 2026-05-13 11:26:00,608 ] best_model.py:61 root - INFO - ===================================
+[ 2026-05-13 11:26:00,608 ] best_model.py:68 root - INFO - Registering model from URI : runs:/8dd9a06e16df414bad6b01088cab96bc/model
+[ 2026-05-13 11:26:00,669 ] best_model.py:95 root - ERROR - Error during best model selection: Unable to find a logged_model with artifact_path model under run 8dd9a06e16df414bad6b01088cab96bc
+[ 2026-05-13 11:26:00,669 ] best_model.py:103 root - ERROR - Error during best model selection: Unable to find a logged_model with artifact_path model under run 8dd9a06e16df414bad6b01088cab96bc
+>>>>>>> f0fd069ebb7538e86d112acbda786a3d9726e00a
+[ 2026-05-13 19:08:51,408 ] extraction.py:14 root - INFO - Using data directory: data/raw
+[ 2026-05-13 19:08:51,409 ] extraction.py:17 root - INFO - Downloading traffic dataset...
+[ 2026-05-13 19:08:53,253 ] extraction.py:30 root - INFO - File read successfully with default utf-8 encoding.
+[ 2026-05-13 19:08:53,254 ] extraction.py:35 root - INFO - Downloaded! Shape: (48120, 4)
+[ 2026-05-13 19:08:53,255 ] extraction.py:36 root - INFO - Columns: ['DateTime', 'Junction', 'Vehicles', 'ID']
+[ 2026-05-13 19:08:53,257 ] extraction.py:37 root - INFO - First 5 records:
+              DateTime  Junction  Vehicles           ID
+0  2015-11-01 00:00:00         1        15  20151101001
+1  2015-11-01 01:00:00         1        13  20151101011
+2  2015-11-01 02:00:00         1        10  20151101021
+3  2015-11-01 03:00:00         1         7  20151101031
+4  2015-11-01 04:00:00         1         9  20151101041
+[ 2026-05-13 19:08:53,566 ] extraction.py:42 root - INFO - Data saved at: data/raw/traffic.csv
+[ 2026-05-13 19:08:53,570 ] extraction.py:45 root - INFO - Final files in data/raw: ['traffic.csv']
+[ 2026-05-13 19:08:53,571 ] extraction.py:46 root - INFO - Data extraction process completed successfully!
+[ 2026-05-13 19:08:55,968 ] cleaning.py:10 root - INFO - Starting data cleaning process...
+[ 2026-05-13 19:09:18,851 ] cleaning.py:23 root - INFO - ===================================
+[ 2026-05-13 19:09:18,852 ] cleaning.py:24 root - INFO - Original Dataset Shape
+[ 2026-05-13 19:09:20,112 ] cleaning.py:25 root - INFO - Rows    : 48120
+[ 2026-05-13 19:09:20,144 ] cleaning.py:26 root - INFO - Columns : 4
+[ 2026-05-13 19:09:20,145 ] cleaning.py:27 root - INFO - ===================================
+[ 2026-05-13 19:09:20,145 ] cleaning.py:30 root - INFO - Checking Null Values...
+[ 2026-05-13 19:09:20,913 ] cleaning.py:33 root - INFO -   DateTime     : 0 null values
+[ 2026-05-13 19:09:21,432 ] cleaning.py:33 root - INFO -   Junction     : 0 null values
+[ 2026-05-13 19:09:22,013 ] cleaning.py:33 root - INFO -   Vehicles     : 0 null values
+[ 2026-05-13 19:09:22,685 ] cleaning.py:33 root - INFO -   ID           : 0 null values
+[ 2026-05-13 19:09:25,575 ] cleaning.py:39 root - INFO - ===================================
+[ 2026-05-13 19:09:25,582 ] cleaning.py:40 root - INFO - Duplicate Removal
+[ 2026-05-13 19:09:25,583 ] cleaning.py:41 root - INFO -   Rows before      : 48120
+[ 2026-05-13 19:09:25,586 ] cleaning.py:42 root - INFO -   Rows after       : 48120
+[ 2026-05-13 19:09:25,586 ] cleaning.py:43 root - INFO -   Duplicates removed: 0
+[ 2026-05-13 19:09:25,586 ] cleaning.py:44 root - INFO - ===================================
+[ 2026-05-13 19:09:25,586 ] cleaning.py:48 root - INFO - Removing unnecessary columns: ID
+[ 2026-05-13 19:09:25,617 ] cleaning.py:50 root - INFO - Columns removed successfully.
+[ 2026-05-13 19:09:25,618 ] cleaning.py:53 root - INFO - Casting DateTime column to TimestampType...
+[ 2026-05-13 19:09:25,677 ] cleaning.py:55 root - INFO - DateTime cast completed.
+[ 2026-05-13 19:09:26,495 ] cleaning.py:59 root - INFO - Vehicles <= 0 (invalid rows): 0
+[ 2026-05-13 19:09:27,264 ] cleaning.py:67 root - INFO - Invalid Junction values: 0
+[ 2026-05-13 19:09:27,264 ] cleaning.py:73 root - INFO - Adding time-based feature columns...
+[ 2026-05-13 19:09:27,422 ] cleaning.py:80 root - INFO - Feature columns added: Year, Month, Hour, DayOfWeek
+[ 2026-05-13 19:09:27,423 ] cleaning.py:83 root - INFO - ===================================
+[ 2026-05-13 19:09:27,423 ] cleaning.py:84 root - INFO - Final Dataset Schema
+[ 2026-05-13 19:09:27,427 ] cleaning.py:85 root - INFO - ===================================
+[ 2026-05-13 19:09:27,438 ] cleaning.py:89 root - INFO - ===================================
+[ 2026-05-13 19:09:27,438 ] cleaning.py:90 root - INFO - Cleaned Dataset Preview (top 5 rows)
+[ 2026-05-13 19:09:27,439 ] cleaning.py:91 root - INFO - ===================================
+[ 2026-05-13 19:09:29,109 ] cleaning.py:95 root - INFO - ===================================
+[ 2026-05-13 19:09:29,109 ] cleaning.py:96 root - INFO - Summary Statistics
+[ 2026-05-13 19:09:29,110 ] cleaning.py:97 root - INFO - ===================================
+[ 2026-05-13 19:09:32,534 ] cleaning.py:102 root - INFO - Saving cleaned dataset to: data/processed/clean_traffic_data
+[ 2026-05-13 19:09:35,269 ] cleaning.py:104 root - INFO - ===================================
+[ 2026-05-13 19:09:35,271 ] cleaning.py:105 root - INFO - Cleaned data saved successfully
+[ 2026-05-13 19:09:35,271 ] cleaning.py:106 root - INFO - Path: data/processed/clean_traffic_data
+[ 2026-05-13 19:09:36,297 ] cleaning.py:107 root - INFO - Final row count  : 48120
+[ 2026-05-13 19:09:36,300 ] cleaning.py:108 root - INFO - Final column count: 7
+[ 2026-05-13 19:09:36,304 ] cleaning.py:109 root - INFO - ===================================
+[ 2026-05-13 19:09:36,305 ] cleaning.py:110 root - INFO - Data cleaning process completed successfully!
+[ 2026-05-13 19:09:36,335 ] clientserver.py:570 py4j.clientserver - INFO - Closing down clientserver connection
+[ 2026-05-13 19:09:40,221 ] transformation.py:13 root - INFO - Starting data transformation process...
+[ 2026-05-13 19:10:02,069 ] transformation.py:26 root - INFO - ===================================
+[ 2026-05-13 19:10:02,069 ] transformation.py:27 root - INFO - Loaded Cleaned Dataset
+[ 2026-05-13 19:10:03,428 ] transformation.py:28 root - INFO -   Rows    : 48120
+[ 2026-05-13 19:10:03,461 ] transformation.py:29 root - INFO -   Columns : ['DateTime', 'Junction', 'Vehicles', 'Year', 'Month', 'Hour', 'DayOfWeek']
+[ 2026-05-13 19:10:03,462 ] transformation.py:30 root - INFO - ===================================
+[ 2026-05-13 19:10:03,462 ] transformation.py:34 root - INFO - Parsing DateTime and extracting time features...
+[ 2026-05-13 19:10:03,539 ] transformation.py:48 root - INFO - Time features confirmed: Year, Month, Hour, DayOfWeek
+[ 2026-05-13 19:10:03,540 ] transformation.py:56 root - INFO - Applying OneHotEncoder to Junction, DayOfWeek, Hour...
+[ 2026-05-13 19:10:04,286 ] transformation.py:76 root - INFO - Assembling feature vector...
+[ 2026-05-13 19:10:04,297 ] transformation.py:90 root - INFO - Adding StandardScaler...
+[ 2026-05-13 19:10:04,313 ] transformation.py:100 root - INFO - Building and fitting Pipeline...
+[ 2026-05-13 19:10:08,680 ] transformation.py:106 root - INFO - Pipeline fitted successfully.
+[ 2026-05-13 19:10:08,680 ] transformation.py:107 root - INFO - ===================================
+[ 2026-05-13 19:10:08,681 ] transformation.py:108 root - INFO - Transformed Dataset Schema
+[ 2026-05-13 19:10:08,681 ] transformation.py:109 root - INFO - ===================================
+[ 2026-05-13 19:10:08,687 ] transformation.py:113 root - INFO - ===================================
+[ 2026-05-13 19:10:08,687 ] transformation.py:114 root - INFO - Transformed Dataset Preview (top 5 rows)
+[ 2026-05-13 19:10:08,687 ] transformation.py:115 root - INFO - ===================================
+[ 2026-05-13 19:10:09,473 ] transformation.py:125 root - INFO - ===================================
+[ 2026-05-13 19:10:09,473 ] transformation.py:126 root - INFO - Train/Test Split
+[ 2026-05-13 19:10:12,423 ] transformation.py:127 root - INFO -   Train rows : 38480
+[ 2026-05-13 19:10:14,479 ] transformation.py:128 root - INFO -   Test  rows : 9640
+[ 2026-05-13 19:10:14,488 ] transformation.py:129 root - INFO - ===================================
+[ 2026-05-13 19:10:25,364 ] transformation.py:142 root - INFO - Train data saved : data/transformed/train
+[ 2026-05-13 19:10:25,365 ] transformation.py:143 root - INFO - Test  data saved : data/transformed/test
+[ 2026-05-13 19:10:28,217 ] transformation.py:151 root - INFO - Pipeline model saved : models/pipeline
+[ 2026-05-13 19:10:28,217 ] transformation.py:153 root - INFO - ===================================
+[ 2026-05-13 19:10:28,218 ] transformation.py:154 root - INFO - Transformation Complete
+[ 2026-05-13 19:10:28,218 ] transformation.py:155 root - INFO -   data/transformed/train/
+[ 2026-05-13 19:10:28,219 ] transformation.py:156 root - INFO -   data/transformed/test/
+[ 2026-05-13 19:10:28,220 ] transformation.py:157 root - INFO -   models/pipeline/
+[ 2026-05-13 19:10:28,221 ] transformation.py:158 root - INFO - ===================================
+[ 2026-05-13 19:10:28,222 ] transformation.py:159 root - INFO - Data transformation process completed successfully!
+[ 2026-05-13 19:10:28,249 ] clientserver.py:570 py4j.clientserver - INFO - Closing down clientserver connection
+[ 2026-05-13 19:10:36,667 ] train.py:24 root - INFO - Starting model training process...
+[ 2026-05-13 19:10:53,733 ] train.py:34 root - INFO - ===================================
+[ 2026-05-13 19:10:53,734 ] train.py:35 root - INFO - Loaded Transformed Dataset
+[ 2026-05-13 19:10:57,206 ] train.py:36 root - INFO -   Train rows : 38480
+[ 2026-05-13 19:10:57,466 ] train.py:37 root - INFO -   Test  rows : 9640
+[ 2026-05-13 19:10:57,466 ] train.py:38 root - INFO - ===================================
+[ 2026-05-13 19:10:59,514 ] train.py:43 root - INFO - MLflow experiment set: Traffic_Vehicles_Regression_Experiment
+[ 2026-05-13 19:10:59,736 ] train.py:110 root - INFO - ===================================
+[ 2026-05-13 19:10:59,736 ] train.py:111 root - INFO - Training : PoissonGLM
+[ 2026-05-13 19:10:59,738 ] train.py:112 root - INFO - ===================================
+[ 2026-05-13 19:11:00,713 ] train.py:125 root - INFO -   ParamGrid size : 6 combinations
+[ 2026-05-13 19:12:41,499 ] clientserver.py:570 py4j.clientserver - INFO - Closing down clientserver connection
+[ 2026-05-13 19:12:42,585 ] train.py:143 root - INFO -   RMSE : 7.1342
+[ 2026-05-13 19:12:42,586 ] train.py:144 root - INFO -   R2   : 0.8865
+[ 2026-05-13 19:12:42,587 ] train.py:145 root - INFO -   MAE  : 4.3736
+[ 2026-05-13 19:13:42,727 ] train.py:167 root - INFO -   *** New best model: PoissonGLM (RMSE=7.1342) ***
+[ 2026-05-13 19:13:42,747 ] train.py:110 root - INFO - ===================================
+[ 2026-05-13 19:13:42,747 ] train.py:111 root - INFO - Training : DecisionTree
+[ 2026-05-13 19:13:42,747 ] train.py:112 root - INFO - ===================================
+[ 2026-05-13 19:13:42,799 ] train.py:125 root - INFO -   ParamGrid size : 9 combinations
+[ 2026-05-13 19:14:20,314 ] clientserver.py:570 py4j.clientserver - INFO - Closing down clientserver connection
+[ 2026-05-13 19:14:20,821 ] train.py:143 root - INFO -   RMSE : 9.6333
+[ 2026-05-13 19:14:20,823 ] train.py:144 root - INFO -   R2   : 0.7931
+[ 2026-05-13 19:14:20,823 ] train.py:145 root - INFO -   MAE  : 6.1894
+[ 2026-05-13 19:15:02,455 ] train.py:110 root - INFO - ===================================
+[ 2026-05-13 19:15:02,458 ] train.py:111 root - INFO - Training : RandomForest
+[ 2026-05-13 19:15:02,462 ] train.py:112 root - INFO - ===================================
+[ 2026-05-13 19:15:02,534 ] train.py:125 root - INFO -   ParamGrid size : 8 combinations
+[ 2026-05-13 19:23:11,291 ] clientserver.py:570 py4j.clientserver - INFO - Closing down clientserver connection
+[ 2026-05-13 19:23:14,201 ] train.py:143 root - INFO -   RMSE : 8.2797
+[ 2026-05-13 19:23:14,205 ] train.py:144 root - INFO -   R2   : 0.8472
+[ 2026-05-13 19:23:14,216 ] train.py:145 root - INFO -   MAE  : 5.2480
+[ 2026-05-13 19:23:56,394 ] train.py:110 root - INFO - ===================================
+[ 2026-05-13 19:23:56,394 ] train.py:111 root - INFO - Training : GradientBoosting
+[ 2026-05-13 19:23:56,394 ] train.py:112 root - INFO - ===================================
+[ 2026-05-13 19:23:56,442 ] train.py:125 root - INFO -   ParamGrid size : 4 combinations
+[ 2026-05-13 19:28:06,257 ] clientserver.py:570 py4j.clientserver - INFO - Closing down clientserver connection
+[ 2026-05-13 19:28:06,939 ] train.py:143 root - INFO -   RMSE : 6.7378
+[ 2026-05-13 19:28:06,939 ] train.py:144 root - INFO -   R2   : 0.8988
+[ 2026-05-13 19:28:06,940 ] train.py:145 root - INFO -   MAE  : 4.0889
+[ 2026-05-13 19:28:48,249 ] train.py:167 root - INFO -   *** New best model: GradientBoosting (RMSE=6.7378) ***
+[ 2026-05-13 19:28:48,271 ] train.py:172 root - INFO - ===================================
+[ 2026-05-13 19:28:48,273 ] train.py:173 root - INFO - BEST MODEL : GradientBoosting
+[ 2026-05-13 19:28:48,274 ] train.py:174 root - INFO - BEST RMSE  : 6.7378
+[ 2026-05-13 19:28:48,274 ] train.py:175 root - INFO - ===================================
+[ 2026-05-13 19:29:38,654 ] train.py:183 root - INFO - Best model logged to MLflow under 'best_model'.
+[ 2026-05-13 19:29:38,661 ] train.py:218 root - ERROR - Error during model training: Expecting property name enclosed in double quotes: line 30 column 1 (char 716)
+[ 2026-05-13 19:29:38,662 ] train.py:226 root - ERROR - Error during model training: Expecting property name enclosed in double quotes: line 30 column 1 (char 716)
+[ 2026-05-13 19:29:38,710 ] clientserver.py:570 py4j.clientserver - INFO - Closing down clientserver connection
+[ 2026-05-14 21:27:53,139 ] extraction.py:13 root - INFO - Using data directory: data/raw
+[ 2026-05-14 21:27:53,141 ] extraction.py:15 root - INFO - Downloading traffic dataset...
+[ 2026-05-14 21:27:54,586 ] extraction.py:24 root - INFO - File read successfully with default utf-8 encoding.
+[ 2026-05-14 21:27:54,586 ] extraction.py:29 root - INFO - Downloaded! Shape: (48120, 4)
+[ 2026-05-14 21:27:54,590 ] extraction.py:30 root - INFO - Columns: ['DateTime', 'Junction', 'Vehicles', 'ID']
+[ 2026-05-14 21:27:54,591 ] extraction.py:31 root - INFO - First 5 records:
+              DateTime  Junction  Vehicles           ID
+0  2015-11-01 00:00:00         1        15  20151101001
+1  2015-11-01 01:00:00         1        13  20151101011
+2  2015-11-01 02:00:00         1        10  20151101021
+3  2015-11-01 03:00:00         1         7  20151101031
+4  2015-11-01 04:00:00         1         9  20151101041
+[ 2026-05-14 21:27:54,814 ] extraction.py:35 root - INFO - Data saved at: data/raw/traffic.csv
+[ 2026-05-14 21:27:54,814 ] extraction.py:37 root - INFO - Final files in data/raw: ['traffic.csv']
+[ 2026-05-14 21:27:54,817 ] extraction.py:38 root - INFO - Data extraction process completed successfully!
+[ 2026-05-14 21:28:00,015 ] cleaning.py:8 root - INFO - Starting data cleaning process...
+[ 2026-05-14 21:30:26,854 ] cleaning.py:19 root - INFO - ===================================
+[ 2026-05-14 21:30:26,854 ] cleaning.py:20 root - INFO - Original Dataset Shape
+[ 2026-05-14 21:30:28,367 ] cleaning.py:21 root - INFO - Rows    : 48120
+[ 2026-05-14 21:30:28,408 ] cleaning.py:22 root - INFO - Columns : 4
+[ 2026-05-14 21:30:28,409 ] cleaning.py:23 root - INFO - ===================================
+[ 2026-05-14 21:30:28,416 ] cleaning.py:25 root - INFO - Checking Null Values...
+[ 2026-05-14 21:30:29,363 ] cleaning.py:28 root - INFO -   DateTime     : 0 null values
+[ 2026-05-14 21:30:29,899 ] cleaning.py:28 root - INFO -   Junction     : 0 null values
+[ 2026-05-14 21:30:30,284 ] cleaning.py:28 root - INFO -   Vehicles     : 0 null values
+[ 2026-05-14 21:30:30,746 ] cleaning.py:28 root - INFO -   ID           : 0 null values
+[ 2026-05-14 21:30:33,433 ] cleaning.py:33 root - INFO - ===================================
+[ 2026-05-14 21:30:33,434 ] cleaning.py:34 root - INFO - Duplicate Removal
+[ 2026-05-14 21:30:33,437 ] cleaning.py:35 root - INFO -   Rows before      : 48120
+[ 2026-05-14 21:30:33,437 ] cleaning.py:36 root - INFO -   Rows after       : 48120
+[ 2026-05-14 21:30:33,443 ] cleaning.py:37 root - INFO -   Duplicates removed: 0
+[ 2026-05-14 21:30:33,445 ] cleaning.py:38 root - INFO - ===================================
+[ 2026-05-14 21:30:33,445 ] cleaning.py:41 root - INFO - Removing unnecessary columns: ID
+[ 2026-05-14 21:30:33,478 ] cleaning.py:43 root - INFO - Columns removed successfully.
+[ 2026-05-14 21:30:33,480 ] cleaning.py:45 root - INFO - Casting DateTime column to TimestampType...
+[ 2026-05-14 21:30:33,531 ] cleaning.py:47 root - INFO - DateTime cast completed.
+[ 2026-05-14 21:30:34,404 ] cleaning.py:50 root - INFO - Vehicles <= 0 (invalid rows): 0
+[ 2026-05-14 21:30:35,066 ] cleaning.py:57 root - INFO - Invalid Junction values: 0
+[ 2026-05-14 21:30:35,066 ] cleaning.py:62 root - INFO - Adding time-based feature columns...
+[ 2026-05-14 21:30:35,192 ] cleaning.py:69 root - INFO - Feature columns added: Year, Month, Hour, DayOfWeek
+[ 2026-05-14 21:30:35,192 ] cleaning.py:71 root - INFO - ===================================
+[ 2026-05-14 21:30:35,196 ] cleaning.py:72 root - INFO - Final Dataset Schema
+[ 2026-05-14 21:30:35,197 ] cleaning.py:73 root - INFO - ===================================
+[ 2026-05-14 21:30:35,208 ] cleaning.py:76 root - INFO - ===================================
+[ 2026-05-14 21:30:35,209 ] cleaning.py:77 root - INFO - Cleaned Dataset Preview (top 5 rows)
+[ 2026-05-14 21:30:35,210 ] cleaning.py:78 root - INFO - ===================================
+[ 2026-05-14 21:30:37,077 ] cleaning.py:81 root - INFO - ===================================
+[ 2026-05-14 21:30:37,081 ] cleaning.py:82 root - INFO - Summary Statistics
+[ 2026-05-14 21:30:37,082 ] cleaning.py:83 root - INFO - ===================================
+[ 2026-05-14 21:30:40,732 ] cleaning.py:87 root - INFO - Saving cleaned dataset to: data/processed/clean_traffic_data
+[ 2026-05-14 21:30:43,650 ] cleaning.py:89 root - INFO - ===================================
+[ 2026-05-14 21:30:43,652 ] cleaning.py:90 root - INFO - Cleaned data saved successfully
+[ 2026-05-14 21:30:43,655 ] cleaning.py:91 root - INFO - Path: data/processed/clean_traffic_data
+[ 2026-05-14 21:30:44,935 ] cleaning.py:92 root - INFO - Final row count  : 48120
+[ 2026-05-14 21:30:44,940 ] cleaning.py:93 root - INFO - Final column count: 7
+[ 2026-05-14 21:30:44,941 ] cleaning.py:94 root - INFO - ===================================
+[ 2026-05-14 21:30:44,942 ] cleaning.py:95 root - INFO - Data cleaning process completed successfully!
+[ 2026-05-14 21:30:44,978 ] clientserver.py:570 py4j.clientserver - INFO - Closing down clientserver connection
+[ 2026-05-14 21:30:55,791 ] transformation.py:12 root - INFO - Starting data transformation process...
+[ 2026-05-14 21:31:20,764 ] transformation.py:23 root - INFO - ===================================
+[ 2026-05-14 21:31:20,764 ] transformation.py:24 root - INFO - Loaded Cleaned Dataset
+[ 2026-05-14 21:31:22,270 ] transformation.py:25 root - INFO -   Rows    : 48120
+[ 2026-05-14 21:31:22,311 ] transformation.py:26 root - INFO -   Columns : ['DateTime', 'Junction', 'Vehicles', 'Year', 'Month', 'Hour', 'DayOfWeek']
+[ 2026-05-14 21:31:22,311 ] transformation.py:27 root - INFO - ===================================
+[ 2026-05-14 21:31:22,315 ] transformation.py:29 root - INFO - Parsing DateTime and extracting time features...
+[ 2026-05-14 21:31:22,412 ] transformation.py:42 root - INFO - Time features confirmed: Year, Month, Hour, DayOfWeek
+[ 2026-05-14 21:31:22,413 ] transformation.py:44 root - INFO - Applying OneHotEncoder to Junction, DayOfWeek, Hour...
+[ 2026-05-14 21:31:23,078 ] transformation.py:59 root - INFO - Assembling feature vector...
+[ 2026-05-14 21:31:23,104 ] transformation.py:72 root - INFO - Adding StandardScaler...
+[ 2026-05-14 21:31:23,123 ] transformation.py:81 root - INFO - Building and fitting Pipeline...
+[ 2026-05-14 21:31:28,226 ] transformation.py:87 root - INFO - Pipeline fitted successfully.
+[ 2026-05-14 21:31:28,227 ] transformation.py:88 root - INFO - ===================================
+[ 2026-05-14 21:31:28,231 ] transformation.py:89 root - INFO - Transformed Dataset Schema
+[ 2026-05-14 21:31:28,232 ] transformation.py:90 root - INFO - ===================================
+[ 2026-05-14 21:31:28,251 ] transformation.py:93 root - INFO - ===================================
+[ 2026-05-14 21:31:28,253 ] transformation.py:94 root - INFO - Transformed Dataset Preview (top 5 rows)
+[ 2026-05-14 21:31:28,254 ] transformation.py:95 root - INFO - ===================================
+[ 2026-05-14 21:31:29,254 ] transformation.py:104 root - INFO - ===================================
+[ 2026-05-14 21:31:29,255 ] transformation.py:105 root - INFO - Train/Test Split
+[ 2026-05-14 21:31:32,057 ] transformation.py:106 root - INFO -   Train rows : 38480
+[ 2026-05-14 21:31:34,137 ] transformation.py:107 root - INFO -   Test  rows : 9640
+[ 2026-05-14 21:31:34,138 ] transformation.py:108 root - INFO - ===================================
+[ 2026-05-14 21:31:44,735 ] transformation.py:120 root - INFO - Train data saved : data/transformed/train
+[ 2026-05-14 21:31:44,736 ] transformation.py:121 root - INFO - Test  data saved : data/transformed/test
+[ 2026-05-14 21:31:47,152 ] transformation.py:128 root - INFO - Pipeline model saved : models/pipeline
+[ 2026-05-14 21:31:47,152 ] transformation.py:130 root - INFO - ===================================
+[ 2026-05-14 21:31:47,155 ] transformation.py:131 root - INFO - Transformation Complete
+[ 2026-05-14 21:31:47,159 ] transformation.py:132 root - INFO -   data/transformed/train/
+[ 2026-05-14 21:31:47,160 ] transformation.py:133 root - INFO -   data/transformed/test/
+[ 2026-05-14 21:31:47,162 ] transformation.py:134 root - INFO -   models/pipeline/
+[ 2026-05-14 21:31:47,162 ] transformation.py:135 root - INFO - ===================================
+[ 2026-05-14 21:31:47,165 ] transformation.py:136 root - INFO - Data transformation process completed successfully!
+[ 2026-05-14 21:31:47,191 ] clientserver.py:570 py4j.clientserver - INFO - Closing down clientserver connection
+[ 2026-05-14 21:32:20,911 ] train.py:18 root - INFO - Starting model training process...
+[ 2026-05-14 21:32:40,429 ] train.py:26 root - INFO - ===================================
+[ 2026-05-14 21:32:40,430 ] train.py:27 root - INFO - Loaded Transformed Dataset
+[ 2026-05-14 21:32:44,260 ] train.py:28 root - INFO -   Train rows : 38480
+[ 2026-05-14 21:32:44,592 ] train.py:29 root - INFO -   Test  rows : 9640
+[ 2026-05-14 21:32:44,592 ] train.py:30 root - INFO - ===================================
+[ 2026-05-14 21:33:20,259 ] train.py:34 root - INFO - MLflow experiment set: Traffic_Vehicles_Regression_Experiment
+[ 2026-05-14 21:33:20,699 ] train.py:96 root - INFO - ===================================
+[ 2026-05-14 21:33:20,700 ] train.py:97 root - INFO - Training : PoissonGLM
+[ 2026-05-14 21:33:20,703 ] train.py:98 root - INFO - ===================================
+[ 2026-05-14 21:33:27,049 ] train.py:111 root - INFO -   ParamGrid size : 6 combinations
+[ 2026-05-14 21:45:28,520 ] clientserver.py:570 py4j.clientserver - INFO - Closing down clientserver connection
+[ 2026-05-14 21:45:29,360 ] train.py:128 root - INFO -   RMSE : 7.1342
+[ 2026-05-14 21:45:29,362 ] train.py:129 root - INFO -   R2   : 0.8865
+[ 2026-05-14 21:45:29,364 ] train.py:130 root - INFO -   MAE  : 4.3736
+[ 2026-05-14 21:46:16,547 ] train.py:149 root - INFO -   *** New best model: PoissonGLM (RMSE=7.1342) ***
+[ 2026-05-14 21:46:16,577 ] train.py:96 root - INFO - ===================================
+[ 2026-05-14 21:46:16,578 ] train.py:97 root - INFO - Training : DecisionTree
+[ 2026-05-14 21:46:16,579 ] train.py:98 root - INFO - ===================================
+[ 2026-05-14 21:46:16,623 ] train.py:111 root - INFO -   ParamGrid size : 9 combinations
+[ 2026-05-14 21:46:56,033 ] clientserver.py:570 py4j.clientserver - INFO - Closing down clientserver connection
+[ 2026-05-14 21:46:56,676 ] train.py:128 root - INFO -   RMSE : 9.6333
+[ 2026-05-14 21:46:56,677 ] train.py:129 root - INFO -   R2   : 0.7931
+[ 2026-05-14 21:46:56,686 ] train.py:130 root - INFO -   MAE  : 6.1894
+[ 2026-05-14 21:47:30,686 ] train.py:96 root - INFO - ===================================
+[ 2026-05-14 21:47:30,687 ] train.py:97 root - INFO - Training : RandomForest
+[ 2026-05-14 21:47:30,690 ] train.py:98 root - INFO - ===================================
+[ 2026-05-14 21:47:30,767 ] train.py:111 root - INFO -   ParamGrid size : 8 combinations
+[ 2026-05-14 21:50:16,092 ] train.py:195 root - ERROR - Error during model training: An error occurred while calling o32596.fit.
+: org.apache.spark.SparkException: Job 1137 cancelled because SparkContext was shut down
+	at org.apache.spark.scheduler.DAGScheduler.$anonfun$cleanUpAfterSchedulerStop$1(DAGScheduler.scala:1309)
+	at org.apache.spark.scheduler.DAGScheduler.$anonfun$cleanUpAfterSchedulerStop$1$adapted(DAGScheduler.scala:1307)
+	at scala.collection.mutable.HashSet$Node.foreach(HashSet.scala:450)
+	at scala.collection.mutable.HashSet.foreach(HashSet.scala:376)
+	at org.apache.spark.scheduler.DAGScheduler.cleanUpAfterSchedulerStop(DAGScheduler.scala:1307)
+	at org.apache.spark.scheduler.DAGSchedulerEventProcessLoop.onStop(DAGScheduler.scala:3424)
+	at org.apache.spark.util.EventLoop.stop(EventLoop.scala:85)
+	at org.apache.spark.scheduler.DAGScheduler.$anonfun$stop$3(DAGScheduler.scala:3307)
+	at org.apache.spark.util.Utils$.tryLogNonFatalError(Utils.scala:1314)
+	at org.apache.spark.scheduler.DAGScheduler.stop(DAGScheduler.scala:3307)
+	at org.apache.spark.SparkContext.$anonfun$stop$12(SparkContext.scala:2357)
+	at org.apache.spark.util.Utils$.tryLogNonFatalError(Utils.scala:1314)
+	at org.apache.spark.SparkContext.stop(SparkContext.scala:2357)
+	at org.apache.spark.SparkContext.stop(SparkContext.scala:2308)
+	at org.apache.spark.SparkContext.$anonfun$new$37(SparkContext.scala:712)
+	at org.apache.spark.util.SparkShutdownHook.run(ShutdownHookManager.scala:231)
+	at org.apache.spark.util.SparkShutdownHookManager.$anonfun$runAll$2(ShutdownHookManager.scala:205)
+	at scala.runtime.java8.JFunction0$mcV$sp.apply(JFunction0$mcV$sp.scala:18)
+	at org.apache.spark.util.Utils$.logUncaughtExceptions(Utils.scala:1941)
+	at org.apache.spark.util.SparkShutdownHookManager.$anonfun$runAll$1(ShutdownHookManager.scala:205)
+	at scala.runtime.java8.JFunction0$mcV$sp.apply(JFunction0$mcV$sp.scala:18)
+	at scala.util.Try$.apply(Try.scala:217)
+	at org.apache.spark.util.SparkShutdownHookManager.runAll(ShutdownHookManager.scala:205)
+	at org.apache.spark.util.SparkShutdownHookManager$$anon$2.run(ShutdownHookManager.scala:184)
+	at java.base/java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:539)
+	at java.base/java.util.concurrent.FutureTask.run(FutureTask.java:264)
+	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1136)
+	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:635)
+	at java.base/java.lang.Thread.run(Thread.java:840)
+	at org.apache.spark.scheduler.DAGScheduler.runJob(DAGScheduler.scala:1017)
+	at org.apache.spark.SparkContext.runJob(SparkContext.scala:2496)
+	at org.apache.spark.SparkContext.runJob(SparkContext.scala:2517)
+	at org.apache.spark.SparkContext.runJob(SparkContext.scala:2536)
+	at org.apache.spark.SparkContext.runJob(SparkContext.scala:2561)
+	at org.apache.spark.rdd.RDD.$anonfun$collect$1(RDD.scala:1057)
+	at org.apache.spark.rdd.RDDOperationScope$.withScope(RDDOperationScope.scala:151)
+	at org.apache.spark.rdd.RDDOperationScope$.withScope(RDDOperationScope.scala:112)
+	at org.apache.spark.rdd.RDD.withScope(RDD.scala:417)
+	at org.apache.spark.rdd.RDD.collect(RDD.scala:1056)
+	at org.apache.spark.rdd.PairRDDFunctions.$anonfun$collectAsMap$1(PairRDDFunctions.scala:740)
+	at org.apache.spark.rdd.RDDOperationScope$.withScope(RDDOperationScope.scala:151)
+	at org.apache.spark.rdd.RDDOperationScope$.withScope(RDDOperationScope.scala:112)
+	at org.apache.spark.rdd.RDD.withScope(RDD.scala:417)
+	at org.apache.spark.rdd.PairRDDFunctions.collectAsMap(PairRDDFunctions.scala:739)
+	at org.apache.spark.ml.tree.impl.RandomForest$.findBestSplits(RandomForest.scala:693)
+	at org.apache.spark.ml.tree.impl.RandomForest$.runBagged(RandomForest.scala:219)
+	at org.apache.spark.ml.tree.impl.RandomForest$.run(RandomForest.scala:332)
+	at org.apache.spark.ml.regression.RandomForestRegressor.$anonfun$train$1(RandomForestRegressor.scala:159)
+	at org.apache.spark.ml.util.Instrumentation$.$anonfun$instrumented$1(Instrumentation.scala:226)
+	at scala.util.Try$.apply(Try.scala:217)
+	at org.apache.spark.ml.util.Instrumentation$.instrumented(Instrumentation.scala:226)
+	at org.apache.spark.ml.regression.RandomForestRegressor.train(RandomForestRegressor.scala:137)
+	at org.apache.spark.ml.regression.RandomForestRegressor.train(RandomForestRegressor.scala:46)
+	at org.apache.spark.ml.Predictor.fit(Predictor.scala:115)
+	at org.apache.spark.ml.Predictor.fit(Predictor.scala:79)
+	at jdk.internal.reflect.GeneratedMethodAccessor144.invoke(Unknown Source)
+	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:569)
+	at py4j.reflection.MethodInvoker.invoke(MethodInvoker.java:244)
+	at py4j.reflection.ReflectionEngine.invoke(ReflectionEngine.java:374)
+	at py4j.Gateway.invoke(Gateway.java:282)
+	at py4j.commands.AbstractCommand.invokeMethod(AbstractCommand.java:132)
+	at py4j.commands.CallCommand.execute(CallCommand.java:79)
+	at py4j.ClientServerConnection.waitForCommands(ClientServerConnection.java:184)
+	at py4j.ClientServerConnection.run(ClientServerConnection.java:108)
+	at java.base/java.lang.Thread.run(Thread.java:840)
+
+[ 2026-05-14 21:50:16,096 ] train.py:202 root - ERROR - Error during model training: An error occurred while calling o32596.fit.
+: org.apache.spark.SparkException: Job 1137 cancelled because SparkContext was shut down
+	at org.apache.spark.scheduler.DAGScheduler.$anonfun$cleanUpAfterSchedulerStop$1(DAGScheduler.scala:1309)
+	at org.apache.spark.scheduler.DAGScheduler.$anonfun$cleanUpAfterSchedulerStop$1$adapted(DAGScheduler.scala:1307)
+	at scala.collection.mutable.HashSet$Node.foreach(HashSet.scala:450)
+	at scala.collection.mutable.HashSet.foreach(HashSet.scala:376)
+	at org.apache.spark.scheduler.DAGScheduler.cleanUpAfterSchedulerStop(DAGScheduler.scala:1307)
+	at org.apache.spark.scheduler.DAGSchedulerEventProcessLoop.onStop(DAGScheduler.scala:3424)
+	at org.apache.spark.util.EventLoop.stop(EventLoop.scala:85)
+	at org.apache.spark.scheduler.DAGScheduler.$anonfun$stop$3(DAGScheduler.scala:3307)
+	at org.apache.spark.util.Utils$.tryLogNonFatalError(Utils.scala:1314)
+	at org.apache.spark.scheduler.DAGScheduler.stop(DAGScheduler.scala:3307)
+	at org.apache.spark.SparkContext.$anonfun$stop$12(SparkContext.scala:2357)
+	at org.apache.spark.util.Utils$.tryLogNonFatalError(Utils.scala:1314)
+	at org.apache.spark.SparkContext.stop(SparkContext.scala:2357)
+	at org.apache.spark.SparkContext.stop(SparkContext.scala:2308)
+	at org.apache.spark.SparkContext.$anonfun$new$37(SparkContext.scala:712)
+	at org.apache.spark.util.SparkShutdownHook.run(ShutdownHookManager.scala:231)
+	at org.apache.spark.util.SparkShutdownHookManager.$anonfun$runAll$2(ShutdownHookManager.scala:205)
+	at scala.runtime.java8.JFunction0$mcV$sp.apply(JFunction0$mcV$sp.scala:18)
+	at org.apache.spark.util.Utils$.logUncaughtExceptions(Utils.scala:1941)
+	at org.apache.spark.util.SparkShutdownHookManager.$anonfun$runAll$1(ShutdownHookManager.scala:205)
+	at scala.runtime.java8.JFunction0$mcV$sp.apply(JFunction0$mcV$sp.scala:18)
+	at scala.util.Try$.apply(Try.scala:217)
+	at org.apache.spark.util.SparkShutdownHookManager.runAll(ShutdownHookManager.scala:205)
+	at org.apache.spark.util.SparkShutdownHookManager$$anon$2.run(ShutdownHookManager.scala:184)
+	at java.base/java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:539)
+	at java.base/java.util.concurrent.FutureTask.run(FutureTask.java:264)
+	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1136)
+	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:635)
+	at java.base/java.lang.Thread.run(Thread.java:840)
+	at org.apache.spark.scheduler.DAGScheduler.runJob(DAGScheduler.scala:1017)
+	at org.apache.spark.SparkContext.runJob(SparkContext.scala:2496)
+	at org.apache.spark.SparkContext.runJob(SparkContext.scala:2517)
+	at org.apache.spark.SparkContext.runJob(SparkContext.scala:2536)
+	at org.apache.spark.SparkContext.runJob(SparkContext.scala:2561)
+	at org.apache.spark.rdd.RDD.$anonfun$collect$1(RDD.scala:1057)
+	at org.apache.spark.rdd.RDDOperationScope$.withScope(RDDOperationScope.scala:151)
+	at org.apache.spark.rdd.RDDOperationScope$.withScope(RDDOperationScope.scala:112)
+	at org.apache.spark.rdd.RDD.withScope(RDD.scala:417)
+	at org.apache.spark.rdd.RDD.collect(RDD.scala:1056)
+	at org.apache.spark.rdd.PairRDDFunctions.$anonfun$collectAsMap$1(PairRDDFunctions.scala:740)
+	at org.apache.spark.rdd.RDDOperationScope$.withScope(RDDOperationScope.scala:151)
+	at org.apache.spark.rdd.RDDOperationScope$.withScope(RDDOperationScope.scala:112)
+	at org.apache.spark.rdd.RDD.withScope(RDD.scala:417)
+	at org.apache.spark.rdd.PairRDDFunctions.collectAsMap(PairRDDFunctions.scala:739)
+	at org.apache.spark.ml.tree.impl.RandomForest$.findBestSplits(RandomForest.scala:693)
+	at org.apache.spark.ml.tree.impl.RandomForest$.runBagged(RandomForest.scala:219)
+	at org.apache.spark.ml.tree.impl.RandomForest$.run(RandomForest.scala:332)
+	at org.apache.spark.ml.regression.RandomForestRegressor.$anonfun$train$1(RandomForestRegressor.scala:159)
+	at org.apache.spark.ml.util.Instrumentation$.$anonfun$instrumented$1(Instrumentation.scala:226)
+	at scala.util.Try$.apply(Try.scala:217)
+	at org.apache.spark.ml.util.Instrumentation$.instrumented(Instrumentation.scala:226)
+	at org.apache.spark.ml.regression.RandomForestRegressor.train(RandomForestRegressor.scala:137)
+	at org.apache.spark.ml.regression.RandomForestRegressor.train(RandomForestRegressor.scala:46)
+	at org.apache.spark.ml.Predictor.fit(Predictor.scala:115)
+	at org.apache.spark.ml.Predictor.fit(Predictor.scala:79)
+	at jdk.internal.reflect.GeneratedMethodAccessor144.invoke(Unknown Source)
+	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:569)
+	at py4j.reflection.MethodInvoker.invoke(MethodInvoker.java:244)
+	at py4j.reflection.ReflectionEngine.invoke(ReflectionEngine.java:374)
+	at py4j.Gateway.invoke(Gateway.java:282)
+	at py4j.commands.AbstractCommand.invokeMethod(AbstractCommand.java:132)
+	at py4j.commands.CallCommand.execute(CallCommand.java:79)
+	at py4j.ClientServerConnection.waitForCommands(ClientServerConnection.java:184)
+	at py4j.ClientServerConnection.run(ClientServerConnection.java:108)
+	at java.base/java.lang.Thread.run(Thread.java:840)
+
+[ 2026-05-14 21:50:16,141 ] clientserver.py:570 py4j.clientserver - INFO - Closing down clientserver connection
+[ 2026-05-14 21:51:49,234 ] train.py:18 root - INFO - Starting model training process...
+[ 2026-05-14 21:52:47,188 ] train.py:26 root - INFO - ===================================
+[ 2026-05-14 21:52:47,188 ] train.py:27 root - INFO - Loaded Transformed Dataset
+[ 2026-05-14 21:52:49,938 ] train.py:28 root - INFO -   Train rows : 38480
+[ 2026-05-14 21:52:50,193 ] train.py:29 root - INFO -   Test  rows : 9640
+[ 2026-05-14 21:52:50,193 ] train.py:30 root - INFO - ===================================
+[ 2026-05-14 21:52:51,851 ] train.py:34 root - INFO - MLflow experiment set: Traffic_Vehicles_Regression_Experiment
+[ 2026-05-14 21:52:51,986 ] train.py:96 root - INFO - ===================================
+[ 2026-05-14 21:52:51,986 ] train.py:97 root - INFO - Training : PoissonGLM
+[ 2026-05-14 21:52:51,987 ] train.py:98 root - INFO - ===================================
+[ 2026-05-14 21:52:52,648 ] train.py:111 root - INFO -   ParamGrid size : 6 combinations
+[ 2026-05-14 21:54:56,737 ] clientserver.py:570 py4j.clientserver - INFO - Closing down clientserver connection
+[ 2026-05-14 21:54:57,466 ] train.py:128 root - INFO -   RMSE : 7.1342
+[ 2026-05-14 21:54:57,466 ] train.py:129 root - INFO -   R2   : 0.8865
+[ 2026-05-14 21:54:57,475 ] train.py:130 root - INFO -   MAE  : 4.3736
+[ 2026-05-14 21:55:37,593 ] train.py:149 root - INFO -   *** New best model: PoissonGLM (RMSE=7.1342) ***
+[ 2026-05-14 21:55:37,615 ] train.py:96 root - INFO - ===================================
+[ 2026-05-14 21:55:37,615 ] train.py:97 root - INFO - Training : DecisionTree
+[ 2026-05-14 21:55:37,616 ] train.py:98 root - INFO - ===================================
+[ 2026-05-14 21:55:37,662 ] train.py:111 root - INFO -   ParamGrid size : 9 combinations
+[ 2026-05-14 21:56:24,322 ] clientserver.py:570 py4j.clientserver - INFO - Closing down clientserver connection
+[ 2026-05-14 21:56:25,127 ] train.py:128 root - INFO -   RMSE : 9.6333
+[ 2026-05-14 21:56:25,127 ] train.py:129 root - INFO -   R2   : 0.7931
+[ 2026-05-14 21:56:25,133 ] train.py:130 root - INFO -   MAE  : 6.1894
+[ 2026-05-14 21:57:05,936 ] train.py:96 root - INFO - ===================================
+[ 2026-05-14 21:57:05,936 ] train.py:97 root - INFO - Training : RandomForest
+[ 2026-05-14 21:57:05,951 ] train.py:98 root - INFO - ===================================
+[ 2026-05-14 21:57:06,027 ] train.py:111 root - INFO -   ParamGrid size : 8 combinations
+[ 2026-05-14 22:05:09,857 ] clientserver.py:563 py4j.clientserver - INFO - Error while receiving.
+Traceback (most recent call last):
+  File "D:\spark-traffic-mlops\.venv\Lib\site-packages\py4j\clientserver.py", line 535, in send_command
+    answer = smart_decode(self.stream.readline()[:-1])
+                          ^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\SHARJEELAHMED\AppData\Roaming\uv\python\cpython-3.11-windows-x86_64-none\Lib\socket.py", line 718, in readinto
+    return self._sock.recv_into(b)
+           ^^^^^^^^^^^^^^^^^^^^^^^
+ConnectionResetError: [WinError 10054] An existing connection was forcibly closed by the remote host
+[ 2026-05-14 22:05:09,886 ] clientserver.py:570 py4j.clientserver - INFO - Closing down clientserver connection
+[ 2026-05-14 22:05:09,892 ] java_gateway.py:1059 root - ERROR - Exception while sending command.
+Traceback (most recent call last):
+  File "D:\spark-traffic-mlops\.venv\Lib\site-packages\py4j\clientserver.py", line 535, in send_command
+    answer = smart_decode(self.stream.readline()[:-1])
+                          ^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\SHARJEELAHMED\AppData\Roaming\uv\python\cpython-3.11-windows-x86_64-none\Lib\socket.py", line 718, in readinto
+    return self._sock.recv_into(b)
+           ^^^^^^^^^^^^^^^^^^^^^^^
+ConnectionResetError: [WinError 10054] An existing connection was forcibly closed by the remote host
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "D:\spark-traffic-mlops\.venv\Lib\site-packages\py4j\java_gateway.py", line 1038, in send_command
+    response = connection.send_command(command)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\spark-traffic-mlops\.venv\Lib\site-packages\py4j\clientserver.py", line 566, in send_command
+    raise Py4JNetworkError(
+py4j.protocol.Py4JNetworkError: Error while sending or receiving
+[ 2026-05-14 22:05:09,895 ] clientserver.py:570 py4j.clientserver - INFO - Closing down clientserver connection
+[ 2026-05-14 22:05:09,896 ] clientserver.py:529 py4j.clientserver - INFO - Error while sending or receiving.
+Traceback (most recent call last):
+  File "D:\spark-traffic-mlops\.venv\Lib\site-packages\pyspark\ml\util.py", line 1252, in _cache_spark_dataset
+    yield dataset
+  File "D:\spark-traffic-mlops\.venv\Lib\site-packages\pyspark\ml\tuning.py", line 863, in _fit
+    for j, metric, subModel in pool.imap_unordered(lambda f: f(), tasks):
+  File "C:\Users\SHARJEELAHMED\AppData\Roaming\uv\python\cpython-3.11-windows-x86_64-none\Lib\multiprocessing\pool.py", line 873, in next
+    raise value
+  File "C:\Users\SHARJEELAHMED\AppData\Roaming\uv\python\cpython-3.11-windows-x86_64-none\Lib\multiprocessing\pool.py", line 125, in worker
+    result = (True, func(*args, **kwds))
+                    ^^^^^^^^^^^^^^^^^^^
+  File "D:\spark-traffic-mlops\.venv\Lib\site-packages\pyspark\ml\tuning.py", line 863, in <lambda>
+    for j, metric, subModel in pool.imap_unordered(lambda f: f(), tasks):
+                                                             ^^^
+  File "D:\spark-traffic-mlops\.venv\Lib\site-packages\pyspark\util.py", line 451, in wrapped
+    return ff(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^
+  File "D:\spark-traffic-mlops\.venv\Lib\site-packages\pyspark\ml\tuning.py", line 114, in singleTask
+    index, model = next(modelIter)
+                   ^^^^^^^^^^^^^^^
+  File "D:\spark-traffic-mlops\.venv\Lib\site-packages\pyspark\ml\base.py", line 96, in __next__
+    return index, self.fitSingleModel(index)
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\spark-traffic-mlops\.venv\Lib\site-packages\pyspark\ml\base.py", line 154, in fitSingleModel
+    return estimator.fit(dataset, paramMaps[index])
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\spark-traffic-mlops\.venv\Lib\site-packages\pyspark\ml\base.py", line 201, in fit
+    return self.copy(params)._fit(dataset)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\spark-traffic-mlops\.venv\Lib\site-packages\pyspark\ml\util.py", line 211, in wrapped
+    return f(self, dataset)
+           ^^^^^^^^^^^^^^^^
+  File "D:\spark-traffic-mlops\.venv\Lib\site-packages\pyspark\ml\wrapper.py", line 417, in _fit
+    java_model = self._fit_java(dataset)
+                 ^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\spark-traffic-mlops\.venv\Lib\site-packages\pyspark\ml\wrapper.py", line 413, in _fit_java
+    return self._java_obj.fit(dataset._jdf)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\spark-traffic-mlops\.venv\Lib\site-packages\py4j\java_gateway.py", line 1362, in __call__
+    return_value = get_return_value(
+                   ^^^^^^^^^^^^^^^^^
+  File "D:\spark-traffic-mlops\.venv\Lib\site-packages\pyspark\errors\exceptions\captured.py", line 263, in deco
+    return f(*a, **kw)
+           ^^^^^^^^^^^
+  File "D:\spark-traffic-mlops\.venv\Lib\site-packages\py4j\protocol.py", line 335, in get_return_value
+    raise Py4JError(
+py4j.protocol.Py4JError: An error occurred while calling o43523.fit
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "D:\spark-traffic-mlops\.venv\Lib\site-packages\py4j\clientserver.py", line 527, in send_command
+    self.socket.sendall(command.encode("utf-8"))
+ConnectionResetError: [WinError 10054] An existing connection was forcibly closed by the remote host
+[ 2026-05-14 22:05:09,936 ] clientserver.py:570 py4j.clientserver - INFO - Closing down clientserver connection
+[ 2026-05-14 22:05:09,947 ] java_gateway.py:1056 root - INFO - Exception while sending command.
+Traceback (most recent call last):
+  File "D:\spark-traffic-mlops\.venv\Lib\site-packages\pyspark\ml\util.py", line 1252, in _cache_spark_dataset
+    yield dataset
+  File "D:\spark-traffic-mlops\.venv\Lib\site-packages\pyspark\ml\tuning.py", line 863, in _fit
+    for j, metric, subModel in pool.imap_unordered(lambda f: f(), tasks):
+  File "C:\Users\SHARJEELAHMED\AppData\Roaming\uv\python\cpython-3.11-windows-x86_64-none\Lib\multiprocessing\pool.py", line 873, in next
+    raise value
+  File "C:\Users\SHARJEELAHMED\AppData\Roaming\uv\python\cpython-3.11-windows-x86_64-none\Lib\multiprocessing\pool.py", line 125, in worker
+    result = (True, func(*args, **kwds))
+                    ^^^^^^^^^^^^^^^^^^^
+  File "D:\spark-traffic-mlops\.venv\Lib\site-packages\pyspark\ml\tuning.py", line 863, in <lambda>
+    for j, metric, subModel in pool.imap_unordered(lambda f: f(), tasks):
+                                                             ^^^
+  File "D:\spark-traffic-mlops\.venv\Lib\site-packages\pyspark\util.py", line 451, in wrapped
+    return ff(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^
+  File "D:\spark-traffic-mlops\.venv\Lib\site-packages\pyspark\ml\tuning.py", line 114, in singleTask
+    index, model = next(modelIter)
+                   ^^^^^^^^^^^^^^^
+  File "D:\spark-traffic-mlops\.venv\Lib\site-packages\pyspark\ml\base.py", line 96, in __next__
+    return index, self.fitSingleModel(index)
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\spark-traffic-mlops\.venv\Lib\site-packages\pyspark\ml\base.py", line 154, in fitSingleModel
+    return estimator.fit(dataset, paramMaps[index])
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\spark-traffic-mlops\.venv\Lib\site-packages\pyspark\ml\base.py", line 201, in fit
+    return self.copy(params)._fit(dataset)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\spark-traffic-mlops\.venv\Lib\site-packages\pyspark\ml\util.py", line 211, in wrapped
+    return f(self, dataset)
+           ^^^^^^^^^^^^^^^^
+  File "D:\spark-traffic-mlops\.venv\Lib\site-packages\pyspark\ml\wrapper.py", line 417, in _fit
+    java_model = self._fit_java(dataset)
+                 ^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\spark-traffic-mlops\.venv\Lib\site-packages\pyspark\ml\wrapper.py", line 413, in _fit_java
+    return self._java_obj.fit(dataset._jdf)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\spark-traffic-mlops\.venv\Lib\site-packages\py4j\java_gateway.py", line 1362, in __call__
+    return_value = get_return_value(
+                   ^^^^^^^^^^^^^^^^^
+  File "D:\spark-traffic-mlops\.venv\Lib\site-packages\pyspark\errors\exceptions\captured.py", line 263, in deco
+    return f(*a, **kw)
+           ^^^^^^^^^^^
+  File "D:\spark-traffic-mlops\.venv\Lib\site-packages\py4j\protocol.py", line 335, in get_return_value
+    raise Py4JError(
+py4j.protocol.Py4JError: An error occurred while calling o43523.fit
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "D:\spark-traffic-mlops\.venv\Lib\site-packages\py4j\clientserver.py", line 527, in send_command
+    self.socket.sendall(command.encode("utf-8"))
+ConnectionResetError: [WinError 10054] An existing connection was forcibly closed by the remote host
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "D:\spark-traffic-mlops\.venv\Lib\site-packages\py4j\java_gateway.py", line 1038, in send_command
+    response = connection.send_command(command)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\spark-traffic-mlops\.venv\Lib\site-packages\py4j\clientserver.py", line 530, in send_command
+    raise Py4JNetworkError(
+py4j.protocol.Py4JNetworkError: Error while sending
+[ 2026-05-15 00:46:13,209 ] train.py:18 root - INFO - Starting model training process...
+[ 2026-05-15 00:47:04,840 ] train.py:26 root - INFO - ===================================
+[ 2026-05-15 00:47:04,841 ] train.py:27 root - INFO - Loaded Transformed Dataset
+[ 2026-05-15 00:47:10,710 ] train.py:28 root - INFO -   Train rows : 38480
+[ 2026-05-15 00:47:11,291 ] train.py:29 root - INFO -   Test  rows : 9640
+[ 2026-05-15 00:47:11,291 ] train.py:30 root - INFO - ===================================
+[ 2026-05-15 00:47:12,809 ] train.py:34 root - INFO - MLflow experiment set: Traffic_Vehicles_Regression_Experiment
+[ 2026-05-15 00:47:13,086 ] train.py:96 root - INFO - ===================================
+[ 2026-05-15 00:47:13,086 ] train.py:97 root - INFO - Training : PoissonGLM
+[ 2026-05-15 00:47:13,086 ] train.py:98 root - INFO - ===================================
+[ 2026-05-15 00:47:14,450 ] train.py:111 root - INFO -   ParamGrid size : 6 combinations
+[ 2026-05-15 00:49:02,885 ] clientserver.py:570 py4j.clientserver - INFO - Closing down clientserver connection
+[ 2026-05-15 00:49:03,587 ] train.py:128 root - INFO -   RMSE : 7.1342
+[ 2026-05-15 00:49:03,590 ] train.py:129 root - INFO -   R2   : 0.8865
+[ 2026-05-15 00:49:03,591 ] train.py:130 root - INFO -   MAE  : 4.3736
+[ 2026-05-15 00:50:33,076 ] clientserver.py:529 py4j.clientserver - INFO - Error while sending or receiving.
+Traceback (most recent call last):
+  File "D:\spark-traffic-mlops\.venv\Lib\site-packages\py4j\clientserver.py", line 527, in send_command
+    self.socket.sendall(command.encode("utf-8"))
+ConnectionResetError: [WinError 10054] An existing connection was forcibly closed by the remote host
+[ 2026-05-15 00:50:33,077 ] clientserver.py:570 py4j.clientserver - INFO - Closing down clientserver connection
+[ 2026-05-15 00:50:33,077 ] java_gateway.py:1056 root - INFO - Exception while sending command.
+Traceback (most recent call last):
+  File "D:\spark-traffic-mlops\.venv\Lib\site-packages\py4j\clientserver.py", line 527, in send_command
+    self.socket.sendall(command.encode("utf-8"))
+ConnectionResetError: [WinError 10054] An existing connection was forcibly closed by the remote host
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "D:\spark-traffic-mlops\.venv\Lib\site-packages\py4j\java_gateway.py", line 1038, in send_command
+    response = connection.send_command(command)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\spark-traffic-mlops\.venv\Lib\site-packages\py4j\clientserver.py", line 530, in send_command
+    raise Py4JNetworkError(
+py4j.protocol.Py4JNetworkError: Error while sending
+[ 2026-05-15 00:50:35,106 ] clientserver.py:570 py4j.clientserver - INFO - Closing down clientserver connection
+[ 2026-05-15 00:50:35,109 ] clientserver.py:570 py4j.clientserver - INFO - Closing down clientserver connection
+[ 2026-05-15 00:50:35,109 ] clientserver.py:570 py4j.clientserver - INFO - Closing down clientserver connection
+[ 2026-05-15 00:50:37,198 ] clientserver.py:570 py4j.clientserver - INFO - Closing down clientserver connection
+[ 2026-05-15 00:50:37,199 ] clientserver.py:570 py4j.clientserver - INFO - Closing down clientserver connection
+[ 2026-05-15 00:50:39,219 ] clientserver.py:570 py4j.clientserver - INFO - Closing down clientserver connection
+[ 2026-05-15 00:50:41,258 ] clientserver.py:570 py4j.clientserver - INFO - Closing down clientserver connection
+[ 2026-05-15 00:50:41,258 ] clientserver.py:570 py4j.clientserver - INFO - Closing down clientserver connection
+[ 2026-05-15 00:50:43,287 ] clientserver.py:570 py4j.clientserver - INFO - Closing down clientserver connection
+[ 2026-05-15 00:50:43,287 ] train.py:195 root - ERROR - Error during model training: [WinError 10061] No connection could be made because the target machine actively refused it
+[ 2026-05-15 00:50:43,288 ] train.py:202 root - ERROR - Error during model training: [WinError 10061] No connection could be made because the target machine actively refused it
+[ 2026-05-15 00:50:43,288 ] clientserver.py:570 py4j.clientserver - INFO - Closing down clientserver connection
+[ 2026-05-15 00:50:43,289 ] clientserver.py:570 py4j.clientserver - INFO - Closing down clientserver connection
+[ 2026-05-15 00:50:43,317 ] clientserver.py:529 py4j.clientserver - INFO - Error while sending or receiving.
+Traceback (most recent call last):
+  File "D:\spark-traffic-mlops\.venv\Lib\site-packages\py4j\clientserver.py", line 527, in send_command
+    self.socket.sendall(command.encode("utf-8"))
+ConnectionResetError: [WinError 10054] An existing connection was forcibly closed by the remote host
+[ 2026-05-15 00:50:43,340 ] clientserver.py:570 py4j.clientserver - INFO - Closing down clientserver connection
+[ 2026-05-15 00:50:43,343 ] clientserver.py:570 py4j.clientserver - INFO - Closing down clientserver connection
+[ 2026-05-15 00:54:55,100 ] train.py:18 root - INFO - Starting model training process...
+[ 2026-05-15 00:55:10,431 ] train.py:26 root - INFO - ===================================
+[ 2026-05-15 00:55:10,432 ] train.py:27 root - INFO - Loaded Transformed Dataset
+[ 2026-05-15 00:55:13,656 ] train.py:28 root - INFO -   Train rows : 38480
+[ 2026-05-15 00:55:13,958 ] train.py:29 root - INFO -   Test  rows : 9640
+[ 2026-05-15 00:55:13,959 ] train.py:30 root - INFO - ===================================
+[ 2026-05-15 00:55:14,909 ] train.py:34 root - INFO - MLflow experiment set: Traffic_Vehicles_Regression_Experiment
+[ 2026-05-15 00:55:15,150 ] train.py:96 root - INFO - ===================================
+[ 2026-05-15 00:55:15,152 ] train.py:97 root - INFO - Training : PoissonGLM
+[ 2026-05-15 00:55:15,156 ] train.py:98 root - INFO - ===================================
+[ 2026-05-15 00:55:16,138 ] train.py:111 root - INFO -   ParamGrid size : 6 combinations
+[ 2026-05-15 00:56:51,660 ] clientserver.py:570 py4j.clientserver - INFO - Closing down clientserver connection
+[ 2026-05-15 00:56:52,208 ] train.py:128 root - INFO -   RMSE : 7.1342
+[ 2026-05-15 00:56:52,209 ] train.py:129 root - INFO -   R2   : 0.8865
+[ 2026-05-15 00:56:52,209 ] train.py:130 root - INFO -   MAE  : 4.3736
+[ 2026-05-15 00:57:47,098 ] train.py:149 root - INFO -   *** New best model: PoissonGLM (RMSE=7.1342) ***
+[ 2026-05-15 00:57:47,891 ] train.py:96 root - INFO - ===================================
+[ 2026-05-15 00:57:47,893 ] train.py:97 root - INFO - Training : DecisionTree
+[ 2026-05-15 00:57:47,893 ] train.py:98 root - INFO - ===================================
+[ 2026-05-15 00:57:48,404 ] train.py:111 root - INFO -   ParamGrid size : 9 combinations
+[ 2026-05-15 00:58:23,636 ] clientserver.py:570 py4j.clientserver - INFO - Closing down clientserver connection
+[ 2026-05-15 00:58:24,023 ] train.py:128 root - INFO -   RMSE : 9.6333
+[ 2026-05-15 00:58:24,023 ] train.py:129 root - INFO -   R2   : 0.7931
+[ 2026-05-15 00:58:24,023 ] train.py:130 root - INFO -   MAE  : 6.1894
+[ 2026-05-15 00:59:08,810 ] train.py:96 root - INFO - ===================================
+[ 2026-05-15 00:59:08,810 ] train.py:97 root - INFO - Training : RandomForest
+[ 2026-05-15 00:59:08,811 ] train.py:98 root - INFO - ===================================
+[ 2026-05-15 00:59:09,404 ] train.py:111 root - INFO -   ParamGrid size : 8 combinations
+[ 2026-05-15 01:07:32,715 ] clientserver.py:570 py4j.clientserver - INFO - Closing down clientserver connection
+[ 2026-05-15 01:07:36,374 ] train.py:128 root - INFO -   RMSE : 8.3242
+[ 2026-05-15 01:07:36,374 ] train.py:129 root - INFO -   R2   : 0.8455
+[ 2026-05-15 01:07:36,374 ] train.py:130 root - INFO -   MAE  : 5.2581
+[ 2026-05-15 01:08:44,202 ] train.py:96 root - INFO - ===================================
+[ 2026-05-15 01:08:44,202 ] train.py:97 root - INFO - Training : GradientBoosting
+[ 2026-05-15 01:08:44,203 ] train.py:98 root - INFO - ===================================
+[ 2026-05-15 01:08:44,699 ] train.py:111 root - INFO -   ParamGrid size : 4 combinations
+[ 2026-05-15 01:13:13,893 ] clientserver.py:570 py4j.clientserver - INFO - Closing down clientserver connection
+[ 2026-05-15 01:13:15,160 ] train.py:128 root - INFO -   RMSE : 6.7378
+[ 2026-05-15 01:13:15,161 ] train.py:129 root - INFO -   R2   : 0.8988
+[ 2026-05-15 01:13:15,161 ] train.py:130 root - INFO -   MAE  : 4.0889
+[ 2026-05-15 01:14:10,501 ] train.py:149 root - INFO -   *** New best model: GradientBoosting (RMSE=6.7378) ***
+[ 2026-05-15 01:14:11,176 ] train.py:153 root - INFO - ===================================
+[ 2026-05-15 01:14:11,177 ] train.py:154 root - INFO - BEST MODEL : GradientBoosting
+[ 2026-05-15 01:14:11,178 ] train.py:155 root - INFO - BEST RMSE  : 6.7378
+[ 2026-05-15 01:14:11,179 ] train.py:156 root - INFO - ===================================
+[ 2026-05-15 01:14:59,699 ] train.py:163 root - INFO - Best model logged to MLflow under 'best_model'.
+[ 2026-05-15 01:14:59,710 ] train.py:180 root - INFO - No scores.json found — creating new file.
+[ 2026-05-15 01:14:59,721 ] train.py:187 root - INFO - ===================================
+[ 2026-05-15 01:14:59,722 ] train.py:188 root - INFO - Scores saved to : D:\spark-traffic-mlops\scores.json
+[ 2026-05-15 01:14:59,722 ] train.py:189 root - INFO - Total runs in file : 1
+[ 2026-05-15 01:14:59,722 ] train.py:190 root - INFO - ===================================
+[ 2026-05-15 01:14:59,722 ] train.py:191 root - INFO - Training Completed Successfully
+[ 2026-05-15 01:14:59,723 ] train.py:192 root - INFO - ===================================
+[ 2026-05-15 01:14:59,748 ] clientserver.py:570 py4j.clientserver - INFO - Closing down clientserver connection
+[ 2026-05-15 01:14:59,748 ] clientserver.py:570 py4j.clientserver - INFO - Closing down clientserver connection
