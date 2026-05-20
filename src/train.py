@@ -3,7 +3,7 @@ load_dotenv()
 from config_utils import load_config
 from logger import logging
 from pyspark.sql import SparkSession
-from pyspark.ml import Pipeline
+from pyspark.ml import Pipeline, PipelineModel
 from pyspark.ml.feature import StandardScaler
 from pyspark.ml.regression import GeneralizedLinearRegression, DecisionTreeRegressor, RandomForestRegressor, GBTRegressor
 from pyspark.ml.evaluation import RegressionEvaluator
@@ -23,7 +23,6 @@ def train_models():
         spark = SparkSession.builder \
             .appName("TrafficTraining") \
             .getOrCreate()
-            
 
         train_df = spark.read.parquet(config["data"]["train_data"])
         test_df  = spark.read.parquet(config["data"]["test_data"])
@@ -126,27 +125,37 @@ def train_models():
 
         logging.info("BEST MODEL : %s | RMSE : %.4f", best_model_name, best_rmse)
 
-        # Best model run mein prediction model + transformation pipeline dono log karo
-        with mlflow.start_run(run_name="Best_Model_" + best_model_name):
+        # Best model run — model + pipeline dono same run mein
+        with mlflow.start_run(run_name="Best_Model_" + best_model_name) as best_run:
             mlflow.log_param("best_model", best_model_name)
             mlflow.log_metric("best_RMSE", best_rmse)
+            mlflow.log_metric("RMSE", best_rmse)
 
-            # Prediction model
+            # Prediction model log karo
             mlflow.spark.log_model(best_model, "model")
 
-            # Transformation pipeline local se load karke same run mein log karo
-            from pyspark.ml import PipelineModel
-            pipeline_path = config["artifacts"]["pipeline_model"]
+            # Transformation pipeline same run mein log karo
+            pipeline_path  = config["artifacts"]["pipeline_model"]
             pipeline_model = PipelineModel.load(pipeline_path)
             mlflow.spark.log_model(pipeline_model, "transformation_pipeline")
 
+            best_run_id = best_run.info.run_id
+            logging.info("Best model run_id : %s", best_run_id)
             logging.info("Best model + transformation pipeline logged to MLflow.")
+
+        # run_id file mein save karo
+        run_id_path = "logs/best_run_id.txt"
+        os.makedirs("logs", exist_ok=True)
+        with open(run_id_path, "w") as f:
+            f.write(best_run_id)
+        logging.info("Best run_id saved : %s", run_id_path)
 
         # Scores save karo
         scores_path = config["artifacts"]["scores_file"]
         run_record = {
             "run_timestamp": datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
             "best_model":    best_model_name,
+            "best_run_id":   best_run_id,
             "best_rmse":     round(best_rmse, 4),
             "models":        results,
         }

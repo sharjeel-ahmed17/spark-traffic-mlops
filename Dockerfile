@@ -16,8 +16,7 @@ ENV PATH=$JAVA_HOME/bin:$PATH
 WORKDIR /app
 
 COPY requirements.api.txt .
-RUN pip install --no-cache-dir --no-compile --timeout=300 -r requirements.api.txt
-
+RUN pip install --no-cache-dir --no-compile --timeout=300 --retries=5 -r requirements.api.txt
 COPY app/ ./app/
 # COPY models/pipeline ./models/pipeline
 

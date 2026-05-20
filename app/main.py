@@ -44,7 +44,7 @@ PIPELINE_NAME  = "Traffic_Transformation_Pipeline"
 
 # Prediction model — MLflow se
 model = mlflow.spark.load_model(
-    model_uri=f"models:/{MODEL_NAME}/1"
+    model_uri=f"models:/{MODEL_NAME}/4"
 )
 
 # Transformation pipeline — MLflow se (local path nahi)
