@@ -1,6 +1,0 @@
----
-# Namespace for spark-traffic-mlops resources
-apiVersion: v1
-kind: Namespace
-metadata:
-  name: spark-traffic

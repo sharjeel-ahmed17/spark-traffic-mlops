@@ -1,29 +1,43 @@
----
-# Ingress for external access to services
-apiVersion: networking.k8s.io/v1
-kind: Ingress
+apiVersion: apps/v1
+kind: Deployment
 metadata:
-  name: spark-traffic-ingress
-  namespace: default
-  annotations:
-    nginx.ingress.kubernetes.io/rewrite-target: /
+  name: traffic-prediction-api
+  labels:
+    app: traffic-prediction-api
 spec:
-  ingressClassName: nginx
-  rules:
-    - host: traffic-mlops.local
-      http:
-        paths:
-          - path: /api
-            pathType: Prefix
-            backend:
-              service:
-                name: fastapi-service
-                port:
-                  number: 8000
-          - path: /
-            pathType: Prefix
-            backend:
-              service:
-                name: streamlit-service
-                port:
-                  number: 80
+  replicas: 2
+  selector:
+    matchLabels:
+      app: traffic-prediction-api
+  template:
+    metadata:
+      labels:
+        app: traffic-prediction-api
+    spec:
+      containers:
+        - name: traffic-prediction-api-container
+          image: sharjeelahmed017/traffic-prediction-api:latest
+          imagePullPolicy: Never
+          ports:
+            - containerPort: 8000
+          env:
+            - name: MLFLOW_TRACKING_URI
+              valueFrom:
+                secretKeyRef:
+                  name: mlflow-secrets
+                  key: tracking_uri
+            - name: MLFLOW_TRACKING_USERNAME
+              valueFrom:
+                secretKeyRef:
+                  name: mlflow-secrets
+                  key: username
+            - name: MLFLOW_TRACKING_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: mlflow-secrets
+                  key: password
+            - name: SENTRY_DSN
+              valueFrom:
+                secretKeyRef:
+                  name: mlflow-secrets
+                  key: sentry_dsn
