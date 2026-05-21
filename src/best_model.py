@@ -1,9 +1,12 @@
 from dotenv import load_dotenv
+from tomlkit import datetime
 load_dotenv()
 from logger import logging
 from mlflow.tracking import MlflowClient
 import mlflow
 import os
+import datetime
+
 
 def best_model():
     try:
@@ -57,6 +60,14 @@ def best_model():
         logging.info("===================================")
         logging.info("Best model selection completed!")
         logging.info("===================================")
+
+
+        os.makedirs("logs", exist_ok=True)
+        with open("logs/best_model.log", "w") as f:
+            f.write(f"Best model selection completed at {datetime.datetime.now()}\n")
+            f.write(f"Model: Traffic_Vehicle_Prediction\n")
+            f.write(f"Pipeline: Traffic_Transformation_Pipeline\n")
+            logging.info("Log file saved: logs/best_model.log")
 
     except Exception as e:
         logging.error("Error: %s", str(e))
